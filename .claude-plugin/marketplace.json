@@ -1,0 +1,21 @@
+{
+  "name": "bos-skillset",
+  "owner": {
+    "name": "sarverott"
+  },
+  "metadata": {
+    "description": "Agent skills for the Blacksmith Organization System (BOS)",
+    "version": "0.1.0"
+  },
+  "plugins": [
+    {
+      "name": "bos-skills",
+      "description": "Recognize __WORKSHOP roots and BOS workshop areas",
+      "source": "./",
+      "strict": false,
+      "skills": [
+        "./skills/bos-workshop"
+      ]
+    }
+  ]
+}
