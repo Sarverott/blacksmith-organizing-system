@@ -9,7 +9,7 @@ host *is* in the setternet; its mode says what the work *is* at this moment.
 
 | Digit | Mode | Covers |
 | ----- | ---- | ------ |
-| 1 | **ALMANAC** | emergency protocols: [sinking](../../src/procedures/sinking/DESCRIPTION.md) |
+| 1 | **ALMANAC** | emergency protocols: [sinking](https://github.com/Sarverott/blacksmith-organizing-system/blob/developement/src/procedures/sinking/DESCRIPTION.md) |
 | 2 | **CONFORM** | establishing the workshop, migrations, cleaning, verifying, syncing between fortified workshops |
 | 3 | **SMELTRY** | code, development, active editing, publishing changes |
 | 4 | **COMMANDORATE** | rulesets, rule editing, granting and revoking privileges, assigning roles, switching modes |

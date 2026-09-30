@@ -1,0 +1,98 @@
+# Built by Read the Docs (.readthedocs.yaml) and locally: `task docs:serve`
+# Tooling of the docs (uv project, lock, Taskfile) lives in docs/, next to the pages.
+site_name: Blacksmith Organization System
+site_description: An ordered digital workshop for code crafting
+site_author: Sett Sarverott
+site_url: !ENV [READTHEDOCS_CANONICAL_URL, "http://127.0.0.1:8000/"]
+repo_url: https://github.com/Sarverott/blacksmith-organizing-system
+repo_name: blacksmith-organizing-system
+edit_uri: edit/developement/docs/   # docs are edited where code is: on developement
+copyright: Copyright &copy; 2019-2026 Sett Sarverott, MIT license
+
+docs_dir: docs
+exclude_docs: |
+  /pyproject.toml
+  /uv.lock
+  /requirements.txt
+  /Taskfile.yml
+  /_mkdocs/
+
+theme:
+  name: material
+  features:
+    - navigation.sections
+    - navigation.top
+    - content.code.copy
+    - content.action.edit
+    - search.highlight
+  palette:
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: blue grey
+      accent: amber
+      toggle: { icon: material/weather-night, name: dark mode }
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: blue grey
+      accent: amber
+      toggle: { icon: material/weather-sunny, name: light mode }
+
+plugins:
+  - search
+
+hooks:
+  - docs/_mkdocs/wikilinks.py   # Obsidian [[links]] → site links (docs/ is also an Obsidian vault)
+
+markdown_extensions:
+  - admonition
+  - tables
+  - toc:
+      permalink: true
+  - pymdownx.superfences:   # ```mermaid blocks become diagrams
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+
+nav:
+  - Home: README.md
+  - Tutorials:
+      - tutorials/preinstall.md
+      - tutorials/installation.md
+      - tutorials/GETTING_STARTED.md
+      - tutorials/first-use-example.md
+      - tutorials/logicflow-explanation.md
+  - Glossary:
+      - glossary/README.md
+      - Network:
+          - glossary/setternet.md
+          - glossary/host-role.md
+          - glossary/canon.md
+      - Workshop:
+          - glossary/workshop.md
+          - glossary/system.md
+          - glossary/mode.md
+          - glossary/devarmory.md
+          - glossary/forge.md
+          - glossary/craftbook.md
+          - glossary/archive.md
+          - glossary/setup.md
+          - glossary/data.md
+          - glossary/nestrelm.md
+          - glossary/storylines.md
+          - glossary/views.md
+      - Elements:
+          - glossary/artefact.md
+          - glossary/element-anatomy.md
+          - glossary/scope.md
+          - glossary/project.md
+          - glossary/sheme.md
+          - glossary/throwbox.md
+          - glossary/sarcophag.md
+          - glossary/exhibit.md
+          - glossary/scrapnote.md
+          - glossary/craftset.md
+          - glossary/collection.md
+          - glossary/postroad.md
+  - Infographics:
+      - infographics/branch-movement-procedures.md

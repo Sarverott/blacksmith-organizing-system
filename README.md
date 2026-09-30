@@ -41,6 +41,8 @@ bos close       # keep shell history as a ttystory, record the closing
 bos repl        # every command at an interactive prompt
 ```
 
+Documentation site: built from `docs/` with MkDocs on Read the Docs (`task docs:serve` to preview).
+
 More: [preinstall](docs/tutorials/preinstall.md) ·
 [installation](docs/tutorials/installation.md) ·
 [getting started](docs/tutorials/GETTING_STARTED.md) ·
