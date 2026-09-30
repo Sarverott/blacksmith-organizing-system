@@ -23,31 +23,63 @@ a BOS project, so its path tells its place in the machine:
 
 `docs/glossary/` defines every element (workshop, forge, scope, sarcophag…),
 one page each. The author annotates it directly; read their changes before
-changing code. `src/models/class.mjs` is the glossary expressed as classes:
+changing code. `src/models/<element>/class.mjs` is the glossary expressed as classes:
 keep the two consistent, and write the page first when adding an element.
 
 ## Architecture
 
-| Path | Role |
-| ---- | ---- |
-| `src/core/basic-model.mjs` | element anatomy: directory + descriptor files; `ensure` (create missing, never overwrite), `inspect`, `seal` / `verify` (checksums) |
-| `src/core/basic-procedure.mjs` | ordered named steps over one context; `chain` composes |
-| `src/core/basic-controll.mjs` | runs a named logicflow with a prepared context |
-| `src/core/basic-view.mjs` | one handler for every presentation (text, json) |
-| `src/core/basic-bridge.mjs` | outside tools (git, gh, docker) behind one call shape |
-| `src/core/logicflows/` | the procedures: env-read, setup-load, bootstrap, open/close-workshop, hook-handlers, ci-cd |
-| `src/models/class.mjs` | the elements: Workshop, System (.BOS), areas, artefacts, HOST_ROLES |
-| `src/cli.mjs` | `bos` command; `src/index.mjs` library entry |
-| `resources/` | defaults and files BOS deploys into workshops |
-| `skills/` | agent skills (Claude Code plugin marketplace) |
+```
+src/
+├── main.ts         spine: class BOS, binds the core and loads every part lazily
+├── core/           skeleton logic: basic-model, -procedure, -controll, -view, -bridge, self
+├── bridge/         outside systems shaped into plain methods, one directory each
+├── models/         actors: the physical assets of the workshop, one directory each
+├── procedures/     steps that close routed routines: DESCRIPTION.md + one file per step
+├── controllers/    simplified management: plain methods that run procedures
+├── commands/       what people call: index.json (path, info, help, inline, repl) per command
+├── views/          how BOS presents itself: text for people, json for machines, repl
+├── cli.mjs         `bos`: parse, load, dispatch, print
+└── index.mjs       library entry
+```
+
+| Part | Role | Extends |
+| ---- | ---- | ------- |
+| core + `main.ts` | the spine: execution order and the mechanics everything shares | |
+| bridges | one handler per outside system: `docker-host` (dockerode), `github-api` (octokit), `git-client` (isomorphic-git; local repos and Gitea remotes), `gitea-api` (fetch), `subprocess-runner`, … | `BOS.Bridge` |
+| models | the elements of `docs/glossary/` as classes: an element is a directory plus descriptor files | `BOS.Model` |
+| procedures | locating → loading → bootstrapping / inspecting / opening / closing / sinking / hooking / promoting | `BOS.Procedure` |
+| controllers | `WorkshopControll`: `status()`, `open()`, `close()`, `sink()`, `promote()`… | `BOS.Controll` |
+| commands | loaded from `commands/<name>/index.json`; `inline` for the CLI or an API, `repl` for interactive use | |
+| views | status tree, help, promotion, inventory, repl; colors off for pipes and `NO_COLOR` | `BOS.View` |
+
+Every part imports the spine the same way: `import { BOS } from "../../main.ts"`
+(Node ≥ 22.18 runs `.ts` directly). The spine never imports parts at load time,
+only in `bos.load()`, so there are no import cycles.
+
+## Why the code is scattered into small files
+
+- **One concern per file.** A step, a bridge helper or a model is small enough
+  to read whole, and its path says what it is (`procedures/closing/capture-ttystory.mjs`).
+- **Revisions don't collide.** The owner and agents work in parallel. When the
+  owner revises one file, an agent's next change to another file doesn't
+  overwrite it. Long files turn every change into a merge of everything.
+- **Feedback has an address.** A comment on one small file is about one thing,
+  and a rejected piece can be replaced without touching the rest.
+- **The tree is the documentation.** Directories and `_index.mjs` files show
+  the structure. `DESCRIPTION.md` explains why a procedure exists; the code
+  only says how.
+
+So: add a new file rather than growing an old one, collect it in the nearest
+`_index.mjs`, and keep each file to one responsibility.
 
 ## Rules
 
-1. Procedures are code. A new BOS behaviour is a logicflow step, not a manual
-   instruction; register it in `src/core/logicflows/_index.mjs`.
+1. Procedures are code. A new BOS behaviour is a procedure step in its own
+   file, assembled in `procedures/<name>/_index.mjs` and described in its `DESCRIPTION.md`.
 2. BOS creates only what is missing and never overwrites or deletes. Keep
    every write behind `createIfMissing` or an explicit, dry-run-aware step.
-3. No runtime dependencies: Node ≥ 22 built-ins only. Outside tools go through a bridge.
+3. Outside systems are reached only through bridges: dockerode, octokit and
+   isomorphic-git live there, nowhere else.
 4. Test against a temporary workshop (`--workshop=` / `BOS_WORKSHOP`), never the real one. Run `task test`.
 5. Branch flow: work on `developement`; `bos promote` moves it to `revision` →
    `testing` → `releasing` → `master` (pull request). Never commit to `master` directly.

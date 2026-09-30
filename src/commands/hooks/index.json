@@ -1,0 +1,9 @@
+{
+    "path": "/hooks",
+    "info": "link this repository's git hooks to BOS",
+    "help": [
+        "./help.md",
+        "MD"
+    ],
+    "inline": "./exec.mjs"
+}

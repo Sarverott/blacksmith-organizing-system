@@ -1,35 +1,29 @@
-// A bridge wraps an outside tool (git, docker, gh, task, ...) behind one call shape.
-import { execFileSync, spawnSync } from "node:child_process";
+// A bridge shapes one outside system (docker host, github, git, a subprocess…)
+// into a few plain methods. The SDK client is created lazily, on first use.
 
 export class BasicBridge {
-  constructor(command, { versionArgs = ["--version"] } = {}) {
-    this.command = command;
-    this.versionArgs = versionArgs;
+  static id = "bridge";
+
+  constructor(options = {}) {
+    this.options = options;
   }
 
-  available() {
-    return spawnSync(this.command, this.versionArgs, { stdio: "ignore" }).status === 0;
+  get client() {
+    this._client ??= this.connect();
+    return this._client;
   }
 
-  run(args, { cwd = process.cwd(), inherit = false } = {}) {
-    const output = execFileSync(this.command, args, {
-      cwd,
-      encoding: "utf8",
-      stdio: inherit ? "inherit" : ["ignore", "pipe", "pipe"],
-    });
-    return typeof output === "string" ? output.trim() : "";
+  // create the SDK client (dockerode, octokit, …); null when the bridge needs none
+  connect() {
+    return null;
   }
 
-  // like run, but null instead of throwing
-  try(args, options) {
-    try {
-      return this.run(args, options);
-    } catch {
-      return null;
-    }
+  // can this bridge be used on this machine right now?
+  async available() {
+    return true;
+  }
+
+  toString() {
+    return `[<BOS.Bridge::${this.constructor.id}>]`;
   }
 }
-
-export const git = new BasicBridge("git");
-export const gh = new BasicBridge("gh");
-export const docker = new BasicBridge("docker");

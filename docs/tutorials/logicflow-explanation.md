@@ -1,34 +1,47 @@
-# Logicflows
+# Procedures (logicflows)
 
-A logicflow is a **procedure**: ordered, named steps sharing one context
-object (`src/core/basic-procedure.mjs`). Flows are built by chaining smaller
-ones, and every run leaves `context.trace` (step, ok, ms) and
+A procedure is a list of ordered, named steps that share one context object
+(`BOS.Procedure`, `src/core/basic-procedure.mjs`). Procedures chain into
+longer ones. Every run leaves `context.trace` (step, ok, ms) and
 `context.changes` (paths created, or planned in a dry run).
 
-| Flow | Steps |
-| ---- | ----- |
-| `locate` = env-read | read environment (host, user, home, cwd, unixusat) → locate workshop → locate self |
-| `status` | env-read → setup-load → inspect tree (read-only) |
-| `bootstrap` | env-read → setup-load → ensure workshop tree → deploy agent guides |
-| `open` | env-read → setup-load → bootstrap → record opening |
-| `close` | env-read → setup-load → capture ttystory → record closing |
-| `hook` | env-read → setup-load → record hook |
-| `hooks-install` | env-read → link hooks |
-| `promote` | read position → plan → apply (only with `--apply`) |
+Each procedure has its own directory in `src/procedures/`:
 
-```js
-import { BasicProcedure, WorkshopControll } from "blacksmith-organizing-system";
-
-const context = await new WorkshopControll().run("status");
-console.log(context.tree, context.trace);
-
-// a new flow: steps are plain functions of the context
-const hello = new BasicProcedure("hello").step("greet", (ctx) => { ctx.greeting = `hello ${ctx.env.user}`; });
+```
+procedures/closing/
+├── DESCRIPTION.md          why it exists
+├── capture-ttystory.mjs    one step
+├── record-closing.mjs      one step
+└── _index.mjs              assembly: loading.chain(steps)
 ```
 
-To add a flow, write it in `src/core/logicflows/<name>.mjs`, register it in
-`_index.mjs`, add a test in `tests/`, and a command in `src/cli.mjs` if people
-should call it.
+| Procedure | Steps |
+| --------- | ----- |
+| locating | read environment → locate workshop → locate self |
+| loading | locating → load workshop config → validate host role |
+| inspecting | loading → inspect tree (read-only) |
+| bootstrapping | loading → ensure workshop tree → deploy agent guides |
+| opening | bootstrapping → record opening |
+| closing | loading → capture ttystory → record closing |
+| sinking | loading → inventory forge → inventory tools (read-only so far) |
+| hooking | loading → record hook; installingHooks: locating → link hooks |
+| promoting | read position → plan → apply (only with `--apply`, clean worktree) |
 
-Rules the flows keep: create only what is missing, never overwrite, respect
-`context.dryRun`, and record events in storylines.
+Controllers run them as plain methods:
+
+```js
+import { BOS } from "blacksmith-organizing-system";
+
+const bos = await new BOS().load();
+const context = await bos.workshop.status();     // runs "inspecting"
+console.log(context.tree, context.trace);
+```
+
+To add a procedure:
+1. Create `src/procedures/<name>/` with `DESCRIPTION.md`, one file per step, and `_index.mjs`.
+2. Register it in `src/procedures/_index.mjs`.
+3. Give it a controller method and a test.
+4. If people should call it, add `src/commands/<name>/` (`index.json`, `help.md`, `exec.mjs`).
+
+Rules the procedures keep: create only what is missing, never overwrite,
+respect `context.dryRun`, and record events in storylines.

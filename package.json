@@ -37,18 +37,20 @@
     "./package.json": "./package.json"
   },
   "engines": {
-    "node": ">=22"
+    "node": ">=22.18"
   },
   "scripts": {
     "start": "node src/cli.mjs status",
     "test": "task test",
     "bos": "node src/cli.mjs"
   },
-  "devDependencies": {
-    "@go-task/cli": "^3.53.1",
+  "dependencies": {
     "dockerode": "^5.0.1",
     "isomorphic-git": "^1.42.4",
-    "octokit": "^5.0.5",
+    "octokit": "^5.0.5"
+  },
+  "devDependencies": {
+    "@go-task/cli": "^3.53.1",
     "skills": "^1.7.0"
   }
 }

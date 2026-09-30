@@ -1,5 +1,18 @@
-import {BOS} from "../../main"
+// Links between BOS instances of one setternet (glossary: setternet, host-role).
+// [TODO] transport and protocol are not decided yet; this names the handler.
+import { BOS } from "../../main.ts";
 
-class testBridge extends BOS.Bridge{}
+export class BosInstancesLink extends BOS.Bridge {
+  static id = "bos-instances-link";
 
-export default testBridge
+  async available() {
+    return false;
+  }
+
+  // hosts known to this workshop, from .BOS/setup/setternet/ [TODO] format
+  hosts() {
+    return [];
+  }
+}
+
+export default BosInstancesLink;

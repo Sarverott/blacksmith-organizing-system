@@ -13,7 +13,7 @@ automated"*.
 
 **Authoritative definitions:** `docs/glossary/<element>.md` in this repository
 (bos-skillset), one page per element, index in `docs/glossary/README.md`.
-Expressed as code in `src/models/class.mjs`. The old core repo holds an older copy. This file is a
+Expressed as code in `src/models/<element>/class.mjs`. The old core repo holds an older copy. This file is a
 summary; if the two disagree, the glossary wins. The author annotates the
 glossary directly: read their changes (`git diff`) before summarizing.
 

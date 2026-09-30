@@ -2,14 +2,15 @@
 
 ## New core: this repository (bos-skillset → Sarverott/blacksmith-organizing-system)
 
-Zero-dependency Node ≥ 22 ESM. Read its root `AGENTS.md` first. In short:
+Node ≥ 22.18, ESM plus `src/main.ts` (run directly via type stripping). Read the
+root `AGENTS.md` first: it has the architecture and the one-concern-per-file rule.
 
-- `src/core/basic-model.mjs`: element = directory + descriptors; `ensure` (create missing, never overwrite), `inspect`, `seal` / `verify`
-- `src/core/basic-procedure.mjs`: steps over one context; logicflows in `src/core/logicflows/` (env-read, setup-load, bootstrap, open/close-workshop, hook-handlers, ci-cd)
-- `src/models/class.mjs`: glossary as classes (Workshop, System=.BOS, areas, artefacts, HOST_ROLES, Project.anatomy)
-- `src/cli.mjs` (`bos`): locate, status, bootstrap, open, close, seal, verify, hooks install, hook, promote
-- storylines log: `.BOS/storylines/logs/workshop.jsonl` (JSON lines: open, close, git-hook)
-- tests: `task test` (node:test, temporary workshops)
+- `src/main.ts`: the spine. `class BOS` holds `BOS.Bridge/Model/Procedure/Controll/View`; `bos.load()` loads the parts; `bos.workshop` is the controller; `bos.command(name)`.
+- `src/bridge/<name>/`: docker-host (dockerode: containers, images, volumes), github-api (octokit), git-client (isomorphic-git), gitea-api, subprocess-runner, docker-publish, npm-publish, ssh-link, bos-instances-link ([`TODO`])
+- `src/models/<element>/class.mjs`: glossary as classes; `models/workshop/locate.mjs` finds workshops
+- `src/procedures/<name>/`: DESCRIPTION.md + a step per file: locating, loading, inspecting, bootstrapping, opening, closing, sinking, hooking, promoting
+- `src/commands/<name>/index.json`: `{path, info, help, inline, repl}`; `bos help` lists them
+- storylines log: `.BOS/storylines/logs/workshop.jsonl`; tests: `task test`
 
 Everything below describes the **old core**.
 

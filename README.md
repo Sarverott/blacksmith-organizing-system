@@ -38,6 +38,7 @@ cd bos-skillset && npm install && npm link   # `bos` on PATH
 bos status      # workshop tree, what is missing (read-only)
 bos open        # create missing areas, record the opening
 bos close       # keep shell history as a ttystory, record the closing
+bos repl        # every command at an interactive prompt
 ```
 
 More: [preinstall](docs/tutorials/preinstall.md) ·
@@ -63,19 +64,17 @@ New skills start from `template/SKILL.md` and are registered in `.claude-plugin/
 ## Repository layout
 
 ```
-├── src/
-│   ├── cli.mjs  index.mjs          bos command, library entry
-│   ├── core/                       basic-model/-procedure/-controll/-view/-bridge
-│   │   └── logicflows/             env-read, setup-load, bootstrap, open/close-workshop, hook-handlers, ci-cd
-│   ├── models/class.mjs            the elements (glossary as code)
-│   ├── controllers/  views/
-├── resources/                      workshop defaults, workshop-root AGENTS.md / CLAUDE.md
-├── tests/                          node:test suite (temporary workshops)
-├── docs/                           glossary, tutorials, infographics (an Obsidian vault)
-├── skills/  template/  .claude-plugin/   agent skills
-├── Taskfile.yml  Dockerfile  compose.yaml
-└── AGENTS.md  CLAUDE.md            instructions for agents working on this repo
+src/
+├── main.ts         spine (class BOS)          ├── controllers/  management methods
+├── core/           skeleton logic             ├── commands/     index.json per command
+├── bridge/         docker, github, git, gitea ├── views/        status tree, help, repl
+├── models/         workshop assets            ├── cli.mjs       bos
+├── procedures/     protocols, step per file   └── index.mjs     library entry
+resources/  tests/  docs/  skills/  template/  .claude-plugin/
+Taskfile.yml  Dockerfile  compose.yaml  AGENTS.md  CLAUDE.md
 ```
+
+Details and the reasons behind the split: [AGENTS.md](AGENTS.md).
 
 ## Branches
 

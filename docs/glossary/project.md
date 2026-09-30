@@ -24,7 +24,7 @@ host) → archived as a [sarcophag](sarcophag.md).
 ## Anatomy
 
 Every project carries the same standard parts, so people, BOS and agents find
-things without asking (`Project.anatomy` in `src/models/class.mjs`):
+things without asking (`src/models/project/anatomy.mjs`):
 
 | Part | Role |
 | ---- | ---- |

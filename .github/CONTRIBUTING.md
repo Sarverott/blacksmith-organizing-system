@@ -2,7 +2,7 @@
 
 1. Read the [glossary](../docs/glossary/README.md): code follows meaning.
 2. Branch from `developement` (here we code). Never commit to `master`.
-3. Keep BOS behaviour as code: logicflows in `src/core/logicflows/`, with tests in `tests/`.
+3. Keep BOS behaviour as code: procedures in `src/procedures/<name>/` (DESCRIPTION.md + one file per step), with tests in `tests/`.
 4. `task test` must pass. Test against temporary workshops only.
 5. Open a pull request into `revision`. A maintainer (or someone they
    authorize) approves; self-approval only after automated checks, and a second

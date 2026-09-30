@@ -1,0 +1,9 @@
+{
+    "path": "/bootstrap",
+    "info": "create missing areas, descriptors and agent guides",
+    "help": [
+        "./help.md",
+        "MD"
+    ],
+    "inline": "./exec.mjs"
+}

@@ -32,6 +32,15 @@ tasks:
     desc: close the workshop (run `history -a` first to include this shell)
     cmds: ['{{.BOS}} close']
 
+  sink:
+    desc: inventory of what must be rescued from this workstation (read-only)
+    cmds: ['{{.BOS}} sink']
+
+  repl:
+    desc: interactive BOS
+    cmds: ['{{.BOS}} repl']
+    interactive: true
+
   hooks:install:
     desc: link this repository's git hooks to BOS storylines
     cmds: ['{{.BOS}} hooks install']
@@ -47,4 +56,4 @@ tasks:
   check:
     desc: syntax-check every module
     cmds:
-      - for f in $(find src -name '*.mjs'); do node --check "$f" || exit 1; done
+      - for f in $(find src -name '*.mjs' -o -name '*.ts'); do node --check "$f" || exit 1; done

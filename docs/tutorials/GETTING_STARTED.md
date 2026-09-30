@@ -8,6 +8,9 @@
 | `bos bootstrap` | creates missing areas, descriptors and `AGENTS.md` / `CLAUDE.md`, and never overwrites |
 | `bos open` | bootstrap, then records the opening in `.BOS/storylines/logs/workshop.jsonl` |
 | `bos close` | copies shell history to `.BOS/storylines/ttystories/ttystory-<host>-<unixusat>.txt` and records the closing. Run `history -a` first so the current shell is included |
+| `bos sink` | read-only inventory for the sinking protocol: forge projects with branch and uncommitted work, plus ttystories |
+| `bos repl` | an interactive prompt for every command; `status` there offers to create what is missing |
+| `bos help [command]` | the command list, or one command's help |
 | `bos seal <dir>` / `bos verify <dir>` | writes, or checks, the checksums of `<dir>` in its manifest |
 | `bos hooks install` | inside a repository, links its git hooks to BOS, so commits, checkouts and merges land in storylines |
 | `bos promote [--reject] [--apply]` | moves the current branch one station along the branch flow |

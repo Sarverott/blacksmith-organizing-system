@@ -1,0 +1,9 @@
+{
+    "path": "/sink",
+    "info": "inventory of what must be rescued from this workstation",
+    "help": [
+        "./help.md",
+        "MD"
+    ],
+    "inline": "./exec.mjs"
+}

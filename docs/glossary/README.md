@@ -3,7 +3,7 @@
 > DRAFT. One page per element of the Blacksmith Organization System environment.
 > Gaps are marked [`TODO`]. Interpretations not yet confirmed by the author are marked *(assumed)*.
 > Sources: author's annotations, and the old core's `docs/README.md`, `docs/devlog.md` and `docs/scrapnote-example.md` (PL).
-> Expressed as code in `src/models/class.mjs`; keep both consistent.
+> Expressed as code in `src/models/<element>/class.mjs`; keep both consistent.
 
 ## The skeleton: three layers
 

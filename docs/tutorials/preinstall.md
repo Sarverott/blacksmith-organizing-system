@@ -2,7 +2,7 @@
 
 Needed:
 
-- **Node.js ≥ 22**: BOS uses only Node built-ins at runtime
+- **Node.js ≥ 22.18**: runs `src/main.ts` directly (type stripping)
 - **git**
 
 Optional:

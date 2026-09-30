@@ -1,0 +1,9 @@
+{
+    "path": "/verify",
+    "info": "compare a directory with its manifest",
+    "help": [
+        "./help.md",
+        "MD"
+    ],
+    "inline": "./exec.mjs"
+}
