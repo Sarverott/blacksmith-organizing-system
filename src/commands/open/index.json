@@ -1,7 +1,0 @@
-{
-  "path": "/open",
-  "info": "bootstrap, then record the opening",
-  "mode": "conform",
-  "help": ["./help.md", "MD"],
-  "inline": "./exec.mjs"
-}

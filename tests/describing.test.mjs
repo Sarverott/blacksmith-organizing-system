@@ -38,7 +38,7 @@ test("drafts follow the staged paths", () => {
 });
 
 test("prepare-commit-msg fills only a plain commit", async () => {
-  const { root, workshop } = await sandbox();
+  const { root, bos } = await sandbox();
   const repo = join(root, "forge/scope/project");
   mkdirSync(repo, { recursive: true });
   const git = new bridges.gitClient();
@@ -53,7 +53,7 @@ test("prepare-commit-msg fills only a plain commit", async () => {
 
   const file = join(root, "COMMIT_EDITMSG");
   writeFileSync(file, "\n# Please enter the commit message\n");
-  await workshop.describe({ cwd: repo, file, source: "" });
+  await bos.repository.describe({ cwd: repo, file, source: "" });
   const drafted = readFileSync(file, "utf8");
   assert.match(
     drafted,
@@ -61,6 +61,6 @@ test("prepare-commit-msg fills only a plain commit", async () => {
   );
 
   writeFileSync(file, "fix: my own words\n");
-  await workshop.describe({ cwd: repo, file, source: "message" });
+  await bos.repository.describe({ cwd: repo, file, source: "message" });
   assert.equal(readFileSync(file, "utf8"), "fix: my own words\n");
 });

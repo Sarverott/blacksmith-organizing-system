@@ -34,7 +34,7 @@ Controllers run them as plain methods:
 import { BOS } from "blacksmith-organization-system";
 
 const bos = await new BOS().load();
-const context = await bos.workshop.status();     // runs "inspecting"
+const context = await bos.call("workshop", "status"); // the tool runs "inspecting"
 console.log(context.tree, context.trace);
 ```
 
@@ -42,7 +42,7 @@ To add a procedure:
 1. Create `src/procedures/<name>/` with `DESCRIPTION.md`, one file per step, and `_index.mjs`.
 2. Register it in `src/procedures/_index.mjs`.
 3. Give it a controller method and a test.
-4. If people should call it, add `src/commands/<name>/` (`index.json`, `help.md`, `exec.mjs`).
+4. If people should call it, add a tool to the model's `toolkit.mjs` (see `src/core/toolkit.mjs`): it becomes `bos <model> <tool>`, and an MCP tool too when it is read-only.
 
 Rules the procedures keep: create only what is missing, never overwrite,
 respect `context.dryRun`, and record events in storylines.

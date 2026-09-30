@@ -8,11 +8,11 @@ root `AGENTS.md` first: it has the architecture and the one-concern-per-file rul
 - `src/main.ts`: the spine. `class BOS` holds `BOS.Bridge/Model/Procedure/Controll/View`; `bos.load()` loads the parts; `bos.workshop` is the controller; `bos.command(name)`.
 - `src/bridge/<name>/`: docker-host (dockerode: containers, images, volumes), github-api (octokit), git-client (isomorphic-git), gitea-api, subprocess-runner, docker-publish, npm-publish, ssh-link, bos-instances-link ([`TODO`])
 - `src/models/<element>/class.mjs`: standalone assets (`BOS.Model`); organs hang on their owner as `models/<owner>/hang.<name>.mjs` (`BOS.Submodule`, built from the owner: `workshop.storylines.logs`); shared anatomy in `core/basic-element.mjs`; `models/workshop/locate.mjs` finds workshops
-- `bos skills`: drafts `skills/bos-<type>/SKILL.md` per model from the glossary (procedure `skilling`), never overwrites
+- `bos project skills`: drafts `skills/bos-<type>/SKILL.md` per model from the glossary (procedure `skilling`), never overwrites
 - `src/procedures/<name>/`: DESCRIPTION.md + a step per file: locating, loading, inspecting, bootstrapping, opening, closing, sinking, hooking, promoting
-- `src/commands/<name>/index.json`: `{path, info, help, inline, repl}`; `bos help` lists them
+- tools: `src/models/<model>/toolkit.mjs` (format `src/core/toolkit.mjs`, zod input), called `bos <model> <tool>`; `src/controllers/execution-controll.mjs` gathers them and generates CLI, help, repl and MCP (read-only tools as `<model>_<tool>`); `bos help [model [tool]]`
 - storylines log: `.BOS/storylines/logs/workshop.jsonl`; tests: `npm test` (vitest)
-- commits: husky (`.husky/`) → `bos describe --hook` drafts a conventional commit, Skryba (raven, `resources/ravens/skryba.md`, via ollama-link) refines it, commitlint checks it, post-* hooks → storylines; `npm run commit` = commitizen (cz-commitlint)
+- commits: husky (`.husky/`) → `bos project prepare-message` drafts a conventional commit, Skryba (raven, `resources/ravens/skryba.md`, via ollama-link) refines it, commitlint checks it, post-* hooks → storylines; `npm run commit` = commitizen (cz-commitlint)
 - releases: semantic-release (`release.config.mjs`), baseline tag v0.7.0; channels dev (developement), beta (testing), rc (releasing), latest (master); npm + GitHub Packages (@sarverott/…) + ghcr.io
 
 Everything below describes the **old core**.

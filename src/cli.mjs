@@ -1,29 +1,28 @@
 #!/usr/bin/env node
-// bos <command> [operands] [--json] [--dry-run] [--workshop=PATH]
 import { VERSION } from "./core/self.mjs";
+// bos <model> <tool> [operands] [--flags]   ·   bos help [model [tool]]   ·   bos repl   ·   bos --version
+import { parseArgs } from "./core/toolkit.mjs";
 import { BOS } from "./main.ts";
 
 const args = process.argv.slice(2);
-const flags = Object.fromEntries(
-  args
-    .filter((arg) => arg.startsWith("--"))
-    .map((arg) => {
-      const [key, value = true] = arg.slice(2).split("=");
-      return [key.replace(/-(\w)/g, (_, c) => c.toUpperCase()), value];
-    }),
-);
-const [name = "help", ...operands] = args.filter((arg) => !arg.startsWith("--"));
-
-if (flags.version) {
-  console.log(VERSION);
-  process.exit(0);
-}
+const { operands, flags } = parseArgs(args);
 
 try {
-  const bos = await new BOS({ workshop: flags.workshop }).load();
-  const output = await bos.command(name, operands, flags);
-  if (output !== undefined) console.log(typeof output === "string" ? output : JSON.stringify(output, null, 2));
+  if (flags.version) {
+    console.log(VERSION);
+  } else {
+    const bos = await new BOS({ workshop: flags.workshop }).load();
+    const [first] = operands;
+    let output;
+    if (!first || first === "help")
+      output = new bos.views.HelpView().text({ tools: bos.execution.tools, ask: operands.slice(1) });
+    else if (first === "repl") await bos.views.startRepl(bos);
+    else output = await bos.run(args, { ask: { digit: bos.views.chooseDigit } });
+    if (output) console.log(output);
+  }
 } catch (error) {
-  console.error(`bos ${name}: ${error.message}${error.procedure ? `\n  in ${error.procedure}` : ""}`);
+  console.error(
+    `bos ${operands.slice(0, 2).join(" ")}: ${error.message}${error.procedure ? `\n  in ${error.procedure}` : ""}`,
+  );
   process.exitCode = 1;
 }

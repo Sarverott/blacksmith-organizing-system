@@ -11,11 +11,11 @@ vars:
 tasks:
   status:
     desc: show the state of this workshop
-    cmds: ['{{.BOS}} status']
+    cmds: ['{{.BOS}} workshop status']
   open:
     desc: open the workshop (bootstrap missing areas, record opening)
-    cmds: ['{{.BOS}} open']
+    cmds: ['{{.BOS}} workshop open']
   close:
     desc: close the workshop (capture ttystory, record closing)
-    cmds: ['{{.BOS}} close']
+    cmds: ['{{.BOS}} workshop close']
 `;

@@ -1,8 +1,0 @@
-{
-  "path": "/mode",
-  "info": "show or switch the mode of work (1-5), or choose it by one digit",
-  "mode": "commandorate",
-  "help": ["./help.md", "MD"],
-  "inline": "./exec.mjs",
-  "repl": "./repl.mjs"
-}

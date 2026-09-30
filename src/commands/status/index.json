@@ -1,7 +1,0 @@
-{
-  "path": "/status",
-  "info": "workshop tree and what is missing (read-only)",
-  "help": ["./help.md", "MD"],
-  "inline": "./exec.mjs",
-  "repl": "./repl.mjs"
-}

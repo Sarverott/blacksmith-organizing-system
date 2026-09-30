@@ -6,7 +6,7 @@ not next to it. The plugin (`.claude-plugin/plugin.json`) brings:
 | Part | What the agent gets |
 | ---- | ------------------- |
 | **Session brief** (`SessionStart` hook) | at the start of every session: the workshop, its role and mode, where the agent works (`forge / <scope> / <project>`), the House's boundaries (who rests and must never be called), the tools, the rules |
-| **MCP tools** (`.claude-plugin/mcp.json` → `src/mcp.mjs`) | `bos_locate`, `bos_status`, `bos_house`, `bos_glossary`, `bos_describe`, `bos_promote_plan`, `bos_sink_inventory`, `bos_help`. All read-only: agents look and plan through MCP, and changing the workshop stays a conscious act on the command line |
+| **MCP tools** (`.claude-plugin/mcp.json` → `src/mcp.mjs`) | generated from the tool registry: every read-only tool as `<model>_<tool>` (`workshop_status`, `workshop_glossary`, `house_show`, `project_describe`, `project_plan`…). Writing tools are not offered: agents look and plan through MCP, and changing the workshop stays a conscious act on the command line |
 | **`bos` on PATH** (`bin/bos`) | the whole CLI as a bare command |
 | **Skills** (`skills/`) | `bos-workshop` and one skill per model (drafts, growing) |
 | **Storylines** (`PostToolUse` and `SessionEnd` hooks) | the agent's sessions as events, and its shell commands as its own ttystory: `.BOS/storylines/ttystories/ttystory-<host>-claude-<session>.txt` (unixusat, cwd, command) |

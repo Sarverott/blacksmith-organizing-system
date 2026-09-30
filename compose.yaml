@@ -1,4 +1,4 @@
-# docker compose run --rm bos open
+# docker compose run --rm bos workshop open
 services:
   bos:
     build: .
@@ -7,4 +7,4 @@ services:
       BOS_WORKSHOP: /workshop
     volumes:
       - ${BOS_WORKSHOP:-~/__WORKSHOP}:/workshop
-    command: ["status"]
+    command: ["workshop", "status"]

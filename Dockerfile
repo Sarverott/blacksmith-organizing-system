@@ -12,4 +12,4 @@ ENV BOS_WORKSHOP=/workshop
 VOLUME /workshop
 
 ENTRYPOINT ["node", "src/cli.mjs"]
-CMD ["status"]
+CMD ["workshop", "status"]

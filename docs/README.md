@@ -1,13 +1,13 @@
 # BOS documentation
 
 The site is built with [MkDocs](https://www.mkdocs.org) + Material from these
-markdown files (config: `../mkdocs.yml`) and published on Read the Docs.
+markdown files (config: `mkdocs.yml`, in this folder) and published on Read the Docs.
 This directory is also an Obsidian vault (`.obsidian/`): `[[links]]` resolve in
 Obsidian, and on the site too (`_mkdocs/wikilinks.py`).
 
 Preview: `task docs:serve` · strict build: `task docs:build` · after changing
 `pyproject.toml`: `task docs:lock` (refreshes the `requirements.txt` Read the Docs installs).
-A new page also needs an entry in `nav:` in `../mkdocs.yml`.
+A new page also needs an entry in `nav:` in `mkdocs.yml`.
 
 | Section | Contents |
 | ------- | -------- |

@@ -16,26 +16,22 @@ async function connected(bos) {
   return client;
 }
 
-test("MCP: read-only BOS tools answer", async () => {
+test("MCP: the read-only tools of the registry answer", async () => {
   const { root, bos } = await sandbox();
   const client = await connected(bos);
   const { tools } = await client.listTools();
-  assert.deepEqual(tools.map((t) => t.name).sort(), [
-    "bos_describe",
-    "bos_glossary",
-    "bos_help",
-    "bos_house",
-    "bos_locate",
-    "bos_promote_plan",
-    "bos_sink_inventory",
-    "bos_status",
-  ]);
+  const expected = bos.execution.tools.filter((t) => t.readOnly).map((t) => `${t.model}_${t.name}`.replace(/-/g, "_"));
+  assert.deepEqual(tools.map((t) => t.name).sort(), expected.sort());
+  assert.ok(
+    !tools.some((t) => ["workshop_bootstrap", "workshop_mode", "project_promote"].includes(t.name)),
+    "no writing tool over MCP",
+  );
   assert.ok(tools.every((t) => t.annotations?.readOnlyHint));
-  const status = await client.callTool({ name: "bos_status", arguments: {} });
+  const status = await client.callTool({ name: "workshop_status", arguments: {} });
   assert.match(status.content[0].text, new RegExp(root.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")));
-  const page = await client.callTool({ name: "bos_glossary", arguments: { term: "house" } });
+  const page = await client.callTool({ name: "workshop_glossary", arguments: { term: "house" } });
   assert.match(page.content[0].text, /^# House/);
-  const missing = await client.callTool({ name: "bos_glossary", arguments: { term: "../../etc/passwd" } });
+  const missing = await client.callTool({ name: "workshop_glossary", arguments: { term: "../../etc/passwd" } });
   assert.match(missing.content[0].text, /no glossary page/);
 });
 

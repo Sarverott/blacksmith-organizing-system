@@ -41,7 +41,7 @@ Its branches follow the [canon](canon.md) flow: `master` → `developement` →
 `revision` → `testing` → `releasing` → `master`.
 
 A project knows its place from its path: `forge/<scope>/<project>`
-(`bos locate` prints it).
+(`bos workshop locate` prints it).
 
 ## Relations
 

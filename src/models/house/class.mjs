@@ -6,11 +6,13 @@ import { RESOURCES } from "../../core/self.mjs";
 import { BOS } from "../../main.ts";
 import { bloodlineOf, readReleasers } from "./bloodlines.mjs";
 import { groupOf, readGroups, sameModel } from "./groups.mjs";
+import { toolkit } from "./toolkit.mjs";
 
 export const STATES = ["active", "resting", "frozen"];
 
 export class House extends BOS.Model {
   static type = "house";
+  static toolkit = toolkit;
 
   constructor(path = `${RESOURCES}/house`, parent = null) {
     super(path, parent);

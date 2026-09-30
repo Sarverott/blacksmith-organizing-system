@@ -27,7 +27,7 @@ export async function brief(input) {
       .orders()
       .map((o) => o.title ?? o.name)
       .join(", ")}.${resting.length ? ` Resting, never call or prompt: ${resting.join(", ")}.` : ""}`,
-    "tools: `bos` CLI on PATH (bos help), MCP tools bos_* (bos_glossary explains any element)",
+    "tools: `bos <model> <tool>` on PATH (bos help), MCP tools <model>_<tool> (workshop_glossary explains any element)",
     "rules: ask the House before calling any ollama model · conventional commits · look before changing the owner's files · the owner works in parallel: re-check git state",
     "",
   ].join("\n");

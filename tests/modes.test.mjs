@@ -4,7 +4,7 @@ import { join } from "node:path";
 import { PassThrough } from "node:stream";
 import { test } from "vitest";
 
-import { loadCommands, MODES, modeByDigit, views } from "../src/index.mjs";
+import { MODES, modeByDigit, views } from "../src/index.mjs";
 import { sandbox } from "./helpers.mjs";
 
 test("five modes, digits 1-5, in the order of the author", () => {
@@ -54,15 +54,17 @@ test("chooser takes one digit; anything else leaves with 0", async () => {
   assert.equal(await ask(""), 0);
 });
 
-test("commands are tagged with the mode they serve", async () => {
-  const commands = await loadCommands();
-  assert.equal(commands.sink.mode, "almanac");
-  assert.equal(commands.open.mode, "conform");
-  assert.equal(commands.promote.mode, "smeltry");
-  assert.equal(commands.mode.mode, "commandorate");
-  assert.equal(commands.status.mode, null);
-  for (const command of Object.values(commands))
-    assert.ok(command.mode === null || command.mode in MODES, command.name);
+test("tools are tagged with the mode they serve", async () => {
+  const { bos } = await sandbox();
+  const modeOf = (model, name) => bos.execution.find(model, name).mode;
+  assert.equal(modeOf("workshop", "sink"), "almanac");
+  assert.equal(modeOf("workshop", "open"), "conform");
+  assert.equal(modeOf("project", "promote"), "smeltry");
+  assert.equal(modeOf("workshop", "mode"), "commandorate");
+  assert.equal(modeOf("house", "show"), "provision");
+  assert.equal(modeOf("workshop", "status"), null);
+  for (const entry of bos.execution.tools)
+    assert.ok(entry.mode === null || entry.mode in MODES, `${entry.model} ${entry.name}`);
 });
 
 test("a first-time workshop is a forging point in CONFORM", async () => {

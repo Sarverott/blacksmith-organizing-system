@@ -1,6 +1,5 @@
-// The workshop as a handful of plain methods; each one runs a procedure.
-//   const workshop = new WorkshopControll({ workshop: "/tmp/x/__WORKSHOP" });
-//   await workshop.open();
+// Remote of the workshop: its flows as plain methods.
+//   const workshop = new WorkshopControll({ workshop: "/tmp/x/__WORKSHOP" });  await workshop.open();
 import { BOS } from "../main.ts";
 import procedures from "../procedures/_index.mjs";
 
@@ -25,23 +24,8 @@ export class WorkshopControll extends BOS.Controll {
   sink() {
     return this.run("sinking");
   }
-  hook(hook) {
-    return this.run("hooking", { hook });
-  }
-  installHooks() {
-    return this.run("installingHooks");
-  }
-  gather(options) {
-    return this.run("gathering", options);
-  }
-  describe(options) {
-    return this.run("describing", options);
-  }
   mode(mode) {
     return this.run("modeSwitching", { mode });
-  }
-  promote({ reject = false, apply = false } = {}) {
-    return this.run("promoting", { reject, dryRun: !apply });
   }
 }
 

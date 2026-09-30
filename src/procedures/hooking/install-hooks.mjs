@@ -6,7 +6,7 @@ import { createIfMissing } from "../../core/basic-element.mjs";
 import { CLI } from "../../core/self.mjs";
 import { HOOKS } from "./hooks.mjs";
 
-// link a repository's hooks to `bos hook <name>`; someone's own hook is left alone
+// link a repository's hooks to `bos project hook <name>`; someone's own hook is left alone
 export const installHooks = async (context) => {
   const git = new GitClient();
   const root = await git.root(context.env.cwd);
@@ -25,7 +25,7 @@ export const installHooks = async (context) => {
     createIfMissing(
       target,
       () => {
-        writeFileSync(target, `#!/bin/sh\nexec node "${CLI}" hook ${hook} "$@"\n`);
+        writeFileSync(target, `#!/bin/sh\nexec node "${CLI}" project hook ${hook} "$@"\n`);
         chmodSync(target, 0o755);
       },
       context,

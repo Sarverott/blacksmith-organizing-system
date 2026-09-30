@@ -31,7 +31,10 @@ jobs:
           node-version: 24.x
           registry-url: https://npm.pkg.github.com
           scope: "@sarverott"
-      - run: npm pkg set name=@sarverott/blacksmith-organization-system version=${{ inputs.version }}
-      - run: npm publish --tag ${{ inputs.channel }} --provenance=false
+      # only this job publishes to GitHub: the scoped name, the GitHub registry, no npm provenance
+      - run: |
+          npm pkg set name=@sarverott/blacksmith-organization-system version=${{ inputs.version }}
+          npm pkg delete publishConfig.provenance publishConfig.registry
+      - run: npm publish --tag ${{ inputs.channel }} --registry https://npm.pkg.github.com
         env:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}

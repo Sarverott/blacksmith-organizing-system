@@ -1,7 +1,0 @@
-{
-  "path": "/describe",
-  "info": "draft a conventional commit message from the staged changes",
-  "mode": "smeltry",
-  "help": ["./help.md", "MD"],
-  "inline": "./exec.mjs"
-}

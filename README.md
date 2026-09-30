@@ -35,9 +35,9 @@ cd ~/__WORKSHOP/forge/blacksmith-organization-system
 git clone https://github.com/Sarverott/blacksmith-organization-system.git bos-skillset
 cd bos-skillset && npm install && npm link   # `bos` on PATH
 
-bos status      # workshop tree, what is missing (read-only)
-bos open        # create missing areas, record the opening
-bos close       # keep shell history as a ttystory, record the closing
+bos workshop status      # workshop tree, what is missing (read-only)
+bos workshop open        # create missing areas, record the opening
+bos workshop close       # keep shell history as a ttystory, record the closing
 bos repl        # every command at an interactive prompt
 ```
 
@@ -57,7 +57,7 @@ More: [preinstall](docs/tutorials/preinstall.md) ·
 | `bos-devarmory` `bos-forge` `bos-craftbook` `bos-archive` | the crafting areas (drafts) |
 | `bos-scope` `bos-project` `bos-sheme` `bos-throwbox` `bos-sarcophag` `bos-exhibit` `bos-craftset` | the assets inside them (drafts) |
 
-A model's skill is drafted from its glossary page by `bos skills` and then grown by hand.
+A model's skill is drafted from its glossary page by `bos project skills` and then grown by hand.
 
 BOS is also a Claude Code plugin, an agent's suit: a session brief, read-only
 MCP tools over the workshop and the House, `bos` on PATH, the skills, and the
@@ -75,11 +75,11 @@ New skills start from `template/SKILL.md` and are registered in `.claude-plugin/
 
 ```
 src/
-├── main.ts         spine (class BOS)          ├── controllers/  management methods
-├── core/           skeleton logic             ├── commands/     index.json per command
-├── bridge/         docker, github, git, gitea ├── views/        status tree, help, repl
-├── models/         workshop assets            ├── cli.mjs       bos
-├── procedures/     protocols, step per file   └── index.mjs     library entry
+├── main.ts         spine (class BOS)          ├── controllers/  remotes: execution, workshop, house, repository
+├── core/           skeleton logic, toolkit    ├── views/        text, help, repl, MCP, agent brief
+├── bridge/         docker, github, git, gitea ├── cli.mjs       bos <model> <tool>
+├── models/         assets + their toolkits    └── index.mjs     library entry
+├── procedures/     protocols, step per file
 resources/  tests/  docs/  skills/  template/  .claude-plugin/
 Taskfile.yml  Dockerfile  compose.yaml  AGENTS.md  CLAUDE.md
 ```
@@ -90,7 +90,7 @@ Details and the reasons behind the split: [AGENTS.md](AGENTS.md).
 
 `master` (spine of canon) → `developement` (here we code) → `revision` →
 `testing` → `releasing` → `master` through a pull request.
-See [branch movement procedures](docs/infographics/branch-movement-procedures.md); `bos promote` walks it.
+See [branch movement procedures](docs/infographics/branch-movement-procedures.md); `bos project promote` walks it.
 Every push releases: `x.y.z-dev.N` from developement, `-beta.N` from testing, `-rc.N`
 from releasing, `x.y.z` from master, on npm, GitHub Packages and ghcr.io
 ([committing and releasing](docs/tutorials/committing-and-releasing.md)).

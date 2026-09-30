@@ -39,7 +39,7 @@ A group file has `title`, `state`, `members` (`model`, `name`, `note`, `kind: re
 and optional `patterns`, which claim served models by name (EON uses them).
 An order with `"fromRavens": true` includes the ravens of `resources/ravens/`.
 
-`bos house` shows it (PROVISION), and so does the MCP tool `bos_house`. Only
+`bos house show` shows it (PROVISION), and so does the MCP tool `house_show`. Only
 the list of models is read from ollama; no resident is started or prompted.
 
 ## Relations

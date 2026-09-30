@@ -11,12 +11,14 @@ import Setup from "./hang.setup.mjs";
 import Storylines from "./hang.storylines.mjs";
 import System from "./hang.system.mjs";
 import { placeOf, WORKSHOP_DIRNAME } from "./locate.mjs";
+import { toolkit } from "./toolkit.mjs";
 
 export class Workshop extends BOS.Model {
   static type = "workshop";
   static dirname = WORKSHOP_DIRNAME;
   static submodules = { system: System, setup: Setup, data: Data, nests: Nests, storylines: Storylines };
   static children = [Devarmory, Forge, Craftbook, Archive];
+  static toolkit = toolkit;
 
   get forge() {
     return new Forge(this.file(Forge.dirname), this);

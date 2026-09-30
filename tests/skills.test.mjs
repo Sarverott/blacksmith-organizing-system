@@ -15,7 +15,7 @@ test("skilling drafts a skill per model, registers it, never overwrites", async 
   writeFileSync(join(root, "skills", "bos-forge", "SKILL.md"), "hand-grown\n");
 
   const bos = await new BOS({ root }).load();
-  const context = await bos.skills.scaffold();
+  const context = await bos.repository.skills();
 
   assert.equal(readFileSync(join(root, "skills", "bos-forge", "SKILL.md"), "utf8"), "hand-grown\n");
   const sheme = readFileSync(join(root, "skills", "bos-sheme", "SKILL.md"), "utf8");
@@ -26,5 +26,5 @@ test("skilling drafts a skill per model, registers it, never overwrites", async 
   assert.ok(existsSync(join(root, "skills", "bos-craftbook", "SKILL.md")));
   const { skills } = JSON.parse(readFileSync(join(root, ".claude-plugin", "marketplace.json"), "utf8")).plugins[0];
   assert.equal(skills.length, context.skills.length);
-  assert.deepEqual((await bos.skills.scaffold()).changes, []);
+  assert.deepEqual((await bos.repository.skills()).changes, []);
 });

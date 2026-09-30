@@ -3,10 +3,10 @@
 //   const bos = await new BOS().load();  await bos.workshop.status();
 
 export { default as bridges } from "./bridge/_index.mjs";
-export { loadCommands } from "./commands/_index.mjs";
 export { default as controllers } from "./controllers/_index.mjs";
 export { createIfMissing, sha256, walkFiles } from "./core/basic-element.mjs";
 export { CLI, REPO_ROOT, RESOURCES, VERSION } from "./core/self.mjs";
+export { parseArgs, parseInput, tool } from "./core/toolkit.mjs";
 export { BOS, default } from "./main.ts";
 export {
   default as models,

@@ -1,2 +1,2 @@
 # recorded in the workshop's storylines (procedures/hooking); never blocks git
-node src/cli.mjs hook post-commit || true
+node src/cli.mjs project hook post-commit || true

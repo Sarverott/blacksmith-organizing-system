@@ -1,5 +1,6 @@
-# Built by Read the Docs (.readthedocs.yaml) and locally: `task docs:serve`
-# Tooling of the docs (uv project, lock, Taskfile) lives in docs/, next to the pages.
+# Built by Read the Docs (.readthedocs.yaml) and locally: `task docs:serve`.
+# The docs are a self-contained sub-project: config, uv project, lock and Taskfile live
+# here, next to the pages. Always build from the repository root: mkdocs build -f docs/mkdocs.yml
 site_name: Blacksmith Organization System
 site_description: An ordered digital workshop for code crafting
 site_author: Sett Sarverott
@@ -9,8 +10,10 @@ repo_name: blacksmith-organization-system
 edit_uri: edit/developement/docs/   # docs are edited where code is: on developement
 copyright: Copyright &copy; 2019-2026 Sett Sarverott, MIT license
 
-docs_dir: docs
+docs_dir: .
+site_dir: ../site
 exclude_docs: |
+  /mkdocs.yml
   /pyproject.toml
   /uv.lock
   /requirements.txt
@@ -41,7 +44,7 @@ plugins:
   - search
 
 hooks:
-  - docs/_mkdocs/wikilinks.py   # Obsidian [[links]] → site links (docs/ is also an Obsidian vault)
+  - _mkdocs/wikilinks.py   # Obsidian [[links]] → site links (docs/ is also an Obsidian vault)
 
 markdown_extensions:
   - admonition
