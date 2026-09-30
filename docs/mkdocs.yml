@@ -1,4 +1,5 @@
 site_name: Blacksmith Organization System
+docs_dir: .
 theme:
   name: readthedocs
   highlightjs: true
