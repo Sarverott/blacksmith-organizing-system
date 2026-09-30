@@ -1,0 +1,16 @@
+{
+  "name": "bos",
+  "displayName": "Blacksmith Organization System",
+  "version": "0.7.0",
+  "description": "BOS as the agent's suit: workshop skills, MCP tools over the workshop and the House of Anubis, a session brief, and the agent's work recorded in storylines",
+  "author": {
+    "name": "Sett Sarverott",
+    "email": "sett@sarverott.com",
+    "url": "https://github.com/Sarverott"
+  },
+  "homepage": "https://github.com/Sarverott/blacksmith-organization-system",
+  "repository": "https://github.com/Sarverott/blacksmith-organization-system",
+  "license": "MIT",
+  "keywords": ["bos", "workshop", "house-of-anubis", "ravens", "storylines"],
+  "mcpServers": "./.claude-plugin/mcp.json"
+}

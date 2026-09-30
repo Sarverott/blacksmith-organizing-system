@@ -3,6 +3,9 @@ import { join } from "node:path";
 
 // add every skill to the plugin in .claude-plugin/marketplace.json (additive only)
 export const registerSkills = (context) => {
+  context.registered = [];
+  // a plugin manifest makes Claude Code scan skills/ itself: nothing to register
+  if (existsSync(join(context.root, ".claude-plugin", "plugin.json"))) return;
   const path = join(context.root, ".claude-plugin", "marketplace.json");
   if (!existsSync(path)) return;
   const marketplace = JSON.parse(readFileSync(path, "utf8"));

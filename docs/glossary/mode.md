@@ -41,7 +41,7 @@ Each command declares the mode it serves (`"mode"` in its `index.json`), and
 - CONFORM: `bootstrap`, `open`, `close`, `seal`, `verify`
 - SMELTRY: `promote`, `hooks`, `hook`, `skills`
 - COMMANDORATE: `mode`
-- PROVISION: nothing yet
+- PROVISION: `house`
 - general (any mode): `help`, `locate`, `status`, `repl`
 
 ## Open questions

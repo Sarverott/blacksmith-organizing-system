@@ -7,6 +7,7 @@ import Craftset from "./craftset/class.mjs";
 import Devarmory from "./devarmory/class.mjs";
 import Exhibit from "./exhibit/class.mjs";
 import Forge from "./forge/class.mjs";
+import House from "./house/class.mjs";
 import Project from "./project/class.mjs";
 import Sarcophag from "./sarcophag/class.mjs";
 import Scope from "./scope/class.mjs";
@@ -38,4 +39,5 @@ export default {
   Sarcophag,
   Exhibit,
   Craftset,
+  House,
 };

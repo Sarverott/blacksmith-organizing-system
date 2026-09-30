@@ -1,0 +1,7 @@
+{
+  "path": "/house",
+  "info": "the House of Anubis: families, residents, states, duties",
+  "mode": "provision",
+  "help": ["./help.md", "MD"],
+  "inline": "./exec.mjs"
+}

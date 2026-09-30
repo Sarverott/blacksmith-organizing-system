@@ -52,12 +52,16 @@ src/
 | procedures | locating → loading → bootstrapping / inspecting / opening / closing / sinking / hooking / promoting; skilling | `BOS.Procedure` |
 | controllers | `bos.workshop` (`status()`, `open()`, `close()`, `sink()`, `promote()`…), `bos.skills` (`scaffold()`) | `BOS.Controll` |
 | commands | loaded from `commands/<name>/index.json`; `inline` for the CLI or an API, `repl` for interactive use; `mode` names the mode of work it serves (glossary: mode) | |
-| views | status tree, help, promotion, inventory, repl; colors off for pipes and `NO_COLOR` | `BOS.View` |
+| views | status tree, help, House, promotion, inventory, repl, MCP server (`views/mcp`), agent brief (`views/agent`); colors off for pipes and `NO_COLOR` | `BOS.View` |
 
 Models and submodules share one anatomy (`core/basic-element.mjs`: dirname,
 descriptors, children, ensure, inspect, seal, verify). To reshape an organ
 freely, change `extends BOS.Submodule` to `extends BOS.Model`, edit it, then
 roll it back: nothing else in the file changes.
+
+BOS is also a Claude Code plugin, the agent's suit (`.claude-plugin/plugin.json`,
+`hooks/hooks.json`, `bin/bos`, MCP via `src/mcp.mjs`): see
+`docs/tutorials/agent-suit.md`.
 
 Every model can grow an agent skill: `bos skills` drafts
 `skills/bos-<type>/SKILL.md` from the glossary page and the model, for models
@@ -105,3 +109,6 @@ So: add a new file rather than growing an old one, collect it in the nearest
 10. Biome lints and formats (`npm run lint`, `npm run format`; config `biome.json`:
     2 spaces, double quotes, semicolons, 120 columns). Silence a rule only with a
     `// biome-ignore <rule>: <reason>` that says why.
+11. Before calling any AI resident (ollama model), ask the House
+    (`resources/house/`, `models/house/`): only `active` residents are called.
+    The EON family rests by its own decision; never call, prompt or inspect it.

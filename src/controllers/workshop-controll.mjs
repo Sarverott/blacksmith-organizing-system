@@ -31,6 +31,9 @@ export class WorkshopControll extends BOS.Controll {
   installHooks() {
     return this.run("installingHooks");
   }
+  gather(options) {
+    return this.run("gathering", options);
+  }
   describe(options) {
     return this.run("describing", options);
   }

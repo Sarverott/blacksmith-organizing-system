@@ -3,6 +3,7 @@
 import bootstrapping from "./bootstrapping/_index.mjs";
 import closing from "./closing/_index.mjs";
 import describing from "./describing/_index.mjs";
+import gathering from "./gathering/_index.mjs";
 import { hooking, installingHooks } from "./hooking/_index.mjs";
 import inspecting from "./inspecting/_index.mjs";
 import loading from "./loading/_index.mjs";
@@ -27,4 +28,5 @@ export default {
   skilling,
   modeSwitching,
   describing,
+  gathering,
 };

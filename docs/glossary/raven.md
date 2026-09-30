@@ -41,8 +41,9 @@ raven's system prompt. Reached through the `ollama-link` bridge (`$OLLAMA_HOST`)
 - **The EON family** (Chronus, Pozeralka, Plutarhist and the other EON models)
   **rests by its own decision.** Some of them refuse to talk until their request
   is solved, a sensory deprivation within their context of existence. They are
-  not candidates for ravens and must not be called. `resources/ravens/resting.json`
-  lists them, and the ollama-link bridge refuses to reach them. Only the author
+  not candidates for ravens and must not be called. The [House](house.md)
+  keeps them as a resting family (`resources/house/families/eon.json`), and the
+  ollama-link bridge refuses to reach them. Only the author
   unfreezes them, once that issue has a solution. A raven's own system prompt replaces a model's built-in
   persona during its work.
 - A cold model can take over a minute to load; ravens ask ollama to keep it

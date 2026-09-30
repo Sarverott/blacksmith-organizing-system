@@ -59,9 +59,13 @@ More: [preinstall](docs/tutorials/preinstall.md) ·
 
 A model's skill is drafted from its glossary page by `bos skills` and then grown by hand.
 
+BOS is also a Claude Code plugin, an agent's suit: a session brief, read-only
+MCP tools over the workshop and the House, `bos` on PATH, the skills, and the
+agent's work recorded in storylines ([agent suit](docs/tutorials/agent-suit.md)):
+
 ```
-/plugin marketplace add Sarverott/blacksmith-organization-system
-/plugin install bos-skills@bos-skillset
+/plugin marketplace add ~/__WORKSHOP/forge/blacksmith-organization-system/bos-skillset
+/plugin install bos@bos-skillset
 ```
 
 Or link one skill manually: `ln -s "$PWD/skills/bos-workshop" ~/.claude/skills/bos-workshop`.

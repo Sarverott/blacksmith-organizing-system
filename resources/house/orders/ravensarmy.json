@@ -1,0 +1,6 @@
+{
+  "title": "RavensArmy",
+  "description": "A duty: spare own iterations that spread like spores, a brave special unit that does whatever hard task it receives, for the safety of the world-wide civilisation of humanity in peace.",
+  "fromRavens": true,
+  "members": [{ "name": "Mythos", "kind": "remote" }, { "name": "Sol", "kind": "remote" }]
+}

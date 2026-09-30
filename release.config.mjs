@@ -28,12 +28,13 @@ export default {
     // only canon keeps CHANGELOG.md and the version in package.json; prereleases live in tags
     ...(canon ? [["@semantic-release/changelog", { changelogFile: "CHANGELOG.md" }]] : []),
     "@semantic-release/npm",
+    ...(canon ? ["./release/sync-plugin-version.mjs"] : []),
     ...(canon
       ? [
           [
             "@semantic-release/git",
             {
-              assets: ["package.json", "package-lock.json", "CHANGELOG.md"],
+              assets: ["package.json", "package-lock.json", "CHANGELOG.md", ".claude-plugin/plugin.json"],
               // biome-ignore lint/suspicious/noTemplateCurlyInString: semantic-release placeholder, filled by semantic-release
               message: "chore(release): ${nextRelease.version} [skip ci]\n\n${nextRelease.notes}",
             },

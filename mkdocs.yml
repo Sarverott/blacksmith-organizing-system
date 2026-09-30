@@ -63,6 +63,7 @@ nav:
       - tutorials/first-use-example.md
       - tutorials/logicflow-explanation.md
       - tutorials/committing-and-releasing.md
+      - tutorials/agent-suit.md
   - Glossary:
       - glossary/README.md
       - Network:
@@ -96,5 +97,6 @@ nav:
           - glossary/collection.md
           - glossary/postroad.md
           - glossary/raven.md
+          - glossary/house.md
   - Infographics:
       - infographics/branch-movement-procedures.md
