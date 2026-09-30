@@ -4,8 +4,8 @@ site_name: Blacksmith Organization System
 site_description: An ordered digital workshop for code crafting
 site_author: Sett Sarverott
 site_url: !ENV [READTHEDOCS_CANONICAL_URL, "http://127.0.0.1:8000/"]
-repo_url: https://github.com/Sarverott/blacksmith-organizing-system
-repo_name: blacksmith-organizing-system
+repo_url: https://github.com/Sarverott/blacksmith-organization-system
+repo_name: blacksmith-organization-system
 edit_uri: edit/developement/docs/   # docs are edited where code is: on developement
 copyright: Copyright &copy; 2019-2026 Sett Sarverott, MIT license
 
@@ -62,6 +62,7 @@ nav:
       - tutorials/GETTING_STARTED.md
       - tutorials/first-use-example.md
       - tutorials/logicflow-explanation.md
+      - tutorials/committing-and-releasing.md
   - Glossary:
       - glossary/README.md
       - Network:

@@ -3,8 +3,8 @@
 **Blacksmith Organization System (BOS)** by Sett Sarverott (2019–), MIT license.
 Part of the R-tier superproject "ANUBIS". Repositories:
 
-- old core: https://github.com/Sarverott/blacksmith-organization-system (local: `forge/blacksmith-organization-system/blacksmith-organization-system`)
-- root of the new BOS (this skillset): https://github.com/Sarverott/blacksmith-organizing-system (local: `forge/blacksmith-organization-system/bos-skillset`)
+- old core: https://github.com/Sarverott/OLD-VERSIONS_blacksmith-organization-system (local: `forge/blacksmith-organization-system/blacksmith-organization-system`)
+- root of the new BOS (this skillset): https://github.com/Sarverott/blacksmith-organization-system (local: `forge/blacksmith-organization-system/bos-skillset`)
 
 The goal is to automate the management of a personal "forest of projects"
 across many machines, servers and publication targets, without version drift

@@ -1,7 +1,7 @@
 import assert from "node:assert/strict";
 import { existsSync, mkdirSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
-import { test } from "node:test";
+import { test } from "vitest";
 
 import { BRANCHES, PROMOTION, REJECTION, bridges } from "../src/index.mjs";
 import { sandbox } from "./helpers.mjs";

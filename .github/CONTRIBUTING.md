@@ -3,7 +3,10 @@
 1. Read the [glossary](../docs/glossary/README.md): code follows meaning.
 2. Branch from `developement` (here we code). Never commit to `master`.
 3. Keep BOS behaviour as code: procedures in `src/procedures/<name>/` (DESCRIPTION.md + one file per step), with tests in `tests/`.
-4. `task test` must pass. Test against temporary workshops only.
+4. `npm test` (vitest) must pass. Test against temporary workshops only.
+   Commits are conventional commits; after `npm install`, husky drafts the message
+   from your staged changes and commitlint checks it
+   ([committing and releasing](../docs/tutorials/committing-and-releasing.md)).
 5. Open a pull request into `revision`. A maintainer (or someone they
    authorize) approves; self-approval only after automated checks, and a second
    pair of eyes is always healthier.

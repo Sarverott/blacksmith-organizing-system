@@ -32,7 +32,7 @@ What each element means: [docs/glossary](docs/glossary/README.md).
 
 ```bash
 cd ~/__WORKSHOP/forge/blacksmith-organization-system
-git clone https://github.com/Sarverott/blacksmith-organizing-system.git bos-skillset
+git clone https://github.com/Sarverott/blacksmith-organization-system.git bos-skillset
 cd bos-skillset && npm install && npm link   # `bos` on PATH
 
 bos status      # workshop tree, what is missing (read-only)
@@ -60,7 +60,7 @@ More: [preinstall](docs/tutorials/preinstall.md) ·
 A model's skill is drafted from its glossary page by `bos skills` and then grown by hand.
 
 ```
-/plugin marketplace add Sarverott/blacksmith-organizing-system
+/plugin marketplace add Sarverott/blacksmith-organization-system
 /plugin install bos-skills@bos-skillset
 ```
 
@@ -87,6 +87,9 @@ Details and the reasons behind the split: [AGENTS.md](AGENTS.md).
 `master` (spine of canon) → `developement` (here we code) → `revision` →
 `testing` → `releasing` → `master` through a pull request.
 See [branch movement procedures](docs/infographics/branch-movement-procedures.md); `bos promote` walks it.
+Every push releases: `x.y.z-dev.N` from developement, `-beta.N` from testing, `-rc.N`
+from releasing, `x.y.z` from master, on npm, GitHub Packages and ghcr.io
+([committing and releasing](docs/tutorials/committing-and-releasing.md)).
 
 ## License
 

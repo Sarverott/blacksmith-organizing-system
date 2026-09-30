@@ -1,9 +1,9 @@
 // Library entry: the spine, and every part by name.
-//   import { BOS } from "blacksmith-organizing-system";
+//   import { BOS } from "blacksmith-organization-system";
 //   const bos = await new BOS().load();  await bos.workshop.status();
 export { BOS, default } from "./main.ts";
 export { createIfMissing, sha256, walkFiles } from "./core/basic-element.mjs";
-export { CLI, REPO_ROOT, RESOURCES } from "./core/self.mjs";
+export { CLI, REPO_ROOT, RESOURCES, VERSION } from "./core/self.mjs";
 export { default as bridges } from "./bridge/_index.mjs";
 export { default as models, submodules, HOST_ROLES, MODES, modeByDigit, findAncestorWorkshop, listWorkshops, placeOf, resolveWorkshop } from "./models/_index.mjs";
 export { default as procedures } from "./procedures/_index.mjs";

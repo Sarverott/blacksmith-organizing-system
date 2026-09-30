@@ -19,7 +19,7 @@ export class Storylines extends BOS.Submodule {
         host: context.env?.host ?? null,
         user: context.env?.user ?? null,
         unixusat: context.env?.unixusat ?? Date.now(),
-        createdBy: "blacksmith-organizing-system",
+        createdBy: "blacksmith-organization-system",
       },
     }),
   };

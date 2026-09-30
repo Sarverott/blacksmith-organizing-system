@@ -1,4 +1,4 @@
-# AGENTS.md: blacksmith-organizing-system
+# AGENTS.md: blacksmith-organization-system
 
 Instructions for AI agents working **on this repository**. For working
 anywhere in a workshop, see `resources/workshop-root/AGENTS.md` (deployed to
@@ -13,8 +13,8 @@ a BOS project, so its path tells its place in the machine:
 ~/__WORKSHOP/                              workshop (root of crafting on this host)
 └── forge/                                 active work
     └── blacksmith-organization-system/    scope (family of BOS repositories)
-        ├── bos-skillset/                  ← this project (github: Sarverott/blacksmith-organizing-system)
-        └── blacksmith-organization-system/  the old core (history, glossary origin)
+        ├── bos-skillset/                  ← this project (github: Sarverott/blacksmith-organization-system)
+        └── blacksmith-organization-system/  the old core (github: Sarverott/OLD-VERSIONS_blacksmith-organization-system)
 ```
 
 `node src/cli.mjs locate` prints this place as BOS computes it.
@@ -91,9 +91,14 @@ So: add a new file rather than growing an old one, collect it in the nearest
    every write behind `createIfMissing` or an explicit, dry-run-aware step.
 3. Outside systems are reached only through bridges: dockerode, octokit and
    isomorphic-git live there, nowhere else.
-4. Test against a temporary workshop (`--workshop=` / `BOS_WORKSHOP`), never the real one. Run `task test`.
+4. Test against a temporary workshop (`--workshop=` / `BOS_WORKSHOP`, or `tests/helpers.mjs`), never the real one. Run `npm test`.
 5. Branch flow: work on `developement`; `bos promote` moves it to `revision` →
    `testing` → `releasing` → `master` (pull request). Never commit to `master` directly.
 6. The owner works in parallel with agents. Re-check `git status` and the tree
    before acting, and treat what you find as intended.
 7. Unknowns are marked [`TODO`]; don't invent meanings. Mark interpretations *(assumed)*.
+8. Commits are conventional commits (`type(scope): subject`). The type decides the
+   next version, so choose it honestly: `feat` for new behaviour, `fix` for fixes.
+   Husky's hooks run tests and commitlint; don't bypass them with `--no-verify`.
+   Details: `docs/tutorials/committing-and-releasing.md`.
+9. Tests use vitest (`npm test`); write new ones in `tests/*.test.mjs`.

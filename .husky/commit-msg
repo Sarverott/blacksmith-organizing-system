@@ -1,0 +1,2 @@
+# the message must be a conventional commit (commitlint.config.mjs)
+npx --no -- commitlint --edit "$1"

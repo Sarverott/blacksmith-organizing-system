@@ -1,5 +1,6 @@
 #!/usr/bin/env node
 // bos <command> [operands] [--json] [--dry-run] [--workshop=PATH]
+import { VERSION } from "./core/self.mjs";
 import { BOS } from "./main.ts";
 
 const args = process.argv.slice(2);
@@ -10,6 +11,11 @@ const flags = Object.fromEntries(
   })
 );
 const [name = "help", ...operands] = args.filter((arg) => !arg.startsWith("--"));
+
+if (flags.version) {
+  console.log(VERSION);
+  process.exit(0);
+}
 
 try {
   const bos = await new BOS({ workshop: flags.workshop }).load();

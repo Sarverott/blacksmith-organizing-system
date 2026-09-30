@@ -2,7 +2,7 @@
 services:
   bos:
     build: .
-    image: blacksmith-organizing-system
+    image: blacksmith-organization-system
     environment:
       BOS_WORKSHOP: /workshop
     volumes:

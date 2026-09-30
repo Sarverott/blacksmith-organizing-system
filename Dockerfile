@@ -1,5 +1,5 @@
 # BOS in a container: mount a workshop at /workshop
-FROM node:22-alpine
+FROM node:24-alpine
 
 RUN apk add --no-cache git bash
 

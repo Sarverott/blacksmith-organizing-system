@@ -39,6 +39,16 @@ export class GitClient extends BOS.Bridge {
       .map(([path, ...state]) => [path, names[state.join(",")] ?? state.join(",")]);
   }
 
+  // what the next commit will contain: [path, "added" | "modified" | "deleted"]
+  async staged(dir) {
+    const status = (head, stage) => (head === 0 && stage > 0 ? "added" : head === 1 && stage === 0 ? "deleted" : head === 1 && stage > 1 ? "modified" : null);
+    return (await git.statusMatrix({ fs, dir }))
+      .map(([path, head, , stage]) => [path, status(head, stage)])
+      .filter(([, state]) => state);
+  }
+
+  hooksPath(dir) { return git.getConfig({ fs, dir, path: "core.hooksPath" }); }
+
   async commit(dir, message, paths = ["."]) {
     for (const filepath of paths) await git.add({ fs, dir, filepath });
     return git.commit({ fs, dir, message, author: await resolveAuthor(git, fs, dir) });

@@ -1,0 +1,2 @@
+# git hooks → BOS: each hook hands its event to a BOS procedure (disabled in CI with HUSKY=0)
+npx vitest run

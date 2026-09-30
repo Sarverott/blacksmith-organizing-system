@@ -11,3 +11,8 @@ updates:
     target-branch: developement
     schedule:
       interval: weekly
+  - package-ecosystem: pip
+    directory: /docs
+    target-branch: developement
+    schedule:
+      interval: weekly

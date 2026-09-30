@@ -15,6 +15,7 @@ export class WorkshopControll extends BOS.Controll {
   sink() { return this.run("sinking"); }
   hook(hook) { return this.run("hooking", { hook }); }
   installHooks() { return this.run("installingHooks"); }
+  describe(options) { return this.run("describing", options); }
   mode(mode) { return this.run("modeSwitching", { mode }); }
   promote({ reject = false, apply = false } = {}) { return this.run("promoting", { reject, dryRun: !apply }); }
 }

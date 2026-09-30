@@ -26,7 +26,7 @@ export class StatusView extends BOS.View {
       lines.push(field("role", (role ? `${paint.cyan(role)} ${paint.dim(HOST_ROLES[role])}` : paint.dim('not set: .BOS/workshop.json "role"')) + byDefault("role")));
       lines.push(field("mode", modeLabel(context.config.mode) + byDefault("mode")));
     }
-    lines.push(field("BOS", place(context.self)));
+    lines.push(field("BOS", `${paint.bold(`v${context.self.version}`)} ${paint.dim("·")} ${place(context.self)}`));
     const others = context.workshops.filter((path) => path !== context.workshopRoot);
     if (others.length) lines.push(field("others", others.join("\n          ")));
     const snapshot = context.tree ?? context.workshop?.inspect();

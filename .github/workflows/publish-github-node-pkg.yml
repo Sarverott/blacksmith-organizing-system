@@ -1,0 +1,37 @@
+# The released version on GitHub Packages, as @sarverott/blacksmith-organization-system
+# (that registry needs a scope). Called by the release, or run by hand for a tag.
+
+name: Publish to GitHub Packages
+
+on:
+  workflow_call:
+    inputs:
+      version: { type: string, required: true }
+      channel: { type: string, required: true }
+  workflow_dispatch:
+    inputs:
+      version: { description: "version to publish, e.g. 0.8.0-dev.3 (tag v<version> must exist)", required: true }
+      channel: { description: "dist-tag: latest, rc, beta or dev", required: true, default: dev }
+
+env:
+  HUSKY: 0
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          ref: v${{ inputs.version }}
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 24.x
+          registry-url: https://npm.pkg.github.com
+          scope: "@sarverott"
+      - run: npm pkg set name=@sarverott/blacksmith-organization-system version=${{ inputs.version }}
+      - run: npm publish --tag ${{ inputs.channel }} --provenance=false
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}

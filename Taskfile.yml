@@ -56,7 +56,12 @@ tasks:
 
   test:
     desc: run the test suite
-    cmds: ['node --test "tests/**/*.test.mjs"']
+    cmds: ['npx vitest run']
+
+  test:watch:
+    desc: rerun tests on every change
+    cmds: ['npx vitest']
+    interactive: true
 
   check:
     desc: syntax-check every module
