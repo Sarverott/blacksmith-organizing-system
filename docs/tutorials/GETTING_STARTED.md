@@ -19,7 +19,10 @@
 
 Add `--json` to any command for machine-readable output.
 
-Give the host its role in `.BOS/workshop.json`:
+A new workshop starts as a **forging point** in **CONFORM** mode: a
+developer's playground, focused on installing and configuring. `bos status`
+marks values that come from defaults with `(default)`. To change them, set
+them in `.BOS/workshop.json`:
 
 ```json
 { "name": "home", "role": "forging-point", "setternet": null, "mode": "smeltry" }

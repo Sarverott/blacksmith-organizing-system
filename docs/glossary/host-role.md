@@ -24,7 +24,9 @@ history only on the canon monolith.
 
 ## Where
 
-*(assumed)* Declared in `.BOS/workshop.json` or `.BOS/setup/setternet/`. [`TODO`]
+`.BOS/workshop.json` → `"role"`. A first-time workshop is a **forging point**
+(`resources/workshop.default.json`): a developer's playground. `null` or a
+missing value means "not set", and the default applies.
 
 ## Relations
 

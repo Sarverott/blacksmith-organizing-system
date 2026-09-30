@@ -13,8 +13,8 @@ function place(self) {
 
 export class StatusView extends BOS.View {
   data(context) {
-    const { workshopRoot, workshopSource, workshops, config, tree, self, changes, dryRun, event } = context;
-    return { workshopRoot, workshopSource, workshops, config, tree, self, changes, dryRun, event };
+    const { workshopRoot, workshopSource, workshops, config, defaulted, tree, self, changes, dryRun, event } = context;
+    return { workshopRoot, workshopSource, workshops, config, defaulted, tree, self, changes, dryRun, event };
   }
 
   text(context) {
@@ -22,8 +22,9 @@ export class StatusView extends BOS.View {
     lines.push(field("workshop", `${context.workshopRoot} ${paint.dim(`(${context.workshopSource})`)}`));
     if (context.config) {
       const { role } = context.config;
-      lines.push(field("role", role ? `${paint.cyan(role)} ${paint.dim(HOST_ROLES[role])}` : paint.dim('not set: .BOS/workshop.json "role"')));
-      lines.push(field("mode", modeLabel(context.config.mode)));
+      const byDefault = (key) => (context.defaulted?.includes(key) ? paint.dim("  (default)") : "");
+      lines.push(field("role", (role ? `${paint.cyan(role)} ${paint.dim(HOST_ROLES[role])}` : paint.dim('not set: .BOS/workshop.json "role"')) + byDefault("role")));
+      lines.push(field("mode", modeLabel(context.config.mode) + byDefault("mode")));
     }
     lines.push(field("BOS", place(context.self)));
     const others = context.workshops.filter((path) => path !== context.workshopRoot);

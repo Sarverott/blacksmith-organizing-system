@@ -58,7 +58,9 @@ MCP, with one shared handler class) has no settled location yet.
 1 ALMANAC: emergency (sinking) · 2 CONFORM: establish, migrate, clean, verify,
 sync workshops · 3 SMELTRY: code, development, publishing changes ·
 4 COMMANDORATE: rules, privileges, roles, mode switching · 5 PROVISION:
-presenting what a source of truth (e.g. GitHub) delivers. Commands declare
+presenting what a source of truth (e.g. GitHub) delivers. Defaults for a new
+workshop: role `forging-point`, mode `conform` (`resources/workshop.default.json`;
+null = not set → default). Commands declare
 their mode in `index.json`; `bos help` groups them. Glossary: mode.md.
 
 ### 3. Elements
