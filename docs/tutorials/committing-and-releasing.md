@@ -24,9 +24,40 @@ A src/procedures/describing/_index.mjs
 A src/procedures/describing/scopes.mjs
 ```
 
+When ollama runs on the machine, **Skryba**, the scribe raven
+([raven](../glossary/raven.md)), refines that draft: he reads the trimmed staged
+diff and proposes a subject about the *purpose* of the change, plus a short
+body. The file list stays, and a `Drafted-by: Skryba (<model> via ollama)`
+trailer shows who wrote it:
+
+```
+feat: make AI helpers of the workshop possible
+
+This commit adds the foundation for AI helpers of the workshop, including the
+OllamaLink bridge and the ravens loader. It also introduces the Skryba raven.
+
+A resources/ravens/skryba.md
+A src/bridge/ollama-link/_index.mjs
+
+Drafted-by: Skryba (llama3 via ollama)
+```
+
+He only proposes. You edit or accept it in the editor, and nothing is
+committed or pushed without you. Without ollama, or with an unusable answer,
+the plain draft appears. `BOS_SKRYBA=0 git commit` skips him;
+`BOS_SKRYBA_MODEL=sebas` picks another model. A cold model takes ~40 s to load,
+a warm one ~7 s.
+
 Change the type, scope or subject if the draft guessed wrong. A message given
 with `-m` is never touched, but commitlint still checks it. See
-`bos describe` for the draft without committing.
+`bos describe` (or `task describe`) for the draft without committing.
+
+### Guided commits: commitizen
+
+`npm run commit` (or `task commit`) asks for type, scope, subject, body and
+breaking changes step by step ([commitizen](https://commitizen.github.io/cz-cli/)
+with the commitlint rules, so the prompts and the checks never disagree).
+It passes the message with `-m`, so Skryba stays quiet and commitlint still checks it.
 
 Types: `feat` (new behaviour), `fix`, `docs`, `test`, `refactor`, `perf`,
 `build`, `ci`, `chore`, `style`. A `!` after the type (`refactor(core)!: …`)

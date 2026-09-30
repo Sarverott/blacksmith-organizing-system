@@ -12,7 +12,7 @@ root `AGENTS.md` first: it has the architecture and the one-concern-per-file rul
 - `src/procedures/<name>/`: DESCRIPTION.md + a step per file: locating, loading, inspecting, bootstrapping, opening, closing, sinking, hooking, promoting
 - `src/commands/<name>/index.json`: `{path, info, help, inline, repl}`; `bos help` lists them
 - storylines log: `.BOS/storylines/logs/workshop.jsonl`; tests: `npm test` (vitest)
-- commits: husky (`.husky/`) → `bos describe --hook` drafts a conventional commit, commitlint checks it, post-* hooks → storylines
+- commits: husky (`.husky/`) → `bos describe --hook` drafts a conventional commit, Skryba (raven, `resources/ravens/skryba.md`, via ollama-link) refines it, commitlint checks it, post-* hooks → storylines; `npm run commit` = commitizen (cz-commitlint)
 - releases: semantic-release (`release.config.mjs`), baseline tag v0.7.0; channels dev (developement), beta (testing), rc (releasing), latest (master); npm + GitHub Packages (@sarverott/…) + ghcr.io
 
 Everything below describes the **old core**.

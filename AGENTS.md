@@ -46,7 +46,7 @@ src/
 | Part | Role | Extends |
 | ---- | ---- | ------- |
 | core + `main.ts` | the spine: execution order and the mechanics everything shares | |
-| bridges | one handler per outside system: `docker-host` (dockerode), `github-api` (octokit), `git-client` (isomorphic-git; local repos and Gitea remotes), `gitea-api` (fetch), `subprocess-runner`, … | `BOS.Bridge` |
+| bridges | one handler per outside system: `docker-host` (dockerode), `github-api` (octokit), `git-client` (isomorphic-git; local repos and Gitea remotes), `gitea-api` (fetch), `ollama-link` (ollama; speaks for the ravens), `subprocess-runner`, … | `BOS.Bridge` |
 | models | standalone assets of `docs/glossary/` (workshop, forge, scope, project, sarcophag…), built from a path | `BOS.Model` |
 | submodules | organs that exist only inside their owner (`.BOS` internals, `storylines/logs`, `craftbook/scrapnotes`), built from the owner and reached as properties: `workshop.storylines.logs` | `BOS.Submodule` |
 | procedures | locating → loading → bootstrapping / inspecting / opening / closing / sinking / hooking / promoting; skilling | `BOS.Procedure` |

@@ -54,7 +54,8 @@
     "start": "node src/cli.mjs status",
     "test": "vitest run",
     "bos": "node src/cli.mjs",
-    "prepare": "husky"
+    "prepare": "husky",
+    "commit": "cz"
   },
   "publishConfig": {
     "access": "public",
@@ -63,18 +64,27 @@
   "dependencies": {
     "dockerode": "^5.0.1",
     "isomorphic-git": "^1.42.4",
-    "octokit": "^5.0.5"
+    "octokit": "^5.0.5",
+    "ollama": "^0.6.4"
   },
   "devDependencies": {
     "@commitlint/cli": "^21.2.3",
     "@commitlint/config-conventional": "^21.2.3",
+    "@commitlint/cz-commitlint": "^21.2.3",
     "@go-task/cli": "^3.53.1",
     "@semantic-release/changelog": "^7.0.0",
     "@semantic-release/git": "^11.0.1",
+    "commitizen": "^4.3.2",
     "conventional-changelog-conventionalcommits": "^9.3.1",
     "husky": "^9.1.7",
+    "inquirer": "^12.11.1",
     "semantic-release": "^25.0.9",
     "skills": "^1.7.0",
     "vitest": "^5.0.2"
+  },
+  "config": {
+    "commitizen": {
+      "path": "@commitlint/cz-commitlint"
+    }
   }
 }

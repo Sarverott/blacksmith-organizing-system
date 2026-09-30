@@ -54,6 +54,15 @@ tasks:
     desc: move the current branch one station along the flow (task promote -- --apply)
     cmds: ['{{.BOS}} promote {{.CLI_ARGS}}']
 
+  commit:
+    desc: commit with guided prompts (commitizen + commitlint rules)
+    cmds: ['npx cz']
+    interactive: true
+
+  describe:
+    desc: show the commit message BOS and Skryba would draft for what is staged
+    cmds: ['{{.BOS}} describe']
+
   test:
     desc: run the test suite
     cmds: ['npx vitest run']
