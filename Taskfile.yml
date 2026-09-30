@@ -54,9 +54,31 @@ tasks:
     desc: move the current branch one station along the flow (task promote -- --apply)
     cmds: ['{{.BOS}} promote {{.CLI_ARGS}}']
 
+  commit:
+    desc: commit with guided prompts (commitizen + commitlint rules)
+    cmds: ['npx cz']
+    interactive: true
+
+  describe:
+    desc: show the commit message BOS and Skryba would draft for what is staged
+    cmds: ['{{.BOS}} describe']
+
   test:
     desc: run the test suite
-    cmds: ['node --test "tests/**/*.test.mjs"']
+    cmds: ['npx vitest run']
+
+  test:watch:
+    desc: rerun tests on every change
+    cmds: ['npx vitest']
+    interactive: true
+
+  lint:
+    desc: lint and format check with Biome (no writes)
+    cmds: ['npx biome check .']
+
+  format:
+    desc: apply Biome formatting and safe fixes
+    cmds: ['npx biome check --write .']
 
   check:
     desc: syntax-check every module

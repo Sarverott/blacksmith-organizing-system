@@ -1,9 +1,9 @@
 import assert from "node:assert/strict";
 import { existsSync, mkdirSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
-import { test } from "node:test";
+import { test } from "vitest";
 
-import { BRANCHES, PROMOTION, REJECTION, bridges } from "../src/index.mjs";
+import { BRANCHES, bridges, PROMOTION, REJECTION } from "../src/index.mjs";
 import { sandbox } from "./helpers.mjs";
 
 test("every bridge extends BOS.Bridge and answers available()", async () => {
@@ -15,7 +15,10 @@ test("every bridge extends BOS.Bridge and answers available()", async () => {
 });
 
 test("branch flow follows the infographic", () => {
-  assert.deepEqual(Object.keys(BRANCHES).map((b) => PROMOTION[b]), ["developement", "revision", "testing", "releasing", "master"]);
+  assert.deepEqual(
+    Object.keys(BRANCHES).map((b) => PROMOTION[b]),
+    ["developement", "revision", "testing", "releasing", "master"],
+  );
   for (const branch of ["revision", "testing", "releasing"]) assert.equal(REJECTION[branch], "developement");
 });
 

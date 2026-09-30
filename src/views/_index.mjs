@@ -1,8 +1,8 @@
 // Every view: how BOS presents itself. Each renders text for people or json for machines.
 import HelpView from "./help/_index.mjs";
 import InventoryView from "./inventory/_index.mjs";
-import { chooseDigit } from "./mode/chooser.mjs";
 import ModeView from "./mode/_index.mjs";
+import { chooseDigit } from "./mode/chooser.mjs";
 import PromotionView from "./promotion/_index.mjs";
 import { startRepl } from "./repl/_index.mjs";
 import SkillsView from "./skills/_index.mjs";

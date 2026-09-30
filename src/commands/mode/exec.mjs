@@ -6,18 +6,12 @@ export default async ({ bos, operands: [asked], flags }) => {
 
   if (asked === undefined) {
     const { config } = await bos.workshop.status();
-    const digit = await bos.views.chooseDigit(
-      view.menu(config.mode) + "choose 0-5: ",
-      5
-    );
+    const digit = await bos.views.chooseDigit(`${view.menu(config.mode)}choose 0-5: `, 5);
     if (digit === 0) {
       return undefined;
     }
     asked = modeByDigit(digit);
   }
 
-  return view.render(
-    await bos.workshop.mode(asked),
-    format
-  );
+  return view.render(await bos.workshop.mode(asked), format);
 };

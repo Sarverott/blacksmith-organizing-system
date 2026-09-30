@@ -1,0 +1,5 @@
+# git hooks → BOS: each hook hands its event to a BOS procedure (disabled in CI with HUSKY=0)
+# lint + format only what is staged, put the fixes back into the commit, then test
+npx biome check --write --staged --no-errors-on-unmatched
+git update-index --again
+npx vitest run

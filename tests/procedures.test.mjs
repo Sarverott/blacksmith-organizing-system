@@ -1,16 +1,28 @@
 import assert from "node:assert/strict";
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
-import { test } from "node:test";
+import { test } from "vitest";
 
 import { sandbox } from "./helpers.mjs";
 
 test("opening builds the whole workshop and records it", async () => {
   const { root, workshop } = await sandbox();
   await workshop.open();
-  for (const part of [".BOS/setup", ".BOS/data", ".BOS/nests/.index.json", ".BOS/nests/.manifest.json",
-    ".BOS/workshop.json", ".BOS/Taskfile.yaml", "devarmory/manifest.json", "forge", "craftbook/scrapnotes",
-    "archive", "AGENTS.md", "CLAUDE.md", ".BOS/storylines/metadata.json"]) {
+  for (const part of [
+    ".BOS/setup",
+    ".BOS/data",
+    ".BOS/nests/.index.json",
+    ".BOS/nests/.manifest.json",
+    ".BOS/workshop.json",
+    ".BOS/Taskfile.yaml",
+    "devarmory/manifest.json",
+    "forge",
+    "craftbook/scrapnotes",
+    "archive",
+    "AGENTS.md",
+    "CLAUDE.md",
+    ".BOS/storylines/metadata.json",
+  ]) {
     assert.ok(existsSync(join(root, part)), `missing ${part}`);
   }
   const log = readFileSync(join(root, ".BOS/storylines/logs/workshop.jsonl"), "utf8");
@@ -64,5 +76,7 @@ test("sinking inventories forge projects", async () => {
   await new bos.bridges.gitClient().init(project);
   writeFileSync(join(project, "draft.txt"), "wip\n");
   const { inventory } = await workshop.sink();
-  assert.deepEqual(inventory.projects, [{ scope: "my-scope", project: "my-project", branch: "master", uncommitted: 1 }]);
+  assert.deepEqual(inventory.projects, [
+    { scope: "my-scope", project: "my-project", branch: "master", uncommitted: 1 },
+  ]);
 });

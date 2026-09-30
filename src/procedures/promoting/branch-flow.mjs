@@ -11,7 +11,13 @@ export const BRANCHES = {
   releasing: "stamping, publishing and announcing",
 };
 
-export const PROMOTION = { master: "developement", developement: "revision", revision: "testing", testing: "releasing", releasing: CANON };
+export const PROMOTION = {
+  master: "developement",
+  developement: "revision",
+  revision: "testing",
+  testing: "releasing",
+  releasing: CANON,
+};
 export const REJECTION = { revision: "developement", testing: "developement", releasing: "developement" };
 
 export const needsPullRequest = (from, to) => from === "releasing" && to === CANON;

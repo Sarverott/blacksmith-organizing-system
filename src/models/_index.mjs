@@ -20,12 +20,22 @@ import Storylines from "./workshop/hang.storylines.mjs";
 import System from "./workshop/hang.system.mjs";
 
 export { HOST_ROLES } from "./workshop/host-roles.mjs";
-export { MODES, modeByDigit } from "./workshop/modes.mjs";
 export * from "./workshop/locate.mjs";
+export { MODES, modeByDigit } from "./workshop/modes.mjs";
 
 export const submodules = { System, Setup, Data, Nests, Storylines, Scrapnotes };
 
 export default {
-  Workshop, Devarmory, Forge, Craftbook, Archive,
-  Scope, Project, Sheme, Throwbox, Sarcophag, Exhibit, Craftset,
+  Workshop,
+  Devarmory,
+  Forge,
+  Craftbook,
+  Archive,
+  Scope,
+  Project,
+  Sheme,
+  Throwbox,
+  Sarcophag,
+  Exhibit,
+  Craftset,
 };

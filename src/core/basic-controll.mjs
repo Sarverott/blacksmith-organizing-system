@@ -9,7 +9,9 @@ export class BasicControll extends EventEmitter {
     this.options = options;
   }
 
-  get flowNames() { return Object.keys(this.constructor.flows); }
+  get flowNames() {
+    return Object.keys(this.constructor.flows);
+  }
 
   async run(flowName, options = {}) {
     const flow = this.constructor.flows[flowName];

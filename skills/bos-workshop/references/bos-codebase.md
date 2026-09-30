@@ -1,6 +1,6 @@
 # BOS codebase map
 
-## New core: this repository (bos-skillset → Sarverott/blacksmith-organizing-system)
+## New core: this repository (bos-skillset → Sarverott/blacksmith-organization-system)
 
 Node ≥ 22.18, ESM plus `src/main.ts` (run directly via type stripping). Read the
 root `AGENTS.md` first: it has the architecture and the one-concern-per-file rule.
@@ -11,14 +11,16 @@ root `AGENTS.md` first: it has the architecture and the one-concern-per-file rul
 - `bos skills`: drafts `skills/bos-<type>/SKILL.md` per model from the glossary (procedure `skilling`), never overwrites
 - `src/procedures/<name>/`: DESCRIPTION.md + a step per file: locating, loading, inspecting, bootstrapping, opening, closing, sinking, hooking, promoting
 - `src/commands/<name>/index.json`: `{path, info, help, inline, repl}`; `bos help` lists them
-- storylines log: `.BOS/storylines/logs/workshop.jsonl`; tests: `task test`
+- storylines log: `.BOS/storylines/logs/workshop.jsonl`; tests: `npm test` (vitest)
+- commits: husky (`.husky/`) → `bos describe --hook` drafts a conventional commit, Skryba (raven, `resources/ravens/skryba.md`, via ollama-link) refines it, commitlint checks it, post-* hooks → storylines; `npm run commit` = commitizen (cz-commitlint)
+- releases: semantic-release (`release.config.mjs`), baseline tag v0.7.0; channels dev (developement), beta (testing), rc (releasing), latest (master); npm + GitHub Packages (@sarverott/…) + ghcr.io
 
 Everything below describes the **old core**.
 
 ---
 
 Local clone: `~/__WORKSHOP/forge/blacksmith-organization-system/blacksmith-organization-system`
-Remote: https://github.com/Sarverott/blacksmith-organization-system
+Remote: https://github.com/Sarverott/OLD-VERSIONS_blacksmith-organization-system (renamed; the name now belongs to the new core)
 Node.js (CommonJS). Entry: `src/_index.js`. Run: `npm start`.
 
 The owner works in this repo in parallel with agents: new commits, removed

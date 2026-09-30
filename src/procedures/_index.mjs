@@ -2,6 +2,7 @@
 // directory: DESCRIPTION.md (meaning), one file per step, _index.mjs (assembly).
 import bootstrapping from "./bootstrapping/_index.mjs";
 import closing from "./closing/_index.mjs";
+import describing from "./describing/_index.mjs";
 import { hooking, installingHooks } from "./hooking/_index.mjs";
 import inspecting from "./inspecting/_index.mjs";
 import loading from "./loading/_index.mjs";
@@ -12,4 +13,18 @@ import promoting from "./promoting/_index.mjs";
 import sinking from "./sinking/_index.mjs";
 import skilling from "./skilling/_index.mjs";
 
-export default { locating, loading, inspecting, bootstrapping, opening, closing, sinking, hooking, installingHooks, promoting, skilling, modeSwitching };
+export default {
+  locating,
+  loading,
+  inspecting,
+  bootstrapping,
+  opening,
+  closing,
+  sinking,
+  hooking,
+  installingHooks,
+  promoting,
+  skilling,
+  modeSwitching,
+  describing,
+};

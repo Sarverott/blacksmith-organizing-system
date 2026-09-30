@@ -14,6 +14,7 @@ export const paint = {
 };
 
 // visible length, ignoring color codes
+// biome-ignore lint/suspicious/noControlCharactersInRegex: \x1b starts the ANSI color codes this strips
 export const width = (text) => String(text).replace(/\x1b\[\d+m/g, "").length;
 export const pad = (text, size) => text + " ".repeat(Math.max(0, size - width(text)));
 

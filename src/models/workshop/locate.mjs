@@ -54,6 +54,7 @@ export function placeOf(target, workshopRoot) {
   if (rel === "") return { area: null };
   if (rel.startsWith("..")) return null;
   const [area, ...rest] = rel.split(sep);
-  if (area === "forge") return { area, scope: rest[0] ?? null, project: rest[1] ?? null, inner: rest.slice(2).join("/") || null };
+  if (area === "forge")
+    return { area, scope: rest[0] ?? null, project: rest[1] ?? null, inner: rest.slice(2).join("/") || null };
   return { area, inner: rest.join("/") || null };
 }

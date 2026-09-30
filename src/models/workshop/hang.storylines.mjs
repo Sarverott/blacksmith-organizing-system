@@ -14,12 +14,12 @@ export class Storylines extends BOS.Submodule {
   static mandatory = false;
   static submodules = { ttystories: Ttystories, logs: Logs, manifests: Manifests };
   static descriptors = {
-    "metadata.json": (element, context) => ({
+    "metadata.json": (_element, context) => ({
       origin: {
         host: context.env?.host ?? null,
         user: context.env?.user ?? null,
         unixusat: context.env?.unixusat ?? Date.now(),
-        createdBy: "blacksmith-organizing-system",
+        createdBy: "blacksmith-organization-system",
       },
     }),
   };
@@ -27,7 +27,7 @@ export class Storylines extends BOS.Submodule {
   // one JSON line per event: opening, closing, git hooks…
   record(event, context = {}) {
     const entry = { unixusat: Date.now(), host: context.env?.host ?? null, ...event };
-    if (!context.dryRun) appendFileSync(this.logs.file("workshop.jsonl"), JSON.stringify(entry) + "\n");
+    if (!context.dryRun) appendFileSync(this.logs.file("workshop.jsonl"), `${JSON.stringify(entry)}\n`);
     return entry;
   }
 

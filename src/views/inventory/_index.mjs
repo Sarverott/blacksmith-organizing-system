@@ -8,8 +8,9 @@ export class InventoryView extends BOS.View {
   }
 
   text({ inventory }) {
-    const rows = inventory.projects.map(({ scope, project, branch, uncommitted }) =>
-      `  ${pad(`${scope}/${project}`, 48)} ${paint.cyan(pad(branch ?? "?", 14))} ${uncommitted ? paint.red(`${uncommitted} uncommitted`) : paint.green("clean")}`
+    const rows = inventory.projects.map(
+      ({ scope, project, branch, uncommitted }) =>
+        `  ${pad(`${scope}/${project}`, 48)} ${paint.cyan(pad(branch ?? "?", 14))} ${uncommitted ? paint.red(`${uncommitted} uncommitted`) : paint.green("clean")}`,
     );
     return [
       header("sinking inventory"),

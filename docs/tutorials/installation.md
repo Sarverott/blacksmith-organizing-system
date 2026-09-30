@@ -5,7 +5,7 @@ BOS is a project like any other, so it lives in the forge, in its scope:
 ```bash
 mkdir -p ~/__WORKSHOP/forge/blacksmith-organization-system
 cd ~/__WORKSHOP/forge/blacksmith-organization-system
-git clone https://github.com/Sarverott/blacksmith-organizing-system.git bos-skillset
+git clone https://github.com/Sarverott/blacksmith-organization-system.git bos-skillset
 cd bos-skillset
 npm install
 npm link        # optional: puts `bos` on PATH

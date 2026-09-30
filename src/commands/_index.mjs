@@ -29,8 +29,15 @@ export function loadCommand(dir, name = dir.split("/").pop()) {
     path: index.path ?? `/${name}`,
     info: index.info ?? "",
     mode: index.mode ?? null, // the mode of work this command serves; null: any mode
-    help: () => (helpFile && existsSync(join(dir, helpFile)) ? { text: readFileSync(join(dir, helpFile), "utf8"), type: helpType } : null),
-    inline: index.inline ? lazy(dir, index.inline) : async () => { throw new Error(`${name} has no inline form; see: bos help ${name}`); },
+    help: () =>
+      helpFile && existsSync(join(dir, helpFile))
+        ? { text: readFileSync(join(dir, helpFile), "utf8"), type: helpType }
+        : null,
+    inline: index.inline
+      ? lazy(dir, index.inline)
+      : async () => {
+          throw new Error(`${name} has no inline form; see: bos help ${name}`);
+        },
     repl: index.repl ? lazy(dir, index.repl) : null,
   };
 }
@@ -39,7 +46,6 @@ export async function loadCommands(root = HERE) {
   return Object.fromEntries(
     readdirSync(root, { withFileTypes: true })
       .filter((entry) => entry.isDirectory() && existsSync(join(root, entry.name, "index.json")))
-      .map((entry) => [entry.name, loadCommand(join(root, entry.name), entry.name)])
+      .map((entry) => [entry.name, loadCommand(join(root, entry.name), entry.name)]),
   );
 }
-

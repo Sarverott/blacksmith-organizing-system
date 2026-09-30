@@ -8,6 +8,8 @@ export const readPosition = async (context) => {
   const table = context.options.reject ? REJECTION : PROMOTION;
   context.to = table[context.from];
   if (!context.to) {
-    throw new Error(`"${context.from}" has no ${context.options.reject ? "rejection" : "promotion"} target (flow: ${Object.keys(table).join(", ")})`);
+    throw new Error(
+      `"${context.from}" has no ${context.options.reject ? "rejection" : "promotion"} target (flow: ${Object.keys(table).join(", ")})`,
+    );
   }
 };

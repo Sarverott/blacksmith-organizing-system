@@ -31,7 +31,7 @@ procedures/closing/
 Controllers run them as plain methods:
 
 ```js
-import { BOS } from "blacksmith-organizing-system";
+import { BOS } from "blacksmith-organization-system";
 
 const bos = await new BOS().load();
 const context = await bos.workshop.status();     // runs "inspecting"

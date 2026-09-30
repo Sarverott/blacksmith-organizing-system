@@ -9,7 +9,9 @@ import * as volume from "./volume.mjs";
 
 // bind every helper to this host's client: containers.run(image, …)
 const bound = (bridge, helpers) =>
-  Object.fromEntries(Object.entries(helpers).map(([name, helper]) => [name, (...args) => helper(bridge.client, ...args)]));
+  Object.fromEntries(
+    Object.entries(helpers).map(([name, helper]) => [name, (...args) => helper(bridge.client, ...args)]),
+  );
 
 export class DockerHost extends BOS.Bridge {
   static id = "docker-host";
@@ -27,9 +29,15 @@ export class DockerHost extends BOS.Bridge {
     }
   }
 
-  get containers() { return bound(this, container); }
-  get images() { return bound(this, image); }
-  get volumes() { return bound(this, volume); }
+  get containers() {
+    return bound(this, container);
+  }
+  get images() {
+    return bound(this, image);
+  }
+  get volumes() {
+    return bound(this, volume);
+  }
 }
 
 export default DockerHost;

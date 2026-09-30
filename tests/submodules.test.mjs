@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import { join } from "node:path";
-import { test } from "node:test";
+import { test } from "vitest";
 
 import { BOS, models, submodules } from "../src/index.mjs";
 
@@ -15,19 +15,26 @@ test("submodules hang on their owner as properties", () => {
 
 test("a submodule cannot exist without its owner", () => {
   assert.throws(() => new submodules.Storylines("/tmp/anything"), /build it from its owner/);
-  assert.throws(() => new submodules.Storylines(new models.Forge("/w/__WORKSHOP/forge")), /hangs on a workshop, not on a forge/);
+  assert.throws(
+    () => new submodules.Storylines(new models.Forge("/w/__WORKSHOP/forge")),
+    /hangs on a workshop, not on a forge/,
+  );
 });
 
 test("moving a class between model and submodule is one extends line", () => {
   assert.ok(submodules.Nests.prototype instanceof BOS.Submodule);
   assert.ok(models.Forge.prototype instanceof BOS.Model);
   for (const Base of [BOS.Model, BOS.Submodule]) {
-    for (const method of ["ensure", "inspect", "seal", "verify"]) assert.equal(typeof Base.prototype[method], "function");
+    for (const method of ["ensure", "inspect", "seal", "verify"])
+      assert.equal(typeof Base.prototype[method], "function");
   }
 });
 
 test(".BOS organs nest under .BOS in the tree", () => {
   const bos = workshop.inspect().children.find((node) => node.type === "system");
-  assert.deepEqual(bos.children.map((node) => node.type), ["setup", "data", "nestrelm", "storylines"]);
+  assert.deepEqual(
+    bos.children.map((node) => node.type),
+    ["setup", "data", "nestrelm", "storylines"],
+  );
   assert.equal(join(bos.path, "storylines"), bos.children[3].path);
 });

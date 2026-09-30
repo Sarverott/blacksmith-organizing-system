@@ -1,6 +1,6 @@
 {
-  "name": "blacksmith-organizing-system",
-  "version": "0.0.1",
+  "name": "blacksmith-organization-system",
+  "version": "0.7.0",
   "description": "set of tools and skillsets for crafting, forging, archivizing and armoring technomancer's digital workshops",
   "keywords": [
     "BOS",
@@ -14,21 +14,18 @@
     "craft",
     "independent"
   ],
-  "homepage": "https://github.com/Sarverott/blacksmith-organizing-system#readme",
+  "homepage": "https://github.com/Sarverott/blacksmith-organization-system#readme",
   "bugs": {
-    "url": "https://github.com/Sarverott/blacksmith-organizing-system/issues"
+    "url": "https://github.com/Sarverott/blacksmith-organization-system/issues"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Sarverott/blacksmith-organizing-system.git"
+    "url": "git+https://github.com/Sarverott/blacksmith-organization-system.git"
   },
   "license": "MIT",
   "author": "Sett Sarverott A.A.B.",
   "type": "module",
   "main": "src/index.mjs",
-  "directories": {
-    "doc": "docs"
-  },
   "bin": {
     "bos": "src/cli.mjs"
   },
@@ -36,21 +33,61 @@
     ".": "./src/index.mjs",
     "./package.json": "./package.json"
   },
+  "files": [
+    "src",
+    "resources",
+    "skills",
+    "template",
+    ".claude-plugin",
+    "README.md",
+    "LICENSE",
+    "AGENTS.md",
+    "CLAUDE.md"
+  ],
   "engines": {
     "node": ">=22.18"
   },
+  "directories": {
+    "doc": "docs"
+  },
   "scripts": {
     "start": "node src/cli.mjs status",
-    "test": "task test",
-    "bos": "node src/cli.mjs"
+    "test": "vitest run",
+    "bos": "node src/cli.mjs",
+    "prepare": "husky",
+    "commit": "cz",
+    "lint": "biome check .",
+    "format": "biome check --write ."
+  },
+  "publishConfig": {
+    "access": "public",
+    "provenance": true
   },
   "dependencies": {
     "dockerode": "^5.0.1",
     "isomorphic-git": "^1.42.4",
-    "octokit": "^5.0.5"
+    "octokit": "^5.0.5",
+    "ollama": "^0.6.4"
   },
   "devDependencies": {
+    "@biomejs/biome": "2.5.14",
+    "@commitlint/cli": "^21.2.3",
+    "@commitlint/config-conventional": "^21.2.3",
+    "@commitlint/cz-commitlint": "^21.2.3",
     "@go-task/cli": "^3.53.1",
-    "skills": "^1.7.0"
+    "@semantic-release/changelog": "^7.0.0",
+    "@semantic-release/git": "^11.0.1",
+    "commitizen": "^4.3.2",
+    "conventional-changelog-conventionalcommits": "^9.3.1",
+    "husky": "^9.1.7",
+    "inquirer": "^12.11.1",
+    "semantic-release": "^25.0.9",
+    "skills": "^1.7.0",
+    "vitest": "^5.0.2"
+  },
+  "config": {
+    "commitizen": {
+      "path": "@commitlint/cz-commitlint"
+    }
   }
 }

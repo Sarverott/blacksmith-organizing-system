@@ -10,7 +10,7 @@ import Nests from "./hang.nests.mjs";
 import Setup from "./hang.setup.mjs";
 import Storylines from "./hang.storylines.mjs";
 import System from "./hang.system.mjs";
-import { WORKSHOP_DIRNAME, placeOf } from "./locate.mjs";
+import { placeOf, WORKSHOP_DIRNAME } from "./locate.mjs";
 
 export class Workshop extends BOS.Model {
   static type = "workshop";
@@ -18,9 +18,13 @@ export class Workshop extends BOS.Model {
   static submodules = { system: System, setup: Setup, data: Data, nests: Nests, storylines: Storylines };
   static children = [Devarmory, Forge, Craftbook, Archive];
 
-  get forge() { return new Forge(this.file(Forge.dirname), this); }
+  get forge() {
+    return new Forge(this.file(Forge.dirname), this);
+  }
 
-  placeOf(path) { return placeOf(path, this.path); }
+  placeOf(path) {
+    return placeOf(path, this.path);
+  }
 }
 
 export default Workshop;

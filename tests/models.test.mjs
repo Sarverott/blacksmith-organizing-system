@@ -1,24 +1,35 @@
 import assert from "node:assert/strict";
 import { mkdirSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
-import { test } from "node:test";
+import { test } from "vitest";
 
 import { BOS, models, placeOf, resolveWorkshop } from "../src/index.mjs";
 import { sandbox } from "./helpers.mjs";
 
 test("place of a path inside the workshop", () => {
   const root = "/w/__WORKSHOP";
-  assert.deepEqual(placeOf(join(root, "forge/bos/bos-skillset/src"), root), { area: "forge", scope: "bos", project: "bos-skillset", inner: "src" });
+  assert.deepEqual(placeOf(join(root, "forge/bos/bos-skillset/src"), root), {
+    area: "forge",
+    scope: "bos",
+    project: "bos-skillset",
+    inner: "src",
+  });
   assert.deepEqual(placeOf(join(root, "archive/pack"), root), { area: "archive", inner: "pack" });
   assert.equal(placeOf("/elsewhere", root), null);
 });
 
 test("workshop resolution order", () => {
   const home = "/home/smith";
-  assert.equal(resolveWorkshop({ explicit: "/x/__WORKSHOP", variable: "/y/__WORKSHOP", cwd: "/", self: "/", home }).source, "--workshop option");
+  assert.equal(
+    resolveWorkshop({ explicit: "/x/__WORKSHOP", variable: "/y/__WORKSHOP", cwd: "/", self: "/", home }).source,
+    "--workshop option",
+  );
   assert.equal(resolveWorkshop({ variable: "~/__WORKSHOP", cwd: "/", self: "/", home }).root, "/home/smith/__WORKSHOP");
   assert.equal(resolveWorkshop({ cwd: "/media/usb/__WORKSHOP/forge", self: "/", home }).root, "/media/usb/__WORKSHOP");
-  assert.equal(resolveWorkshop({ cwd: "/tmp", self: "/opt/__WORKSHOP/forge/bos", home }).source, "ancestor of BOS installation");
+  assert.equal(
+    resolveWorkshop({ cwd: "/tmp", self: "/opt/__WORKSHOP/forge/bos", home }).source,
+    "ancestor of BOS installation",
+  );
   assert.equal(resolveWorkshop({ cwd: "/tmp", self: "/opt", home }).root, "/home/smith/__WORKSHOP");
 });
 
