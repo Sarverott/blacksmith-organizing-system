@@ -1,76 +1,107 @@
 # What BOS is
 
 **Blacksmith Organization System (BOS)** by Sett Sarverott (2019–), MIT license.
-Part of the R-tier superproject "ANUBIS". Main repository:
-https://github.com/Sarverott/blacksmith-organization-system
+Part of the R-tier superproject "ANUBIS". Repositories:
 
-The goal is to automate management of a personal "forest of projects": a method
-for sorting project types, grouping the parts of a project and families of
-related projects, and keeping them working, synchronized and archived across
-several machines (workspaces), servers and publication targets.
+- old core: https://github.com/Sarverott/blacksmith-organization-system (local: `forge/blacksmith-organization-system/blacksmith-organization-system`)
+- root of the new BOS (this skillset): https://github.com/Sarverott/blacksmith-organizing-system (local: `forge/blacksmith-organization-system/bos-skillset`)
 
-Guiding rule from the author: *"if it is good thinking then it will be automated"*.
-BOS itself is supposed to create and maintain the workshop tree. Until it does,
-agents follow these rules by hand.
+The goal is to automate the management of a personal "forest of projects"
+across many machines, servers and publication targets, without version drift
+("variantogeddon"). The author's rule: *"if it is good thinking then it will be
+automated"*.
 
-## Workshop tree
+**Authoritative definitions:** `docs/glossary/<element>.md` in the old core
+repo, one page per element, index in `docs/glossary/README.md`. This file is a
+summary; if the two disagree, the glossary wins. The author annotates the
+glossary directly: read their changes (`git diff`) before summarizing.
 
-Canonical tree, taken from `config/workshop.json.default` on the repository's
-`developement` branch. Each key is a directory and each value is the element
-type it holds.
+## The skeleton: three layers
 
-| Directory     | Type      | Notes |
-| ------------- | --------- | ----- |
-| `forge/`      | forge     | Center of the craftspace. Holds the Artefacts that are open right now: focused, in dev mode, flagged with the user's mid-sync signature. On save a commit is made, signing runs, and automation starts. |
-| `archive/`    | archive   | Integrity base: non-releasable repos, buffering mirrors between the craftspace and the production VCS server. Holds **sarcophags**. |
-| `craftbook/`  | craftbook | [`TODO`] (probably replaces the older `scrapbook`/`notes`: notes, notebooks, docs, text data that needs extra care) |
-| `devarmory/`  | devtools  | [`TODO`] |
-| `.SETUP/`     | config    | Configuration, workshop history, dev data (older name: `setup/`) |
-| `.DATA/`      | data      | Data files, e.g. `*.gitlist` lists of repos to mirror into `archive/` |
-| `.__BOS/`     | system    | The BOS installation itself [`TODO`] confirm |
-| `.NESTRELM/`  | sandbox   | [`TODO`] |
-| `.STORYLINES/`| history   | [`TODO`] |
-| `.VIEWS/`     | display   | [`TODO`] |
+### 1. Network
 
-The four visible areas (forge, archive, devarmory, craftbook) must always exist.
-If any is missing, create it. [`TODO`] Decide whether the hidden areas are also
-mandatory.
+- **Setternet (snet):** the owner's network of BOS hosts. Setup lives in `.BOS/setup/setternet/`.
+- **Host roles** (PL originals): master's outpost (Posterunek Mistrza: remote
+  management), forging point (Punkt Kuźniczy: development), trial hall (Sala
+  Prób: VMs, testing), market stall (Kram Targowy: publication only), canon
+  monolith (Monolit Kanonu: the master archive; exactly one per setternet),
+  side catacomb (Katakumb Poboczny: single-purpose archive, e.g. Ollama or deployments).
+- **Canon:** the complete, authoritative record, held by the canon monolith, and
+  in git by the `canonical` branch, which the Canon Keeper confirms.
 
-Workshop config lookup order (`config` in `workshop.json.default`):
-`<workshop>/.workshop.json`, `~/.workshop.json`, `~/.config/bos/workshop.json`,
-`~/.vscode/extensions/bos/workshop.json`.
+### 2. Workshop: one per host or partition
 
-> Naming conflict: the repository defaults to the hidden `~/.__WORKSHOP`, but
-> the current standard is the visible `~/__WORKSHOP`. Prefer `~/__WORKSHOP`.
+```
+__WORKSHOP/
+├── .BOS/          internal, mandatory: workshop.json Taskfile.yaml .omnis.toml package.json Dockerfile compose.yaml
+│   ├── setup/     keys, VPN, routing, DNS/SSH aliases, tokens, setternet/   (mandatory)
+│   ├── data/      e.g. <pack>.gitlist
+│   ├── nests/     container/VM volumes; always .index.json + .manifest.json (mandatory)
+│   └── storylines/ ttystories/ logs/ manifests/ metadata.json            (created during use)
+├── devarmory/     tools: manifest-listed, auto-downloaded, checksum-verified, linked to PATH/desktop
+├── forge/         active work (the desk): <scope>/<project|sheme>, throwbox; defines the working branch
+├── craftbook/     knowledge: scrapnotes/, craftsets, collections, recipes
+└── archive/       at rest: sarcophags, exhibits, <pack>/<mirror>
+```
 
-## Element (Artefact) types — the "models"
+The four crafting areas and `.BOS/` must always exist; BOS creates them at
+boot. Older layouts had `.SETUP`, `.DATA`, `.NESTRELM`, `.STORYLINES` and
+`.__BOS` as separate top-level dirs, `~/.__WORKSHOP` as the root, and `notes/`
+or scrapbook instead of craftbook.
 
-| Type | Meaning |
-| ---- | ------- |
-| **workshop** | Root of the whole tree |
-| **forge** / **archive** / **craftbook** | Top-level areas (see table above) |
-| **scope** | Formerly *superproject*. A recurring Artefact with its own collection of Artefacts, each one a git submodule: a family of related parts with shared automation, configs, secrets and publication setup. Example: `forge/blacksmith-organization-system/` |
-| **project** | A concrete, independent project with a name and a focused workflow |
-| **sheme** (sic) | Schematic-type material: graphics/audio/data source files, notes, notebooks, playgrounds, live-code docs, VM/container sandboxes, test areas |
-| **throwbox** | Every collection has one: the default place for loose files. When the collection closes, BOS sweeps the throwbox, auto-describes and packs it into an unlabeled sarcophag for later sorting |
-| **sarcophag** | A single encrypted container that holds one bare repo (lives in archive) |
-| **exhibit** | Based on sarcophags; a publication view of canon [`TODO`] |
-| **collection** | Collection of Artefacts (a container) |
-| **craftset** | [`TODO`] (repos also have `.craftset/` and `.craftsets/` directories holding tooling setups) |
-| **postroad** | [`TODO`] |
-| **scrapnote** | [`TODO`] (older name: scrapbook) |
+Views (dashboards over CLI, web, mobile, Chrome extension, Electron, OpenAPI,
+MCP, with one shared handler class) has no settled location yet.
 
-## Branch flow of BOS repositories (from docs/README.md)
+### 3. Elements
 
-`developement` (addons sink) → `testing` (awaiting approval) → `master`
-(release candidate) → `canonical` (confirmed by the **Canon Keeper**). Also
-`gh-pages`, `releasing`, `including`, `revision`.
+- **scope** (formerly superproject): a private repository with submodules,
+  holding a family of projects and shemes plus a throwbox. Synced through a
+  self-hosted server (e.g. Gitea) that also keeps pre-public drafts.
+- **project:** one concrete project repository.
+- **sheme:** source material that isn't code: graphics/GIMP, Blender/CAD, photos,
+  templates, third-party reference docs. A design template is a sheme; the code
+  realizing it is a project. (The old scrapnote used sheme for processing
+  routes: HF uploaders, publish and deploy routines. Unresolved.)
+- **throwbox:** automated collector of loose files per scope; swept on close into an anonymous sarcophag.
+- **sarcophag:** encrypted container holding one bare repository (archive).
+- **exhibit:** view built from sarcophags (archive). [`TODO`]
+- **scrapnote:** any note not yet promoted to a document; changelogs and release notes stay scrapnotes.
+- **craftset:** reusable kit of notes, notebooks, one-off scripts and session
+  setup; mandatory `.omnis.toml`, `metadata.json`, `manifest.json`, `Taskfile.yaml`.
+- **collection**, **postroad:** meaning unresolved.
+
+**Element anatomy** (pattern awaiting confirmation): a directory plus descriptor
+files: `metadata.json` (identity/origin), `manifest.json` (checksums/integrity),
+`.index.json` (map), `Taskfile.yaml` (procedures), `.omnis.toml` ([`TODO`]).
+
+## Lifecycles
+
+- work: forge → archive (sarcophag) → canon monolith
+- loose files: throwbox → anonymous sarcophag → sorted, reused or deleted
+- notes: scrapnote → document (or stays a scrapnote)
+- tools: manifest → download → verify checksum → link
+
+## Storylines naming
+
+`ttystory.txt`, `ttystory-$UNIXUSAT.txt`, `ttystory-$HOSTNAME-$UNIXUSAT.txt`.
+`UNIXUSAT` = Unix timestamp in milliseconds. The purpose is to reuse command
+patterns and to teach AI to use the shell the BOS way.
+
+## Ideas on record
+
+Autocommit on save; GIMP history bound to VCS (a branch per session, a commit
+per action); releases trigger social media posts; Taskfile + Husky + a standard
+command set; history proven via OpenTimestamps.
+
+## Branches and versioning of the old core repo
+
+Branches: `developement`, `drafting`, `moderation`, `publishing`, `testing`,
+`revision`, `releasing`, `master`, and `dev/<topic>`. Original plan:
+development → testing → master → canonical. How the new branches map onto it: [`TODO`]
 
 Versioning is `{G}.{R}.{I}.{H}`: Generation, Reconstruction, Integration, Hooking.
 
 ## Related repositories
 
-- Apps: bos-desktop, bos-mobile, bos-server, bos-gui, bos-vscode-extension (`apps/templates.csv`)
-- Components: `Sarverott/bos.<component>` (see bos-codebase.md)
-- Library: carnival-toolbox (npm)
-- This skillset: `forge/blacksmith-organization-system/bos-skillset`
+Apps: bos-desktop, bos-mobile, bos-server, bos-gui, bos-vscode-extension.
+Components: `Sarverott/bos.<component>`. Library: carnival-toolbox.

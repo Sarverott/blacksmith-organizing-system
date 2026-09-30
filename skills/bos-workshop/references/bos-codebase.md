@@ -1,75 +1,97 @@
 # BOS codebase map
 
 Local clone: `~/__WORKSHOP/forge/blacksmith-organization-system/blacksmith-organization-system`
-Node.js (CommonJS). Entry: `src/_index.js`. Run: `npm start` (`node src/_index.js`).
+Remote: https://github.com/Sarverott/blacksmith-organization-system
+Node.js (CommonJS). Entry: `src/_index.js`. Run: `npm start`.
 
-## Boot sequence
+The owner works in this repo in parallel with agents: new commits, removed
+files and changed remote branches between sessions are normal. Always re-check
+`git status`, `git log --all` and the tree before acting. Don't assume an
+earlier state.
 
-1. `src/_index.js` runs `runner.js` when executed directly, or exports `includer.js` (the library API) when required.
-2. `runner.js` calls `BOS.INITIALIZE(repoRoot)`, then `BOS.SETUP()`, then `BOS.EXECUTE()` (EXECUTE is empty).
-3. `core/bos.js` INITIALIZE loads every controller class and calls `Controller.loadAll()` in a fixed order:
-   Config → Models → Commands → Interfaces → Scope → Scrapbook → Projects → Bridges → Factors → Sandbox → Publication → Deployment.
-4. `ConfigControll` copies each `config/*.default` to its real name if missing, then loads `config/*.json` into `BOS.CONFIG`.
-5. `ModelsControll` loads each model directory (`class.js`, `data.json`, `actions/`, `events/`, `listeners/`, `methods/`) and exposes it as `BOS.<Capitalized>`.
-6. `ScopeControll` builds the workshop tree: it creates `Workshop`, `Archive`, `Scrapbook(notes)` and `Forge` objects. Each model constructor runs `mkdir -p` on its path and sets `fs.watch` on it.
-7. `SETUP` copies `config/startup.bos.default` to `~/<context-path>/<startup>` and runs it as a BOS script.
-   A BOS script has one command per line: `<command> <args...>`. The default is `use-interface cli-repl open`.
-8. The `cli-repl` interface is a readline prompt that evaluates each line as JavaScript in a `vm` context (not as BOS commands).
+## Branches (as of 2026-09-30)
 
-Every model is a subclass of the `BlacksmithOrganizationSystem` EventEmitter
-class in `core/bos.js`. Lifecycle methods (`open`, `create`, `close`, `move`, …)
-emit `on-model-<name>` events on `BOS.EVENTS`.
+| Branch | State |
+| ------ | ----- |
+| `developement` | Main dev line. Being cleaned radically by the owner ("massive removal of junk codes from dark past", c7da0df) |
+| `dev/reforge` | The agent's reforge work (4d71a58): the component-submodule layout, booting |
+| `dev/submodule-gits` | `developement` before the reforge (ade23b9): 14 component submodules, not booting |
+| `drafting`, `moderation`, `publishing`, `testing`, `revision`, `releasing` | Workflow branches, created at ade23b9, not used yet |
+| `master` | Old, single-repo version (767aa95). Boots, but builds the workshop inside the repo |
 
-## Branches
+`developement/…` names are impossible while a `developement` branch exists
+(a git ref can't be both a branch and a folder), so sub-branches use `dev/…`.
 
-| | `master` (767aa95) | `developement` (ade23b9, 6 commits ahead) |
-|-|-|-|
-| Code layout | Everything in `src/<type>/` | Components split into 14 git submodules at `src/components/<type>/` (`Sarverott/bos.<type>`), code under `ITEMS/` |
-| Core (`src/core`) | Loads from `src/controllers`, `src/models`, … | **Unchanged from master**, so it still points at paths that no longer exist → cannot start |
-| Tooling | Shell scripts in `dev/` | Moved to the `bos.toolsets` component; JS `.craftset/` tooling in each component |
-| Config | `main.json.default`, `startup.bos.default` | Adds `workshop.json.default` (forge/archive/craftbook/devarmory + hidden areas) |
-| Models | archive, exhibit, forge, project, sarcophag, scheme, scrapbook, superproject, throwbox, workshop | archive, collection, craftset, forge, postroad, project, sarcophag, scope, scrapnote, sheme, throwbox, workshop |
-| Deps | 5 runtime deps | ~37 runtime deps (openai, ollama, discord, puppeteer, …), mostly unused yet |
+Commit messages marked `░▒▓BOS.helper.tulu3╚╣Skryba╠╗UNIXUSAT=…` come from an
+automated commit-message helper. Several are garbled noise.
 
-The submodule pointers in `developement` are pinned to each component's
-template "Initial commit". The real migrated code is 3 commits later, on each
-component's `origin/master`. `ITEMS/*` files are byte-identical to master's
-`src/<type>/*` (checked 2026-09-30), except for model renames.
+## Layout of `developement` after the clean-up (c7da0df)
 
-Commit messages marked `░▒▓BOS.helper.tulu3╚╣Skryba╠╗UNIXUSAT=…` come from
-an automated commit-message helper. Several are garbled noise; don't read
-meaning into them.
+Submodules are gone. The component code is flat again in `src/<type>/`:
 
-## `reforge` branch (2026-09-30, uncommitted)
+```
+src/
+├── _index.js runner.js spawner.js includer.js
+├── core/          bos.js (base class + INITIALIZE/SETUP), bos.controller.js,
+│                  bos.command.js, bos.interface.js, helperFunctions.js
+├── controllers/   Config, Models, Commands, Interfaces, Scope, … (*Controll.js)
+├── commands/      <name>/{call.js,index.json,manual.md}
+├── models/        <type>/{class.js,data.json[,README.md]}; archive keeps actions/events/…
+├── factors/       command-factory.js
+├── bridges/       integration stubs (publishers, extensions, integrators)
+└── toolsets/      old shell scripts + dev/_index.js save/test runner
+resources/cli-art/ text-art logos
+docs/              README, devlog, about-*.md, glossary/
+```
 
-A new branch built from `developement`, with the same branch name inside the
-edited submodules. Main changes:
+Removed in the clean-up: `config/` (main/workshop/startup defaults),
+`src/interfaces/` (cli-repl, http-api, socket-server), `libs/py`, `apps/`,
+`examples/`, `.crovley`, all submodules.
 
-- Submodules point at each component's `origin/master` (the real code).
-- Core loaders read `src/components/<type>/ITEMS` via `helpers.componentPath()`.
-- Components require core via the package self-reference
-  `blacksmith-organization-system/core/<file>` (`exports` in package.json), so
-  their depth doesn't matter.
-- The workshop root is resolved by `helpers.findWorkshopRoot()`:
-  `$BOS_WORKSHOP` → nearest ancestor `__WORKSHOP` → `config/workshop.json` `path`
-  (`~/__WORKSHOP`). Available as `BOS.WORKSHOP_ROOT` and `BOS.WorkshopPath(...)`.
-- `ScopeControll` creates every missing area from `config/workshop.json` at boot.
-- The startup script and CLI history live in `<workshop>/.SETUP/`.
-- CLI commands are dot-commands: `.show-status`, `.deploy-workshop`,
-  `.new-scope <name>`, `.pull-archive`, `.new-component <name>`, `.exit`.
-- Model `fs.watch` is non-recursive. Event logging only runs with `BOS_DEBUG=1`.
+## Boot sequence (design)
 
-Test safely with `BOS_WORKSHOP=/tmp/some/__WORKSHOP npm start`. Without it,
+1. `_index.js` runs `runner.js` when executed directly, or exports `includer.js` (the library API) when required.
+2. `runner.js` calls `BOS.INITIALIZE(repoRoot)`, `BOS.SETUP()`, `BOS.EXECUTE()` (EXECUTE is empty).
+3. INITIALIZE loads every controller class and calls `loadAll()`: Config → Models → Commands → Interfaces → Scope → Scrapbook → Projects → Bridges → Factors → Sandbox → Publication → Deployment.
+4. Config loads `config/*.json` (copied from `*.default` if missing) into `BOS.CONFIG`.
+5. Models are exposed as `BOS.<Type>` and `BOS.MODELS[type]`.
+6. Scope builds the workshop tree from `BOS.CONFIG.workshop.content` and creates missing areas.
+7. SETUP runs `<workshop>/.SETUP/startup.bos`: one command per line, `<command> <args…>`. The default is `use-interface cli-repl open`.
+8. `cli-repl` is Node's REPL. BOS commands are dot-commands (`.show-status`).
+
+## Current boot state of `developement` (c7da0df): does not start
+
+Leftovers from the reforge still point at the removed layout:
+
+- `core/helperFunctions.js` `componentPath()` returns `src/components/<type>/ITEMS/…`. It should become `src/<type>/…`.
+- `controllers/InterfacesControll.js`, `ModelsControll.js`, `CommandsControll.js` join `"src","components",<type>,"ITEMS"`.
+- `require("blacksmith-organization-system/core/…")` (package self-reference) still works while `package.json` has `exports`. Relative `../core/…` would work again now too.
+- `config/` is gone, but ConfigControll, Scope and SETUP need `main.json` and `workshop.json` (defaults).
+- `src/interfaces/` is gone, but the startup script and InterfacesControll expect it.
+- `commands/new-component` still does `git submodule add … src/components/<name>`.
+
+Workshop root resolution (still in `helperFunctions.findWorkshopRoot`):
+`$BOS_WORKSHOP` → nearest ancestor `__WORKSHOP` → `~/__WORKSHOP`.
+Test safely with `BOS_WORKSHOP=/tmp/x/__WORKSHOP npm start`. Without it,
 running from inside `~/__WORKSHOP` uses the real workshop.
 
-## Known defects (on master / developement; fixed on reforge unless noted)
+## Commands (src/commands)
 
-- `ScopeControll` builds the workshop at `BOS.PathTo(context-path)`, which is
-  **inside the repository** (`<repo>/__WORKSHOP`), while `SETUP` writes the
-  startup script to `~/__WORKSHOP/setup`. These are two different places.
-- `SETUP` copies the startup file without creating `~/__WORKSHOP/setup/` first,
-  so a fresh run crashes with ENOENT.
-- The stub `exit` command overrides the REPL's built-in `.exit`, so `.exit` did nothing.
+| Command | Does |
+| ------- | ---- |
+| `show-status [workshop\|workshops\|forge\|archive\|interfaces\|tree]` | readable status |
+| `deploy-workshop` | create missing areas, write `bos-workshop.log` (port of deploy-new-workshop.sh) |
+| `new-scope <name>` | `forge/<name>` + `git init` (port of new-superproject.sh; the old one made a bare `<name>.git`) |
+| `pull-archive` | clone or fetch the repos in `.DATA/*.gitlist` into `archive/<pack>/` (port of archive_mirrors.sh) |
+| `new-component <name>` | `gh repo create bos.<name>` from template + submodule (outdated since submodules were removed) |
+| `exit` | closes the REPL |
+| `use-interface <name> open` | starts an interface |
+| `create-item`, `load-workshop` | empty stubs |
+
+## Historic defects fixed in `dev/reforge`
+
+- master built the workshop inside the repo (`BOS.PathTo(context-path)`) but wrote the startup script to `~/__WORKSHOP/setup`.
+- SETUP copied the startup file without creating its directory (ENOENT on a fresh run).
+- A stub `exit` command overrode the REPL's built-in `.exit`.
 - CLI command arguments arrived as one unsplit string.
-- Many command `call.js` files and model actions are empty stubs (still true: create-item, load-workshop).
-- `developement` core loaders use old paths (see Branches).
+- A recursive `fs.watch` on every model; every file change dumped whole objects to the console.

@@ -1,0 +1,35 @@
+{
+  "name": "blacksmith-organizing-system",
+  "version": "0.0.1",
+  "description": "set of tools and skillsets for crafting, forging, archivizing and armoring technomancer's digital workshops",
+  "keywords": [
+    "BOS",
+    "blacksmith",
+    "organization",
+    "system",
+    "npm",
+    "js",
+    "environment",
+    "smelt",
+    "craft",
+    "independent"
+  ],
+  "homepage": "https://github.com/Sarverott/blacksmith-organizing-system#readme",
+  "bugs": {
+    "url": "https://github.com/Sarverott/blacksmith-organizing-system/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Sarverott/blacksmith-organizing-system.git"
+  },
+  "license": "MIT",
+  "author": "Sett Sarverott A.A.B.",
+  "type": "module",
+  "main": "src/index.mjs",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "test": "task test"
+  }
+}
