@@ -3,6 +3,11 @@
 
 version: '3'
 
+includes:
+  docs:
+    taskfile: ./docs
+    dir: ./docs
+
 vars:
   BOS: node {{.ROOT_DIR}}/src/cli.mjs
 

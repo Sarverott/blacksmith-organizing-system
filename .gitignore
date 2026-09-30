@@ -4,3 +4,7 @@
 __pycache__/
 node_modules/
 .env
+
+# documentation build
+/site/
+docs/.venv/
