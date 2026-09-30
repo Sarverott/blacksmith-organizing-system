@@ -1,6 +1,7 @@
 {
     "path": "/hooks",
     "info": "link this repository's git hooks to BOS",
+    "mode": "smeltry",
     "help": [
         "./help.md",
         "MD"

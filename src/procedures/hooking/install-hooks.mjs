@@ -2,7 +2,7 @@ import { chmodSync, existsSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 
 import GitClient from "../../bridge/git-client/_index.mjs";
-import { createIfMissing } from "../../core/basic-model.mjs";
+import { createIfMissing } from "../../core/basic-element.mjs";
 import { CLI } from "../../core/self.mjs";
 import { HOOKS } from "./hooks.mjs";
 

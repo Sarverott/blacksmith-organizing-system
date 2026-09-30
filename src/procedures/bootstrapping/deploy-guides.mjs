@@ -1,7 +1,7 @@
 import { copyFileSync } from "node:fs";
 import { join } from "node:path";
 
-import { createIfMissing } from "../../core/basic-model.mjs";
+import { createIfMissing } from "../../core/basic-element.mjs";
 import { RESOURCES } from "../../core/self.mjs";
 
 export const AGENT_GUIDES = ["AGENTS.md", "CLAUDE.md"];

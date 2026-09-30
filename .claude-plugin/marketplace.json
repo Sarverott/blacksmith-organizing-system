@@ -10,11 +10,22 @@
   "plugins": [
     {
       "name": "bos-skills",
-      "description": "Recognize __WORKSHOP roots and BOS workshop areas",
+      "description": "Recognize BOS workshops and handle every element in them: areas, scopes, projects, sarcophags, craftsets…",
       "source": "./",
       "strict": false,
       "skills": [
-        "./skills/bos-workshop"
+        "./skills/bos-workshop",
+        "./skills/bos-devarmory",
+        "./skills/bos-forge",
+        "./skills/bos-craftbook",
+        "./skills/bos-archive",
+        "./skills/bos-scope",
+        "./skills/bos-project",
+        "./skills/bos-sheme",
+        "./skills/bos-throwbox",
+        "./skills/bos-sarcophag",
+        "./skills/bos-exhibit",
+        "./skills/bos-craftset"
       ]
     }
   ]

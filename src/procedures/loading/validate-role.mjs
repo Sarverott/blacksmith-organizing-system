@@ -1,4 +1,4 @@
-import { HOST_ROLES } from "../../models/system/host-roles.mjs";
+import { HOST_ROLES } from "../../models/workshop/host-roles.mjs";
 
 export const validateRole = (context) => {
   const { role } = context.config;

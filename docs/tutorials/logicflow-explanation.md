@@ -26,6 +26,7 @@ procedures/closing/
 | sinking | loading → inventory forge → inventory tools (read-only so far) |
 | hooking | loading → record hook; installingHooks: locating → link hooks |
 | promoting | read position → plan → apply (only with `--apply`, clean worktree) |
+| skilling | collect models → compose skills → write missing skills → register in marketplace |
 
 Controllers run them as plain methods:
 

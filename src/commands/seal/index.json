@@ -1,6 +1,7 @@
 {
     "path": "/seal",
     "info": "write checksums of a directory into its manifest",
+    "mode": "conform",
     "help": [
         "./help.md",
         "MD"

@@ -1,5 +1,6 @@
 // The spine of BOS: one class that binds the core mechanics together and
-// lazily loads the parts. Core classes hang on it as BOS.Bridge, BOS.Model…,
+// lazily loads the parts. Core classes hang on it as BOS.Bridge, BOS.Model,
+// BOS.Submodule…,
 // so every part extends them through this one import:
 //   import { BOS } from "../main.ts";  class DockerHost extends BOS.Bridge {}
 import { EventEmitter } from "node:events";
@@ -8,6 +9,7 @@ import { BasicBridge } from "./core/basic-bridge.mjs";
 import { BasicControll } from "./core/basic-controll.mjs";
 import { BasicModel } from "./core/basic-model.mjs";
 import { BasicProcedure } from "./core/basic-procedure.mjs";
+import { BasicSubmodule } from "./core/basic-submodule.mjs";
 import { BasicView } from "./core/basic-view.mjs";
 
 type Options = { workshop?: string; dryRun?: boolean; [key: string]: unknown };
@@ -17,6 +19,7 @@ export class BOS extends EventEmitter {
   static Controll = BasicControll;
   static Model = BasicModel;
   static Procedure = BasicProcedure;
+  static Submodule = BasicSubmodule;
   static View = BasicView;
 
   options: Options;
@@ -55,6 +58,11 @@ export class BOS extends EventEmitter {
   // the workshop as one easy handle: bos.workshop.status(), .open(), .close()…
   get workshop() {
     return new this.controllers.WorkshopControll(this.options);
+  }
+
+  // the agent skills of this repository: bos.skills.scaffold()
+  get skills() {
+    return new this.controllers.SkillsControll(this.options);
   }
 
   async command(name: string, operands: string[] = [], flags: Options = {}) {

@@ -1,6 +1,7 @@
 {
     "path": "/sink",
     "info": "inventory of what must be rescued from this workstation",
+    "mode": "almanac",
     "help": [
         "./help.md",
         "MD"

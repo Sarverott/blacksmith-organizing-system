@@ -1,6 +1,7 @@
 {
     "path": "/verify",
     "info": "compare a directory with its manifest",
+    "mode": "conform",
     "help": [
         "./help.md",
         "MD"

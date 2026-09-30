@@ -52,6 +52,10 @@ More: [preinstall](docs/tutorials/preinstall.md) ·
 | Skill | Description |
 | ----- | ----------- |
 | [`bos-workshop`](skills/bos-workshop/SKILL.md) | Recognize workshops, their areas and elements; place work where it belongs |
+| `bos-devarmory` `bos-forge` `bos-craftbook` `bos-archive` | the crafting areas (drafts) |
+| `bos-scope` `bos-project` `bos-sheme` `bos-throwbox` `bos-sarcophag` `bos-exhibit` `bos-craftset` | the assets inside them (drafts) |
+
+A model's skill is drafted from its glossary page by `bos skills` and then grown by hand.
 
 ```
 /plugin marketplace add Sarverott/blacksmith-organizing-system

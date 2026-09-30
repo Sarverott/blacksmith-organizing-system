@@ -1,6 +1,7 @@
 {
     "path": "/hook",
     "info": "(called by git) record a hook in storylines",
+    "mode": "smeltry",
     "help": [
         "./help.md",
         "MD"

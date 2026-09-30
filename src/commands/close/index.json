@@ -1,6 +1,7 @@
 {
     "path": "/close",
     "info": "keep shell history as a ttystory, record the closing",
+    "mode": "conform",
     "help": [
         "./help.md",
         "MD"

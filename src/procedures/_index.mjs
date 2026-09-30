@@ -6,8 +6,10 @@ import { hooking, installingHooks } from "./hooking/_index.mjs";
 import inspecting from "./inspecting/_index.mjs";
 import loading from "./loading/_index.mjs";
 import locating from "./locating/_index.mjs";
+import modeSwitching from "./mode-switching/_index.mjs";
 import opening from "./opening/_index.mjs";
 import promoting from "./promoting/_index.mjs";
 import sinking from "./sinking/_index.mjs";
+import skilling from "./skilling/_index.mjs";
 
-export default { locating, loading, inspecting, bootstrapping, opening, closing, sinking, hooking, installingHooks, promoting };
+export default { locating, loading, inspecting, bootstrapping, opening, closing, sinking, hooking, installingHooks, promoting, skilling, modeSwitching };

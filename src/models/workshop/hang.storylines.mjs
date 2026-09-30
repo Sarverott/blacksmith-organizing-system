@@ -1,19 +1,18 @@
-// Records of what happened: ttystories, logs, manifests (glossary: storylines).
+// .BOS/storylines: records of what happened (glossary: storylines).
 // Not needed to launch; appears with the first recorded event.
 import { appendFileSync } from "node:fs";
 
 import { BOS } from "../../main.ts";
+import Logs from "./hang.storylines.logs.mjs";
+import Manifests from "./hang.storylines.manifests.mjs";
+import Ttystories from "./hang.storylines.ttystories.mjs";
 
-const area = (type) => class extends BOS.Model {
-  static type = type;
-  static dirname = type;
-};
-
-export class Storylines extends BOS.Model {
+export class Storylines extends BOS.Submodule {
   static type = "storylines";
-  static dirname = "storylines";
+  static ownerType = "workshop";
+  static dirname = ".BOS/storylines";
   static mandatory = false;
-  static children = [area("ttystories"), area("logs"), area("manifests")];
+  static submodules = { ttystories: Ttystories, logs: Logs, manifests: Manifests };
   static descriptors = {
     "metadata.json": (element, context) => ({
       origin: {
@@ -28,7 +27,7 @@ export class Storylines extends BOS.Model {
   // one JSON line per event: opening, closing, git hooks…
   record(event, context = {}) {
     const entry = { unixusat: Date.now(), host: context.env?.host ?? null, ...event };
-    if (!context.dryRun) appendFileSync(this.file("logs", "workshop.jsonl"), JSON.stringify(entry) + "\n");
+    if (!context.dryRun) appendFileSync(this.logs.file("workshop.jsonl"), JSON.stringify(entry) + "\n");
     return entry;
   }
 

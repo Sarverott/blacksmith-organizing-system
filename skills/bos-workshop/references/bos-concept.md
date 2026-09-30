@@ -53,6 +53,14 @@ or scrapbook instead of craftbook.
 Views (dashboards over CLI, web, mobile, Chrome extension, Electron, OpenAPI,
 MCP, with one shared handler class) has no settled location yet.
 
+### Modes of work (`.BOS/workshop.json` → "mode"; `bos mode`)
+
+1 ALMANAC: emergency (sinking) · 2 CONFORM: establish, migrate, clean, verify,
+sync workshops · 3 SMELTRY: code, development, publishing changes ·
+4 COMMANDORATE: rules, privileges, roles, mode switching · 5 PROVISION:
+presenting what a source of truth (e.g. GitHub) delivers. Commands declare
+their mode in `index.json`; `bos help` groups them. Glossary: mode.md.
+
 ### 3. Elements
 
 - **scope** (formerly superproject): a private repository with submodules,

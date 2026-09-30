@@ -33,7 +33,8 @@ src/
 ├── main.ts         spine: class BOS, binds the core and loads every part lazily
 ├── core/           skeleton logic: basic-model, -procedure, -controll, -view, -bridge, self
 ├── bridge/         outside systems shaped into plain methods, one directory each
-├── models/         actors: the physical assets of the workshop, one directory each
+├── models/         actors: the physical assets of the workshop, one directory each;
+│                   organs of an asset hang on it as models/<owner>/hang.<name>.mjs
 ├── procedures/     steps that close routed routines: DESCRIPTION.md + one file per step
 ├── controllers/    simplified management: plain methods that run procedures
 ├── commands/       what people call: index.json (path, info, help, inline, repl) per command
@@ -46,11 +47,21 @@ src/
 | ---- | ---- | ------- |
 | core + `main.ts` | the spine: execution order and the mechanics everything shares | |
 | bridges | one handler per outside system: `docker-host` (dockerode), `github-api` (octokit), `git-client` (isomorphic-git; local repos and Gitea remotes), `gitea-api` (fetch), `subprocess-runner`, … | `BOS.Bridge` |
-| models | the elements of `docs/glossary/` as classes: an element is a directory plus descriptor files | `BOS.Model` |
-| procedures | locating → loading → bootstrapping / inspecting / opening / closing / sinking / hooking / promoting | `BOS.Procedure` |
-| controllers | `WorkshopControll`: `status()`, `open()`, `close()`, `sink()`, `promote()`… | `BOS.Controll` |
-| commands | loaded from `commands/<name>/index.json`; `inline` for the CLI or an API, `repl` for interactive use | |
+| models | standalone assets of `docs/glossary/` (workshop, forge, scope, project, sarcophag…), built from a path | `BOS.Model` |
+| submodules | organs that exist only inside their owner (`.BOS` internals, `storylines/logs`, `craftbook/scrapnotes`), built from the owner and reached as properties: `workshop.storylines.logs` | `BOS.Submodule` |
+| procedures | locating → loading → bootstrapping / inspecting / opening / closing / sinking / hooking / promoting; skilling | `BOS.Procedure` |
+| controllers | `bos.workshop` (`status()`, `open()`, `close()`, `sink()`, `promote()`…), `bos.skills` (`scaffold()`) | `BOS.Controll` |
+| commands | loaded from `commands/<name>/index.json`; `inline` for the CLI or an API, `repl` for interactive use; `mode` names the mode of work it serves (glossary: mode) | |
 | views | status tree, help, promotion, inventory, repl; colors off for pipes and `NO_COLOR` | `BOS.View` |
+
+Models and submodules share one anatomy (`core/basic-element.mjs`: dirname,
+descriptors, children, ensure, inspect, seal, verify). To reshape an organ
+freely, change `extends BOS.Submodule` to `extends BOS.Model`, edit it, then
+roll it back: nothing else in the file changes.
+
+Every model can grow an agent skill: `bos skills` drafts
+`skills/bos-<type>/SKILL.md` from the glossary page and the model, for models
+that have none. Drafts are never overwritten; grow them by hand.
 
 Every part imports the spine the same way: `import { BOS } from "../../main.ts"`
 (Node ≥ 22.18 runs `.ts` directly). The spine never imports parts at load time,

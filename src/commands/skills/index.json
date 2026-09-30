@@ -1,0 +1,10 @@
+{
+    "path": "/skills",
+    "info": "draft an agent skill for every model that has none",
+    "mode": "smeltry",
+    "help": [
+        "./help.md",
+        "MD"
+    ],
+    "inline": "./exec.mjs"
+}

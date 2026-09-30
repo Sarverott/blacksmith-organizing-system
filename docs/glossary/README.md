@@ -23,6 +23,7 @@ An ordered workspace is described at three levels. Each page below belongs to on
 | ------- | ---- | ------------------- |
 | [workshop](workshop.md) | `~/__WORKSHOP`, `/media/**/__WORKSHOP` | root |
 | [system](system.md) | `__WORKSHOP/.BOS/` | BOS itself (internal) |
+| [mode](mode.md) | `.BOS/workshop.json` → `"mode"` | the kind of need served now: ALMANAC, CONFORM, SMELTRY, COMMANDORATE, PROVISION |
 | [devarmory](devarmory.md) | `__WORKSHOP/devarmory/` | tools: what work is done *with* |
 | [forge](forge.md) | `__WORKSHOP/forge/` | active: what is being worked *on* |
 | [craftbook](craftbook.md) | `__WORKSHOP/craftbook/` | knowledge: notes, recipes, procedures |

@@ -1,6 +1,7 @@
 // The state of a workshop: where it is, its role, where BOS sits, its tree, what changed.
 import { BOS } from "../../main.ts";
-import { HOST_ROLES } from "../../models/system/host-roles.mjs";
+import { HOST_ROLES } from "../../models/workshop/host-roles.mjs";
+import { modeLabel } from "../mode/_index.mjs";
 import { field, header, paint } from "../terminal/paint.mjs";
 import { drawTree } from "./tree.mjs";
 
@@ -22,6 +23,7 @@ export class StatusView extends BOS.View {
     if (context.config) {
       const { role } = context.config;
       lines.push(field("role", role ? `${paint.cyan(role)} ${paint.dim(HOST_ROLES[role])}` : paint.dim('not set: .BOS/workshop.json "role"')));
+      lines.push(field("mode", modeLabel(context.config.mode)));
     }
     lines.push(field("BOS", place(context.self)));
     const others = context.workshops.filter((path) => path !== context.workshopRoot);
