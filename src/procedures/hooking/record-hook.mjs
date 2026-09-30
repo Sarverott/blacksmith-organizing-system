@@ -8,6 +8,6 @@ export const recordHook = async (context) => {
   const storylines = context.workshop.storylines.ensure(context);
   context.event = storylines.record(
     { event: "git-hook", hook, repo, place: context.workshop.placeOf(repo), ...(await HOOKS[hook](repo)) },
-    context
+    context,
   );
 };

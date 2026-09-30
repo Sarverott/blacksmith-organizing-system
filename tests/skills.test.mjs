@@ -19,7 +19,10 @@ test("skilling drafts a skill per model, registers it, never overwrites", async 
 
   assert.equal(readFileSync(join(root, "skills", "bos-forge", "SKILL.md"), "utf8"), "hand-grown\n");
   const sheme = readFileSync(join(root, "skills", "bos-sheme", "SKILL.md"), "utf8");
-  assert.match(sheme, /^---\nname: bos-sheme\ndescription: "Source material that isn't code, kept next to the projects it belongs with\. Use when/);
+  assert.match(
+    sheme,
+    /^---\nname: bos-sheme\ndescription: "Source material that isn't code, kept next to the projects it belongs with\. Use when/,
+  );
   assert.ok(existsSync(join(root, "skills", "bos-craftbook", "SKILL.md")));
   const { skills } = JSON.parse(readFileSync(join(root, ".claude-plugin", "marketplace.json"), "utf8")).plugins[0];
   assert.equal(skills.length, context.skills.length);

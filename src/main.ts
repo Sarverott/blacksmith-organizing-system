@@ -13,6 +13,9 @@ import { BasicSubmodule } from "./core/basic-submodule.mjs";
 import { BasicView } from "./core/basic-view.mjs";
 
 type Options = { workshop?: string; dryRun?: boolean; [key: string]: unknown };
+// parts are loaded at runtime (bos.load()) and differ per part, so their registries stay open
+// biome-ignore lint/suspicious/noExplicitAny: dynamic registries of classes and functions
+type Registry = Record<string, any>;
 
 export class BOS extends EventEmitter {
   static Bridge = BasicBridge;
@@ -23,12 +26,12 @@ export class BOS extends EventEmitter {
   static View = BasicView;
 
   options: Options;
-  bridges: Record<string, any> = {};
-  models: Record<string, any> = {};
-  procedures: Record<string, any> = {};
-  controllers: Record<string, any> = {};
-  commands: Record<string, any> = {};
-  views: Record<string, any> = {};
+  bridges: Registry = {};
+  models: Registry = {};
+  procedures: Registry = {};
+  controllers: Registry = {};
+  commands: Registry = {};
+  views: Registry = {};
 
   constructor(options: Options = {}) {
     super();

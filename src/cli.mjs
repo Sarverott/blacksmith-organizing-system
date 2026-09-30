@@ -5,10 +5,12 @@ import { BOS } from "./main.ts";
 
 const args = process.argv.slice(2);
 const flags = Object.fromEntries(
-  args.filter((arg) => arg.startsWith("--")).map((arg) => {
-    const [key, value = true] = arg.slice(2).split("=");
-    return [key.replace(/-(\w)/g, (_, c) => c.toUpperCase()), value];
-  })
+  args
+    .filter((arg) => arg.startsWith("--"))
+    .map((arg) => {
+      const [key, value = true] = arg.slice(2).split("=");
+      return [key.replace(/-(\w)/g, (_, c) => c.toUpperCase()), value];
+    }),
 );
 const [name = "help", ...operands] = args.filter((arg) => !arg.startsWith("--"));
 

@@ -37,10 +37,16 @@ export class GiteaApi extends BOS.Bridge {
     }
   }
 
-  async me() { return (await this.request("GET", "/user")).login; }
+  async me() {
+    return (await this.request("GET", "/user")).login;
+  }
 
   async repos() {
-    return (await this.request("GET", "/user/repos")).map((r) => ({ name: r.full_name, private: r.private, url: r.clone_url }));
+    return (await this.request("GET", "/user/repos")).map((r) => ({
+      name: r.full_name,
+      private: r.private,
+      url: r.clone_url,
+    }));
   }
 
   // scopes are private by default

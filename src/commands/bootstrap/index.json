@@ -1,10 +1,7 @@
 {
-    "path": "/bootstrap",
-    "info": "create missing areas, descriptors and agent guides",
-    "mode": "conform",
-    "help": [
-        "./help.md",
-        "MD"
-    ],
-    "inline": "./exec.mjs"
+  "path": "/bootstrap",
+  "info": "create missing areas, descriptors and agent guides",
+  "mode": "conform",
+  "help": ["./help.md", "MD"],
+  "inline": "./exec.mjs"
 }

@@ -8,8 +8,10 @@ export class BasicSubmodule extends BasicElement {
 
   constructor(owner) {
     const { ownerType, dirname, name } = new.target;
-    if (!owner || !(owner instanceof BasicElement)) throw new Error(`${name} is a submodule: build it from its owner, not from a path`);
-    if (ownerType && owner.type !== ownerType) throw new Error(`${name} hangs on a ${ownerType}, not on a ${owner.type}`);
+    if (!owner || !(owner instanceof BasicElement))
+      throw new Error(`${name} is a submodule: build it from its owner, not from a path`);
+    if (ownerType && owner.type !== ownerType)
+      throw new Error(`${name} hangs on a ${ownerType}, not on a ${owner.type}`);
     super(owner.file(dirname), owner);
   }
 

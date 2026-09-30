@@ -102,3 +102,6 @@ So: add a new file rather than growing an old one, collect it in the nearest
    Husky's hooks run tests and commitlint; don't bypass them with `--no-verify`.
    Details: `docs/tutorials/committing-and-releasing.md`.
 9. Tests use vitest (`npm test`); write new ones in `tests/*.test.mjs`.
+10. Biome lints and formats (`npm run lint`, `npm run format`; config `biome.json`:
+    2 spaces, double quotes, semicolons, 120 columns). Silence a rule only with a
+    `// biome-ignore <rule>: <reason>` that says why.

@@ -22,9 +22,13 @@ export const installHooks = async (context) => {
   for (const hook of Object.keys(HOOKS)) {
     const target = join(root, ".git", "hooks", hook);
     if (existsSync(target)) context.skipped.push(target);
-    createIfMissing(target, () => {
-      writeFileSync(target, `#!/bin/sh\nexec node "${CLI}" hook ${hook} "$@"\n`);
-      chmodSync(target, 0o755);
-    }, context);
+    createIfMissing(
+      target,
+      () => {
+        writeFileSync(target, `#!/bin/sh\nexec node "${CLI}" hook ${hook} "$@"\n`);
+        chmodSync(target, 0o755);
+      },
+      context,
+    );
   }
 };

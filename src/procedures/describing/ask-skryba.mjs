@@ -26,13 +26,23 @@ export function assemble(answer, draft, signature) {
   } catch {
     return null;
   }
-  const subject = String(parsed?.subject ?? "").trim().replace(/\.$/, "");
+  const subject = String(parsed?.subject ?? "")
+    .trim()
+    .replace(/\.$/, "");
   if (!TYPES.includes(parsed?.type) || !subject) return null;
-  const scope = String(parsed.scope ?? "").trim().toLowerCase().replace(/[^a-z0-9,._-]/g, "");
+  const scope = String(parsed.scope ?? "")
+    .trim()
+    .toLowerCase()
+    .replace(/[^a-z0-9,._-]/g, "");
   const header = `${parsed.type}${scope ? `(${scope})` : ""}: ${subject}`.slice(0, 100);
-  const body = String(parsed.body ?? "").trim().split("\n").map((line) => line.trim()).filter(Boolean).join("\n");
+  const body = String(parsed.body ?? "")
+    .trim()
+    .split("\n")
+    .map((line) => line.trim())
+    .filter(Boolean)
+    .join("\n");
   const files = draft.split("\n\n").slice(1).join("\n\n").trim();
-  return [header, body, files, signature].filter(Boolean).join("\n\n") + "\n";
+  return `${[header, body, files, signature].filter(Boolean).join("\n\n")}\n`;
 }
 
 export const askSkryba = async (context) => {
@@ -51,10 +61,21 @@ export const askSkryba = async (context) => {
   const prompt = [
     `Hint from the file paths: type "${type}", scope "${scope ?? ""}". Keep them unless the diff clearly shows otherwise.`,
     "Write the subject about the purpose of the change: what it makes possible or fixes, not which files changed.",
-    "", "Recent commit subjects of this repository (for style):", recent || "(none)",
-    "", "Staged changes, stat:", stat, "", "Staged changes, diff (may be trimmed):", diff,
+    "",
+    "Recent commit subjects of this repository (for style):",
+    recent || "(none)",
+    "",
+    "Staged changes, stat:",
+    stat,
+    "",
+    "Staged changes, diff (may be trimmed):",
+    diff,
   ].join("\n");
-  const answer = await ollama.ask("skryba", prompt, { format: ANSWER, model, timeout: context.options.timeout ?? 60000 });
+  const answer = await ollama.ask("skryba", prompt, {
+    format: ANSWER,
+    model,
+    timeout: context.options.timeout ?? 90000,
+  });
   const message = answer && assemble(answer, context.message, `Drafted-by: Skryba (${model} via ollama)`);
   context.skryba = { used: Boolean(message), model, reason: message ? null : "no usable answer" };
   if (message) context.message = message;

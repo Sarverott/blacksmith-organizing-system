@@ -10,7 +10,7 @@ version is published by the pipeline. Nobody has to count versions.
 
 | Hook | What happens |
 | ---- | ------------ |
-| `pre-commit` | the tests run (`vitest`) |
+| `pre-commit` | [Biome](https://biomejs.dev) lints and formats the staged files (fixes go into the commit), then the tests run (`vitest`) |
 | `prepare-commit-msg` | `bos describe --hook` drafts the message from the staged changes |
 | `commit-msg` | `commitlint` checks that the message is a conventional commit |
 | `post-commit`, `post-checkout`, `post-merge` | `bos hook` records the event in the workshop's storylines |
@@ -39,14 +39,15 @@ OllamaLink bridge and the ravens loader. It also introduces the Skryba raven.
 A resources/ravens/skryba.md
 A src/bridge/ollama-link/_index.mjs
 
-Drafted-by: Skryba (llama3 via ollama)
+Drafted-by: Skryba (tulu3 via ollama)
 ```
 
 He only proposes. You edit or accept it in the editor, and nothing is
 committed or pushed without you. Without ollama, or with an unusable answer,
 the plain draft appears. `BOS_SKRYBA=0 git commit` skips him;
-`BOS_SKRYBA_MODEL=sebas` picks another model. A cold model takes ~40 s to load,
-a warm one ~7 s.
+`BOS_SKRYBA_MODEL=llama3.1:8b` picks another model. The first commit of a
+session waits for the model to load (up to ~90 s); it then stays warm for 30
+minutes, and later drafts take ~10 s.
 
 Change the type, scope or subject if the draft guessed wrong. A message given
 with `-m` is never touched, but commitlint still checks it. See

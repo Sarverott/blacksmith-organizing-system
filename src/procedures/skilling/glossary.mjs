@@ -14,6 +14,10 @@ export function section(page, name) {
 
 // first sentence of the first paragraph, plain text, on one line
 export function firstSentence(text) {
-  const paragraph = text.split(/\n\s*\n/)[0].replace(/\[([^\]]+)\]\([^)]+\)/g, "$1").replace(/\s+/g, " ").trim();
+  const paragraph = text
+    .split(/\n\s*\n/)[0]
+    .replace(/\[([^\]]+)\]\([^)]+\)/g, "$1")
+    .replace(/\s+/g, " ")
+    .trim();
   return (paragraph.match(/^.+?[.!?](?=\s|$)/)?.[0] ?? paragraph).replace(/:$/, ".");
 }

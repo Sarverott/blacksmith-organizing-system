@@ -14,7 +14,9 @@ export class SkillsView extends BOS.View {
       "",
       ...skills.map(({ name, created }) => `  ${pad(paint.cyan(name), 24)} ${state(created)}`),
       "",
-      registered.length ? `${dryRun ? "would register" : "registered"} ${registered.length} in marketplace.json` : paint.dim("marketplace up to date"),
+      registered.length
+        ? `${dryRun ? "would register" : "registered"} ${registered.length} in marketplace.json`
+        : paint.dim("marketplace up to date"),
     ].join("\n");
   }
 }

@@ -1,7 +1,18 @@
 // Which part of the project a path belongs to: the scope of a conventional commit.
 const BUILD = new Set([
-  "package.json", "package-lock.json", "Taskfile.yml", "vitest.config.mjs", "commitlint.config.mjs",
-  "release.config.mjs", "Dockerfile", "compose.yaml", ".dockerignore", "mkdocs.yml", ".readthedocs.yaml", ".gitignore",
+  "package.json",
+  "package-lock.json",
+  "Taskfile.yml",
+  "vitest.config.mjs",
+  "commitlint.config.mjs",
+  "release.config.mjs",
+  "biome.json",
+  "Dockerfile",
+  "compose.yaml",
+  ".dockerignore",
+  "mkdocs.yml",
+  ".readthedocs.yaml",
+  ".gitignore",
 ]);
 
 export function scopeOf(path) {
@@ -21,5 +32,7 @@ export function targetOf(path) {
   const parts = path.split("/");
   const base = parts.at(-1).replace(/\.[^.]+$/, "");
   if (parts[0] === "src" && parts.length > 3) return parts[2];
-  return ["_index", "index", "class", "README", "exec", "help"].includes(base) && parts.length > 1 ? parts.at(-2) : base;
+  return ["_index", "index", "class", "README", "exec", "help"].includes(base) && parts.length > 1
+    ? parts.at(-2)
+    : base;
 }

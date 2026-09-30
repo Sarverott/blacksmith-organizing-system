@@ -55,7 +55,9 @@
     "test": "vitest run",
     "bos": "node src/cli.mjs",
     "prepare": "husky",
-    "commit": "cz"
+    "commit": "cz",
+    "lint": "biome check .",
+    "format": "biome check --write ."
   },
   "publishConfig": {
     "access": "public",
@@ -68,6 +70,7 @@
     "ollama": "^0.6.4"
   },
   "devDependencies": {
+    "@biomejs/biome": "2.5.14",
     "@commitlint/cli": "^21.2.3",
     "@commitlint/config-conventional": "^21.2.3",
     "@commitlint/cz-commitlint": "^21.2.3",

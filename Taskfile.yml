@@ -72,6 +72,14 @@ tasks:
     cmds: ['npx vitest']
     interactive: true
 
+  lint:
+    desc: lint and format check with Biome (no writes)
+    cmds: ['npx biome check .']
+
+  format:
+    desc: apply Biome formatting and safe fixes
+    cmds: ['npx biome check --write .']
+
   check:
     desc: syntax-check every module
     cmds:

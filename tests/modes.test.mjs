@@ -4,7 +4,7 @@ import { join } from "node:path";
 import { PassThrough } from "node:stream";
 import { test } from "vitest";
 
-import { MODES, loadCommands, modeByDigit, views } from "../src/index.mjs";
+import { loadCommands, MODES, modeByDigit, views } from "../src/index.mjs";
 import { sandbox } from "./helpers.mjs";
 
 test("five modes, digits 1-5, in the order of the author", () => {
@@ -20,9 +20,22 @@ test("switching keeps workshop.json and records only real changes", async () => 
   await workshop.mode("3");
   await workshop.mode("smeltry");
   await workshop.mode("almanac");
-  assert.deepEqual(JSON.parse(readFileSync(join(root, ".BOS/workshop.json"), "utf8")), { name: "home", role: "forging-point", mode: "almanac" });
-  const events = readFileSync(join(root, ".BOS/storylines/logs/workshop.jsonl"), "utf8").trim().split("\n").map(JSON.parse);
-  assert.deepEqual(events.map(({ from, to }) => [from, to]), [["conform", "smeltry"], ["smeltry", "almanac"]]);
+  assert.deepEqual(JSON.parse(readFileSync(join(root, ".BOS/workshop.json"), "utf8")), {
+    name: "home",
+    role: "forging-point",
+    mode: "almanac",
+  });
+  const events = readFileSync(join(root, ".BOS/storylines/logs/workshop.jsonl"), "utf8")
+    .trim()
+    .split("\n")
+    .map(JSON.parse);
+  assert.deepEqual(
+    events.map(({ from, to }) => [from, to]),
+    [
+      ["conform", "smeltry"],
+      ["smeltry", "almanac"],
+    ],
+  );
   assert.equal((await workshop.status()).config.mode, "almanac");
   await assert.rejects(workshop.mode("castle"), /unknown mode "castle"/);
 });
@@ -48,7 +61,8 @@ test("commands are tagged with the mode they serve", async () => {
   assert.equal(commands.promote.mode, "smeltry");
   assert.equal(commands.mode.mode, "commandorate");
   assert.equal(commands.status.mode, null);
-  for (const command of Object.values(commands)) assert.ok(command.mode === null || command.mode in MODES, command.name);
+  for (const command of Object.values(commands))
+    assert.ok(command.mode === null || command.mode in MODES, command.name);
 });
 
 test("a first-time workshop is a forging point in CONFORM", async () => {
@@ -58,7 +72,12 @@ test("a first-time workshop is a forging point in CONFORM", async () => {
   assert.equal(status.config.mode, "conform");
   assert.deepEqual(status.defaulted, ["role", "mode"]);
   await workshop.bootstrap();
-  assert.deepEqual(JSON.parse(readFileSync(join(root, ".BOS/workshop.json"), "utf8")), { name: null, role: "forging-point", setternet: null, mode: "conform" });
+  assert.deepEqual(JSON.parse(readFileSync(join(root, ".BOS/workshop.json"), "utf8")), {
+    name: null,
+    role: "forging-point",
+    setternet: null,
+    mode: "conform",
+  });
 });
 
 test("null in workshop.json means not set; explicit values win over defaults", async () => {

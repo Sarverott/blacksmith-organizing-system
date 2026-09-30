@@ -1,8 +1,7 @@
 import assert from "node:assert/strict";
 import { test } from "vitest";
-
-import { askSkryba, assemble } from "../src/procedures/describing/ask-skryba.mjs";
 import { readRaven } from "../src/bridge/ollama-link/ravens.mjs";
+import { askSkryba, assemble } from "../src/procedures/describing/ask-skryba.mjs";
 
 const draft = "feat(procedures): add describing\n\nA src/procedures/describing/_index.mjs\n";
 const fakeOllama = (answer, available = true) => ({
@@ -13,14 +12,26 @@ const fakeOllama = (answer, available = true) => ({
 
 test("Skryba is a raven with a model, a duty and a prompt", () => {
   const skryba = readRaven("skryba");
-  assert.equal(skryba.model, "llama3");
+  assert.equal(skryba.model, "tulu3");
   assert.match(skryba.duty, /commit messages/);
   assert.match(skryba.system, /conventional commit/);
 });
 
 test("a good answer becomes a valid message that keeps the file list", () => {
-  const message = assemble({ type: "feat", scope: "Procedures", subject: "let commits describe themselves.", body: "drafts from staged paths\n  refined by Skryba" }, draft, "Drafted-by: Skryba (llama3 via ollama)");
-  assert.equal(message, "feat(procedures): let commits describe themselves\n\ndrafts from staged paths\nrefined by Skryba\n\nA src/procedures/describing/_index.mjs\n\nDrafted-by: Skryba (llama3 via ollama)\n");
+  const message = assemble(
+    {
+      type: "feat",
+      scope: "Procedures",
+      subject: "let commits describe themselves.",
+      body: "drafts from staged paths\n  refined by Skryba",
+    },
+    draft,
+    "Drafted-by: Skryba (llama3 via ollama)",
+  );
+  assert.equal(
+    message,
+    "feat(procedures): let commits describe themselves\n\ndrafts from staged paths\nrefined by Skryba\n\nA src/procedures/describing/_index.mjs\n\nDrafted-by: Skryba (llama3 via ollama)\n",
+  );
 });
 
 test("a bad answer is refused", () => {
@@ -35,7 +46,9 @@ test("Skryba refines the draft, or leaves it when he can't help", async () => {
     await askSkryba(context);
     return context;
   };
-  const good = await run(fakeOllama({ type: "feat", scope: "procedures", subject: "let commits describe themselves", body: "why" }));
+  const good = await run(
+    fakeOllama({ type: "feat", scope: "procedures", subject: "let commits describe themselves", body: "why" }),
+  );
   assert.match(good.message, /^feat\(procedures\): let commits describe themselves\n\nwhy\n/);
   assert.equal(good.skryba.used, true);
 
@@ -45,4 +58,21 @@ test("Skryba refines the draft, or leaves it when he can't help", async () => {
 
   const confused = await run(fakeOllama("¯\\_(ツ)_/¯"));
   assert.equal(confused.message, draft);
+});
+
+test("the resting EON family is never called", async () => {
+  const { default: OllamaLink } = await import("../src/bridge/ollama-link/_index.mjs");
+  const { isResting } = await import("../src/bridge/ollama-link/ravens.mjs");
+  for (const model of [
+    "EON-beta___Chronus:latest",
+    "sarverott/EON-alfa:latest",
+    "EON-alfa---Pozeralka:latest",
+    "sarverott/Plutarhist:latest",
+  ]) {
+    assert.equal(isResting(model), true, model);
+  }
+  assert.equal(isResting("tulu3"), false);
+  const link = new OllamaLink({ host: "http://127.0.0.1:9" }); // unreachable on purpose: nothing may be sent
+  assert.equal(await link.available("EON-beta___Chronus"), false);
+  await assert.rejects(link.ask("skryba", "hello", { model: "EON-beta___Chronus" }), /is resting and is not called/);
 });

@@ -13,4 +13,18 @@ import promoting from "./promoting/_index.mjs";
 import sinking from "./sinking/_index.mjs";
 import skilling from "./skilling/_index.mjs";
 
-export default { locating, loading, inspecting, bootstrapping, opening, closing, sinking, hooking, installingHooks, promoting, skilling, modeSwitching, describing };
+export default {
+  locating,
+  loading,
+  inspecting,
+  bootstrapping,
+  opening,
+  closing,
+  sinking,
+  hooking,
+  installingHooks,
+  promoting,
+  skilling,
+  modeSwitching,
+  describing,
+};

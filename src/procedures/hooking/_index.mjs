@@ -5,5 +5,8 @@ import { installHooks } from "./install-hooks.mjs";
 import { recordHook } from "./record-hook.mjs";
 
 export const hooking = loading.chain(new BOS.Procedure("hooking").step("record hook", recordHook), "hooking");
-export const installingHooks = locating.chain(new BOS.Procedure("installing-hooks").step("link hooks", installHooks), "installing-hooks");
+export const installingHooks = locating.chain(
+  new BOS.Procedure("installing-hooks").step("link hooks", installHooks),
+  "installing-hooks",
+);
 export default hooking;

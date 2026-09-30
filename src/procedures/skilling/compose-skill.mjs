@@ -41,5 +41,9 @@ export function composeSkill({ Model, type, page }) {
 }
 
 export const composeSkills = (context) => {
-  context.skills = context.models.map((model) => ({ type: model.type, name: `bos-${model.type}`, text: composeSkill(model) }));
+  context.skills = context.models.map((model) => ({
+    type: model.type,
+    name: `bos-${model.type}`,
+    text: composeSkill(model),
+  }));
 };

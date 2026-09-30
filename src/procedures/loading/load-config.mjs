@@ -9,7 +9,7 @@ export const loadConfig = (context) => {
   const defaults = JSON.parse(readFileSync(join(RESOURCES, "workshop.default.json"), "utf8"));
   context.workshop = new Workshop(context.workshopRoot);
   const own = Object.fromEntries(
-    Object.entries(context.workshop.system.readJSON("workshop.json", {})).filter(([, value]) => value !== null)
+    Object.entries(context.workshop.system.readJSON("workshop.json", {})).filter(([, value]) => value !== null),
   );
   context.config = { ...defaults, ...own };
   context.defaulted = Object.keys(defaults).filter((key) => !(key in own) && defaults[key] !== null);

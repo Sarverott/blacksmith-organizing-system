@@ -10,14 +10,14 @@ export class System extends BOS.Submodule {
   static ownerType = "workshop";
   static dirname = ".BOS";
   static descriptors = {
-    "workshop.json": (element, context) => context.config ?? {},
+    "workshop.json": (_element, context) => context.config ?? {},
     "Taskfile.yaml": workshopTaskfile,
   };
 
   // change some fields of workshop.json, keep every other one
   update(fields, context = {}) {
     const next = { ...this.readJSON("workshop.json", {}), ...fields };
-    if (!context.dryRun) writeFileSync(this.file("workshop.json"), JSON.stringify(next, null, 2) + "\n");
+    if (!context.dryRun) writeFileSync(this.file("workshop.json"), `${JSON.stringify(next, null, 2)}\n`);
     return next;
   }
 }

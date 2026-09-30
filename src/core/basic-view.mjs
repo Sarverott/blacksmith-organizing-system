@@ -11,7 +11,11 @@ export class BasicView {
   }
 
   // what a machine interface receives; defaults to the whole state
-  data(state) { return state; }
+  data(state) {
+    return state;
+  }
 
-  text(state) { return String(state); }
+  text(state) {
+    return String(state);
+  }
 }

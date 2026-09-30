@@ -28,6 +28,18 @@ jobs:
       - run: npm ci
       - run: npm test
 
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 24.x
+          cache: npm
+      - run: npm ci
+      - name: biome (lint + format, no writes)
+        run: npx biome ci .
+
   commits:
     if: github.event_name == 'pull_request'
     runs-on: ubuntu-latest
