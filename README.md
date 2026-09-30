@@ -1,6 +1,18 @@
-# bos-skillset
+```
+      █▄▄ █░░ ▄▀█ █▀▀ █▄▀ █▀ █▀▄▀█ █ ▀█▀ █░█
+      █▄█ █▄▄ █▀█ █▄▄ █░█ ▄█ █░▀░█ █ ░█░ █▀█
 
-Agent skills for the **Blacksmith Organization System (BOS)**: a convention that
+   █▀█ █▀█ █▀▀ ▄▀█ █▄░█ █ ▀█ ▄▀█ ▀█▀ █ █▀█ █▄░█
+   █▄█ █▀▄ █▄█ █▀█ █░▀█ █ █▄ █▀█ ░█░ █ █▄█ █░▀█
+
+             █▀ █▄█ █▀ ▀█▀ █▀▀ █▀▄▀█
+             ▄█ ░█░ ▄█ ░█░ ██▄ █░▀░█
+```
+> ###### [Sett Sarverott](https://github.com/Sarverott) @ 2019-2026
+
+# Blacksmith Organization System
+
+Package files, sourcecode of server, client for end-user access and agent skills for the **Blacksmith Organization System (BOS)**: a convention that
 makes `~/__WORKSHOP` (per user) and `/media/**/__WORKSHOP` (per partition) the
 default root of code crafting.
 

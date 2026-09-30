@@ -31,5 +31,12 @@
   },
   "scripts": {
     "test": "task test"
+  },
+  "devDependencies": {
+    "@go-task/cli": "^3.53.1",
+    "dockerode": "^5.0.1",
+    "isomorphic-git": "^1.42.4",
+    "octokit": "^5.0.5",
+    "skills": "^1.7.0"
   }
 }
