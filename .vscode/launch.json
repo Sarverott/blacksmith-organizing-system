@@ -4,18 +4,18 @@
     {
       "type": "node",
       "request": "launch",
-      "name": "bos status",
+      "name": "bos workshop status",
       "skipFiles": ["<node_internals>/**"],
       "program": "${workspaceFolder}/src/cli.mjs",
-      "args": ["status"]
+      "args": ["workshop", "status"]
     },
     {
       "type": "node",
       "request": "launch",
-      "name": "bos bootstrap (dry run)",
+      "name": "bos workshop bootstrap (dry run)",
       "skipFiles": ["<node_internals>/**"],
       "program": "${workspaceFolder}/src/cli.mjs",
-      "args": ["bootstrap", "--dry-run"]
+      "args": ["workshop", "bootstrap", "--dry-run"]
     },
     {
       "type": "node",

@@ -1,6 +1,0 @@
-{
-  "path": "/repl",
-  "info": "interactive BOS: every command at a prompt",
-  "help": ["./help.md", "MD"],
-  "inline": "./exec.mjs"
-}

@@ -16,14 +16,14 @@ Without `npm link`, use `node src/cli.mjs <command>` or `task <command>`.
 Check it:
 
 ```bash
-bos locate      # prints the workshop and "forge / blacksmith-organization-system / bos-skillset"
+bos workshop locate      # prints the workshop and "forge / blacksmith-organization-system / bos-skillset"
 task test
 ```
 
 Container instead:
 
 ```bash
-docker compose run --rm bos status      # mounts $BOS_WORKSHOP or ~/__WORKSHOP at /workshop
+docker compose run --rm bos workshop status      # mounts $BOS_WORKSHOP or ~/__WORKSHOP at /workshop
 ```
 
 Next: [getting started](GETTING_STARTED.md)

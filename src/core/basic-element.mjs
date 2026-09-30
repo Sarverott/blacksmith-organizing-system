@@ -16,6 +16,7 @@ export class BasicElement {
   static children = []; // fixed child models (areas)
   static submodules = {}; // { property: Submodule } organs hanging on this element
   static descriptors = {}; // { filename: (element, context) => default content }
+  static toolkit = []; // tools of this model (core/toolkit.mjs): bos <type> <tool>
 
   constructor(path, parent = null) {
     this.path = path;

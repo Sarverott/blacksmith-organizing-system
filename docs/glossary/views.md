@@ -25,6 +25,12 @@ workshop state is described once and rendered by many interfaces.
 [`TODO`] Views is probably more a code layer (interfaces) than a directory.
 If it keeps files, *(assumed)* `.BOS/views/`.
 
+## In code
+
+`src/views/`: status tree, help, House, promotion, inventory, mode menu, repl;
+`views/mcp/` serves BOS as an MCP server for AI agents (read-only tools), and
+`views/agent/` writes the brief an agent gets at the start of a session.
+
 ## Relations
 
 Replaces the removed `src/interfaces/` (cli-repl, http-api, socket-server).

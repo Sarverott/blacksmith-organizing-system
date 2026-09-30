@@ -23,7 +23,7 @@ test("branch flow follows the infographic", () => {
 });
 
 test("git-client walks one station of the branch flow", async () => {
-  const { root, workshop } = await sandbox();
+  const { root, bos } = await sandbox();
   const repo = join(root, "forge/scope/project");
   mkdirSync(repo, { recursive: true });
   const git = new bridges.gitClient();
@@ -36,15 +36,15 @@ test("git-client walks one station of the branch flow", async () => {
   writeFileSync(join(repo, "b.txt"), "work\n");
   await git.commit(repo, "work");
 
-  const plan = await workshop.run("promoting", { cwd: repo, dryRun: true });
+  const plan = await bos.repository.run("promoting", { cwd: repo, dryRun: true });
   assert.equal(plan.to, "revision");
   assert.ok(plan.plan[0].startsWith("merge developement into revision"));
 
   writeFileSync(join(repo, "dirty.txt"), "unsaved\n");
-  await assert.rejects(workshop.run("promoting", { cwd: repo, dryRun: false }), /uncommitted changes/);
+  await assert.rejects(bos.repository.run("promoting", { cwd: repo, dryRun: false }), /uncommitted changes/);
   await git.commit(repo, "save");
 
-  await workshop.run("promoting", { cwd: repo, dryRun: false });
+  await bos.repository.run("promoting", { cwd: repo, dryRun: false });
   assert.equal(await git.branch(repo), "revision");
   assert.ok(existsSync(join(repo, "b.txt")));
   assert.equal((await git.log(repo, 1))[0].message, "developement → revision");

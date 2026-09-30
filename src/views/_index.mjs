@@ -1,5 +1,6 @@
 // Every view: how BOS presents itself. Each renders text for people or json for machines.
 import HelpView from "./help/_index.mjs";
+import HouseView from "./house/_index.mjs";
 import InventoryView from "./inventory/_index.mjs";
 import ModeView from "./mode/_index.mjs";
 import { chooseDigit } from "./mode/chooser.mjs";
@@ -9,4 +10,14 @@ import SkillsView from "./skills/_index.mjs";
 import StatusView from "./status/_index.mjs";
 
 export { paint } from "./terminal/paint.mjs";
-export default { StatusView, HelpView, PromotionView, InventoryView, SkillsView, ModeView, chooseDigit, startRepl };
+export default {
+  StatusView,
+  HelpView,
+  HouseView,
+  PromotionView,
+  InventoryView,
+  SkillsView,
+  ModeView,
+  chooseDigit,
+  startRepl,
+};

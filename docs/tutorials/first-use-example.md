@@ -5,9 +5,9 @@ A safe rehearsal in a temporary directory:
 ```bash
 export BOS_WORKSHOP=/tmp/demo/__WORKSHOP
 
-bos bootstrap --dry-run     # plan only; nothing exists yet
-bos open                    # the workshop appears
-bos status
+bos workshop bootstrap --dry-run     # plan only; nothing exists yet
+bos workshop open                    # the workshop appears
+bos workshop status
 ```
 
 ```
@@ -32,14 +32,14 @@ Put work where it belongs:
 ```bash
 mkdir -p $BOS_WORKSHOP/forge/my-scope && cd $BOS_WORKSHOP/forge/my-scope
 git clone <repo> my-project && cd my-project
-bos hooks install           # commits now leave a trace in storylines
+bos project install-hooks           # commits now leave a trace in storylines
 echo "idea…" > $BOS_WORKSHOP/craftbook/scrapnotes/idea.md
 ```
 
 End the session:
 
 ```bash
-history -a && bos close
+history -a && bos workshop close
 cat $BOS_WORKSHOP/.BOS/storylines/logs/workshop.jsonl
 ```
 
@@ -49,4 +49,4 @@ cat $BOS_WORKSHOP/.BOS/storylines/logs/workshop.jsonl
 {"unixusat":1790736014427,"host":"setternet-H1","event":"close","user":"sarverott","ttystory":".../ttystories/ttystory-setternet-H1-1790736014426.txt"}
 ```
 
-For your real workshop, drop `BOS_WORKSHOP` and run `bos open` from anywhere inside it.
+For your real workshop, drop `BOS_WORKSHOP` and run `bos workshop open` from anywhere inside it.

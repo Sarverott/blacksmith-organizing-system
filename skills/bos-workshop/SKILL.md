@@ -13,7 +13,7 @@ standard working area and default root of code crafting.
 - **Per user:** `~/__WORKSHOP`
 - **Per partition:** `/media/**/__WORKSHOP` (any mounted partition)
 
-To find the active workshop, run `bos locate` (or `node <bos-skillset>/src/cli.mjs locate`);
+To find the active workshop, run `bos workshop locate` (or `node <bos-skillset>/src/cli.mjs locate`);
 without Node, `scripts/find-workshop.sh`. Resolution order:
 
 1. `--workshop=PATH` option
@@ -22,7 +22,7 @@ without Node, `scripts/find-workshop.sh`. Resolution order:
 4. The workshop BOS itself is installed in
 5. `~/__WORKSHOP`
 
-`bos status` shows what is missing (read-only); `bos bootstrap` creates it
+`bos workshop status` shows what is missing (read-only); `bos workshop bootstrap` creates it
 (never overwrites; `--dry-run` to plan).
 
 ## Standard areas

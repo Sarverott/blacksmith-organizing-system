@@ -8,7 +8,7 @@ Needed:
 Optional:
 
 - **Task** (taskfile.dev): installed with the dev dependencies as `@go-task/cli`; runs `Taskfile.yml`
-- **gh**: pull requests in `bos promote` (releasing → master)
+- **gh**: pull requests in `bos project promote` (releasing → master)
 - **Docker**: run BOS in a container (`compose.yaml`)
 - **Obsidian**: browse `docs/` as a vault
 

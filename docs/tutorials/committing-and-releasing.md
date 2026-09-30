@@ -11,7 +11,7 @@ version is published by the pipeline. Nobody has to count versions.
 | Hook | What happens |
 | ---- | ------------ |
 | `pre-commit` | [Biome](https://biomejs.dev) lints and formats the staged files (fixes go into the commit), then the tests run (`vitest`) |
-| `prepare-commit-msg` | `bos describe --hook` drafts the message from the staged changes |
+| `prepare-commit-msg` | `bos project prepare-message` drafts the message from the staged changes |
 | `commit-msg` | `commitlint` checks that the message is a conventional commit |
 | `post-commit`, `post-checkout`, `post-merge` | `bos hook` records the event in the workshop's storylines |
 
@@ -51,7 +51,7 @@ minutes, and later drafts take ~10 s.
 
 Change the type, scope or subject if the draft guessed wrong. A message given
 with `-m` is never touched, but commitlint still checks it. See
-`bos describe` (or `task describe`) for the draft without committing.
+`bos project describe` (or `task describe`) for the draft without committing.
 
 ### Guided commits: commitizen
 
@@ -89,7 +89,7 @@ has its own channel:
 The baseline is the tag **`v0.7.0`**. The old line reached 0.6.1 in its
 source and 0.4.2 on npm under the same package name. Only `master` writes
 the version into `package.json` and `CHANGELOG.md`; prereleases live in tags.
-`bos --version` and `bos status` show the version of the installation.
+`bos --version` and `bos workshop status` show the version of the installation.
 
 ## Releasing
 

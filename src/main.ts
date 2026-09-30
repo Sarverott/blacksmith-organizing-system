@@ -30,7 +30,6 @@ export class BOS extends EventEmitter {
   models: Registry = {};
   procedures: Registry = {};
   controllers: Registry = {};
-  commands: Registry = {};
   views: Registry = {};
 
   constructor(options: Options = {}) {
@@ -40,12 +39,11 @@ export class BOS extends EventEmitter {
 
   // parts import this file, so they are loaded here on demand, never at import time
   async load(): Promise<this> {
-    const [bridges, models, procedures, controllers, commands, views] = await Promise.all([
+    const [bridges, models, procedures, controllers, views] = await Promise.all([
       import("./bridge/_index.mjs"),
       import("./models/_index.mjs"),
       import("./procedures/_index.mjs"),
       import("./controllers/_index.mjs"),
-      import("./commands/_index.mjs"),
       import("./views/_index.mjs"),
     ]);
     this.bridges = bridges.default;
@@ -53,25 +51,34 @@ export class BOS extends EventEmitter {
     this.procedures = procedures.default;
     this.controllers = controllers.default;
     this.views = views.default;
-    this.commands = await commands.loadCommands();
     this.emit("loaded", this);
     return this;
   }
 
-  // the workshop as one easy handle: bos.workshop.status(), .open(), .close()…
+  // the remotes: bos.execution runs tools; bos.workshop / bos.house / bos.repository hold the flows
+  get execution() {
+    this._execution ??= new this.controllers.ExecutionControll(this.options, {
+      models: this.models,
+      views: this.views,
+    });
+    return this._execution;
+  }
   get workshop() {
-    return new this.controllers.WorkshopControll(this.options);
+    return this.execution.controllers.workshop;
+  }
+  get house() {
+    return this.execution.controllers.house;
+  }
+  get repository() {
+    return this.execution.controllers.repository;
   }
 
-  // the agent skills of this repository: bos.skills.scaffold()
-  get skills() {
-    return new this.controllers.SkillsControll(this.options);
+  // bos.call("workshop", "status") → the tool's result; bos.run(["workshop", "status"]) → rendered text
+  async call(model: string, tool: string, input: Record<string, unknown> = {}) {
+    return (await this.execution.call(model, tool, input)).result;
   }
-
-  async command(name: string, operands: string[] = [], flags: Options = {}) {
-    const command = this.commands[name];
-    if (!command) throw new Error(`unknown command "${name}" (known: ${Object.keys(this.commands).join(", ")})`);
-    return command.inline({ bos: this, operands, flags: { ...this.options, ...flags } });
+  run(args: string[], extras: Record<string, unknown> = {}) {
+    return this.execution.dispatch(args, extras);
   }
 
   toString() {

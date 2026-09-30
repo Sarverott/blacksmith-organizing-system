@@ -9,7 +9,7 @@ build:
     python: "3.12"   # same as docs/.python-version
 
 mkdocs:
-  configuration: mkdocs.yml
+  configuration: docs/mkdocs.yml
   fail_on_warning: true
 
 # generated from docs/pyproject.toml by `task docs:lock`

@@ -1,0 +1,40 @@
+{
+  "description": "BOS as the agent's suit: a brief at session start, the agent's shell commands and sessions recorded in the workshop's storylines",
+  "hooks": {
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node \"${CLAUDE_PLUGIN_ROOT}/src/agent-hook.mjs\" session-start",
+            "timeout": 20
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node \"${CLAUDE_PLUGIN_ROOT}/src/agent-hook.mjs\" bash",
+            "async": true,
+            "timeout": 20
+          }
+        ]
+      }
+    ],
+    "SessionEnd": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node \"${CLAUDE_PLUGIN_ROOT}/src/agent-hook.mjs\" session-end",
+            "timeout": 5
+          }
+        ]
+      }
+    ]
+  }
+}

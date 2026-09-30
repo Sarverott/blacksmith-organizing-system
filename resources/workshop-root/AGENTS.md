@@ -85,8 +85,8 @@ scripts and session setup) and recipes.
 BOS lives in the forge like any project:
 `forge/blacksmith-organization-system/bos-skillset`
 (https://github.com/Sarverott/blacksmith-organization-system).
-This file is deployed from its `resources/workshop-root/` by `bos bootstrap`.
+This file is deployed from its `resources/workshop-root/` by `bos workshop bootstrap`.
 
-- `bos status` shows the workshop tree and what is missing; `bos open` / `bos close` run the procedures
+- `bos workshop status` shows the workshop tree and what is missing; `bos workshop open` / `bos workshop close` run the procedures
 - definition of every element, one page each: `bos-skillset/docs/glossary/`
 - agent skill: `bos-skillset/skills/bos-workshop/`

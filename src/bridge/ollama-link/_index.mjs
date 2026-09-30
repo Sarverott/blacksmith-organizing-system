@@ -1,9 +1,11 @@
 // Local language models through the ollama client (host: options.host, $OLLAMA_HOST
 // or http://127.0.0.1:11434). Ravens (resources/ravens/) speak through it.
+// Before any call the House (resources/house/) is asked: only active residents are called.
 import { Ollama } from "ollama";
 
 import { BOS } from "../../main.ts";
-import { isResting, listRavens, readRaven, resting } from "./ravens.mjs";
+import House from "../../models/house/class.mjs";
+import { listRavens, readRaven } from "./ravens.mjs";
 
 export class OllamaLink extends BOS.Bridge {
   static id = "ollama-link";
@@ -30,12 +32,29 @@ export class OllamaLink extends BOS.Bridge {
     }
   }
 
+  // names, architectures and parents of the served models: reading the list starts no model
+  async catalog() {
+    const listed = await this.within(2000, () => this.client.list());
+    return (
+      listed?.models.map((m) => ({
+        name: m.name,
+        family: m.details?.family ?? null,
+        parent: m.details?.parent_model || null,
+      })) ?? []
+    );
+  }
+
   async models() {
-    return (await this.within(2000, () => this.client.list()))?.models.map((m) => m.name) ?? [];
+    return (await this.catalog()).map((entry) => entry.name);
+  }
+
+  get house() {
+    this._house ??= new House();
+    return this._house;
   }
 
   async available(model) {
-    if (isResting(model)) return false;
+    if (model && !this.house.mayCall(model)) return false;
     const models = await this.models();
     return model ? models.some((name) => name === model || name === `${model}:latest`) : models.length > 0;
   }
@@ -52,7 +71,8 @@ export class OllamaLink extends BOS.Bridge {
   async ask(ravenName, prompt, { format, timeout = 90000, model, keepAlive = "30m" } = {}) {
     const raven = this.raven(ravenName);
     const chosen = model ?? process.env[`BOS_${ravenName.toUpperCase()}_MODEL`] ?? raven.model;
-    if (isResting(chosen)) throw new Error(`${chosen} is resting and is not called. ${resting().reason}`);
+    const { state, reason } = this.house.stateOf(chosen);
+    if (state !== "active") throw new Error(`${chosen} is ${state} and is not called.${reason ? ` ${reason}` : ""}`);
     const response = await this.within(timeout, () =>
       this.client.chat({
         model: chosen,

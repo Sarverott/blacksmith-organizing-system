@@ -66,4 +66,4 @@ jobs:
           cache-dependency-path: docs/requirements.txt
       - run: pip install -r docs/requirements.txt
       - name: strict build, as Read the Docs does
-        run: mkdocs build --strict
+        run: mkdocs build --strict -f docs/mkdocs.yml

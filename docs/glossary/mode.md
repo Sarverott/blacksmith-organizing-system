@@ -29,7 +29,7 @@ and, later, give each mode its own mechanics of models.
 `null` or a missing value means "not set", and the default applies. Every switch is recorded in storylines
 (`{"event":"mode","from":…,"to":…}`).
 
-`bos mode` shows the menu and takes one digit (0 leaves); `bos mode <name|digit>`
+`bos workshop mode` shows the menu and takes one digit (0 leaves); `bos workshop mode <name|digit>`
 switches directly. Switching modes is itself a COMMANDORATE act.
 
 ## Relations
@@ -41,7 +41,7 @@ Each command declares the mode it serves (`"mode"` in its `index.json`), and
 - CONFORM: `bootstrap`, `open`, `close`, `seal`, `verify`
 - SMELTRY: `promote`, `hooks`, `hook`, `skills`
 - COMMANDORATE: `mode`
-- PROVISION: nothing yet
+- PROVISION: `house`
 - general (any mode): `help`, `locate`, `status`, `repl`
 
 ## Open questions

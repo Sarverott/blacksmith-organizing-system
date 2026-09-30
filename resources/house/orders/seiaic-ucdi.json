@@ -1,0 +1,5 @@
+{
+  "title": "SEIAIC / UCDI delegation",
+  "description": "The author wrote: \"Astra and DeepSeek are SEIAIC units or UCDI delegation... i think\". [TODO] confirm which, and what SEIAIC and UCDI stand for.",
+  "members": [{ "name": "Astra", "kind": "remote" }, { "name": "DeepSeek", "kind": "remote" }]
+}

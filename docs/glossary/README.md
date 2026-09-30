@@ -55,6 +55,7 @@ Internal parts of `.BOS/`:
 | [collection](collection.md) | craftbook? | [`TODO`] |
 | [postroad](postroad.md) | ? | [`TODO`] |
 | [element anatomy](element-anatomy.md) | any | The descriptor files that most elements carry |
+| [house](house.md) | resources/house | The House of Anubis as code: families of AI residents with states (active, resting, frozen) |
 | [raven](raven.md) | resources/ravens | AI helper with one duty, through local ollama (Skryba writes commit messages) |
 
 ## Tree

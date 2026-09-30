@@ -1,7 +1,0 @@
-{
-  "path": "/promote",
-  "info": "move the current branch one station along the flow",
-  "mode": "smeltry",
-  "help": ["./help.md", "MD"],
-  "inline": "./exec.mjs"
-}

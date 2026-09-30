@@ -30,7 +30,7 @@ the minimal branches of every repository:
 | `releasing` | stamping, publishing, announcing; lands in master through a pull request |
 
 A rejection at revision, testing or releasing sends work back to developement.
-`bos promote` walks this flow (`src/procedures/promoting/`).
+`bos project promote` walks this flow (`src/procedures/promoting/`).
 
 Older plan (old core `docs/README.md`): development → testing → master →
 canonical (confirmed by the Canon Keeper).

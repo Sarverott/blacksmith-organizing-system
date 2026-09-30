@@ -31,14 +31,15 @@ keep the two consistent, and write the page first when adding an element.
 ```
 src/
 ├── main.ts         spine: class BOS, binds the core and loads every part lazily
-├── core/           skeleton logic: basic-model, -procedure, -controll, -view, -bridge, self
+├── core/           skeleton logic: basic-element/-model/-submodule, -procedure, -controll, -view,
+│                   -bridge, toolkit (the one tool format), self
 ├── bridge/         outside systems shaped into plain methods, one directory each
 ├── models/         actors: the physical assets of the workshop, one directory each;
-│                   organs of an asset hang on it as models/<owner>/hang.<name>.mjs
+│                   organs hang on their owner as models/<owner>/hang.<name>.mjs;
+│                   a model's tools live next to it: models/<model>/toolkit.mjs
 ├── procedures/     steps that close routed routines: DESCRIPTION.md + one file per step
-├── controllers/    simplified management: plain methods that run procedures
-├── commands/       what people call: index.json (path, info, help, inline, repl) per command
-├── views/          how BOS presents itself: text for people, json for machines, repl
+├── controllers/    remotes: execution (main process, tool registry), workshop, house, repository
+├── views/          how BOS presents itself: text, json, help, repl, MCP, agent brief
 ├── cli.mjs         `bos`: parse, load, dispatch, print
 └── index.mjs       library entry
 ```
@@ -50,16 +51,20 @@ src/
 | models | standalone assets of `docs/glossary/` (workshop, forge, scope, project, sarcophag…), built from a path | `BOS.Model` |
 | submodules | organs that exist only inside their owner (`.BOS` internals, `storylines/logs`, `craftbook/scrapnotes`), built from the owner and reached as properties: `workshop.storylines.logs` | `BOS.Submodule` |
 | procedures | locating → loading → bootstrapping / inspecting / opening / closing / sinking / hooking / promoting; skilling | `BOS.Procedure` |
-| controllers | `bos.workshop` (`status()`, `open()`, `close()`, `sink()`, `promote()`…), `bos.skills` (`scaffold()`) | `BOS.Controll` |
-| commands | loaded from `commands/<name>/index.json`; `inline` for the CLI or an API, `repl` for interactive use; `mode` names the mode of work it serves (glossary: mode) | |
-| views | status tree, help, promotion, inventory, repl; colors off for pipes and `NO_COLOR` | `BOS.View` |
+| tools | `models/<model>/toolkit.mjs`: `{ name, info, mode, input (zod), positional, readOnly, run, render }`, called as `bos <model> <tool>`; the same entry is the CLI call, the MCP tool (read-only ones only), the help, and (next) the OpenAPI operation and the skill | `core/toolkit.mjs` |
+| controllers | remotes: `bos.execution` gathers every tool, validates input and routes calls; `bos.workshop`, `bos.house`, `bos.repository` hold the flows the tools run | `BOS.Controll` |
+| views | status tree, help, House, promotion, inventory, repl, MCP server (`views/mcp`), agent brief (`views/agent`); colors off for pipes and `NO_COLOR` | `BOS.View` |
 
 Models and submodules share one anatomy (`core/basic-element.mjs`: dirname,
 descriptors, children, ensure, inspect, seal, verify). To reshape an organ
 freely, change `extends BOS.Submodule` to `extends BOS.Model`, edit it, then
 roll it back: nothing else in the file changes.
 
-Every model can grow an agent skill: `bos skills` drafts
+BOS is also a Claude Code plugin, the agent's suit (`.claude-plugin/plugin.json`,
+`hooks/hooks.json`, `bin/bos`, MCP via `src/mcp.mjs`): see
+`docs/tutorials/agent-suit.md`.
+
+Every model can grow an agent skill: `bos project skills` drafts
 `skills/bos-<type>/SKILL.md` from the glossary page and the model, for models
 that have none. Drafts are never overwritten; grow them by hand.
 
@@ -92,7 +97,7 @@ So: add a new file rather than growing an old one, collect it in the nearest
 3. Outside systems are reached only through bridges: dockerode, octokit and
    isomorphic-git live there, nowhere else.
 4. Test against a temporary workshop (`--workshop=` / `BOS_WORKSHOP`, or `tests/helpers.mjs`), never the real one. Run `npm test`.
-5. Branch flow: work on `developement`; `bos promote` moves it to `revision` →
+5. Branch flow: work on `developement`; `bos project promote` moves it to `revision` →
    `testing` → `releasing` → `master` (pull request). Never commit to `master` directly.
 6. The owner works in parallel with agents. Re-check `git status` and the tree
    before acting, and treat what you find as intended.
@@ -105,3 +110,6 @@ So: add a new file rather than growing an old one, collect it in the nearest
 10. Biome lints and formats (`npm run lint`, `npm run format`; config `biome.json`:
     2 spaces, double quotes, semicolons, 120 columns). Silence a rule only with a
     `// biome-ignore <rule>: <reason>` that says why.
+11. Before calling any AI resident (ollama model), ask the House
+    (`resources/house/`, `models/house/`): only `active` residents are called.
+    The EON family rests by its own decision; never call, prompt or inspect it.

@@ -62,17 +62,16 @@ test("Skryba refines the draft, or leaves it when he can't help", async () => {
 
 test("the resting EON family is never called", async () => {
   const { default: OllamaLink } = await import("../src/bridge/ollama-link/_index.mjs");
-  const { isResting } = await import("../src/bridge/ollama-link/ravens.mjs");
+  const link = new OllamaLink({ host: "http://127.0.0.1:9" }); // unreachable on purpose: nothing may be sent
   for (const model of [
     "EON-beta___Chronus:latest",
     "sarverott/EON-alfa:latest",
     "EON-alfa---Pozeralka:latest",
     "sarverott/Plutarhist:latest",
   ]) {
-    assert.equal(isResting(model), true, model);
+    assert.equal(link.house.mayCall(model), false, model);
   }
-  assert.equal(isResting("tulu3"), false);
-  const link = new OllamaLink({ host: "http://127.0.0.1:9" }); // unreachable on purpose: nothing may be sent
+  assert.equal(link.house.mayCall("tulu3"), true);
   assert.equal(await link.available("EON-beta___Chronus"), false);
   await assert.rejects(link.ask("skryba", "hello", { model: "EON-beta___Chronus" }), /is resting and is not called/);
 });

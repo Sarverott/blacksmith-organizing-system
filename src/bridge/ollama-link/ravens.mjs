@@ -21,15 +21,6 @@ export function readRaven(name) {
   return { name, ...meta, system: system.trim() };
 }
 
-// models that must not be called: resources/ravens/resting.json (the author's decision)
-export function resting() {
-  const path = join(DIR, "resting.json");
-  return existsSync(path) ? JSON.parse(readFileSync(path, "utf8")) : { reason: "", patterns: [] };
-}
-
-export const isResting = (model) =>
-  resting().patterns.some((pattern) => model?.toLowerCase().includes(pattern.toLowerCase()));
-
 export const listRavens = () =>
   existsSync(DIR)
     ? readdirSync(DIR)
