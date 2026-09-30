@@ -11,8 +11,9 @@ across many machines, servers and publication targets, without version drift
 ("variantogeddon"). The author's rule: *"if it is good thinking then it will be
 automated"*.
 
-**Authoritative definitions:** `docs/glossary/<element>.md` in the old core
-repo, one page per element, index in `docs/glossary/README.md`. This file is a
+**Authoritative definitions:** `docs/glossary/<element>.md` in this repository
+(bos-skillset), one page per element, index in `docs/glossary/README.md`.
+Expressed as code in `src/models/class.mjs`. The old core repo holds an older copy. This file is a
 summary; if the two disagree, the glossary wins. The author annotates the
 glossary directly: read their changes (`git diff`) before summarizing.
 
@@ -93,11 +94,14 @@ Autocommit on save; GIMP history bound to VCS (a branch per session, a commit
 per action); releases trigger social media posts; Taskfile + Husky + a standard
 command set; history proven via OpenTimestamps.
 
-## Branches and versioning of the old core repo
+## Branches and versioning
 
-Branches: `developement`, `drafting`, `moderation`, `publishing`, `testing`,
-`revision`, `releasing`, `master`, and `dev/<topic>`. Original plan:
-development → testing → master → canonical. How the new branches map onto it: [`TODO`]
+Every repository (docs/infographics/branch-movement-procedures.md): `master`
+(spine of canon) → `developement` (here we code) → `revision` (approval) →
+`testing` (QA, nightly builds) → `releasing` (stamp, publish, announce) →
+`master` via pull request. Rejections go back to `developement`.
+The old core repo additionally has `drafting`, `moderation`, `publishing` and
+`dev/<topic>`; their place in the flow: [`TODO`]
 
 Versioning is `{G}.{R}.{I}.{H}`: Generation, Reconstruction, Integration, Hooking.
 

@@ -1,13 +1,50 @@
 # yaml-language-server: $schema=https://taskfile.dev/schema.json
+# Procedures of this repository. Workshop procedures live in <workshop>/.BOS/Taskfile.yaml.
 
 version: '3'
 
 vars:
-  GREETING: Hello, world!
+  BOS: node {{.ROOT_DIR}}/src/cli.mjs
 
 tasks:
   default:
-    desc: Print a greeting message
-    cmds:
-      - echo "{{.GREETING}}"
+    desc: list tasks
+    cmds: [task --list]
     silent: true
+
+  locate:
+    desc: active workshop and where BOS sits in it
+    cmds: ['{{.BOS}} locate']
+
+  status:
+    desc: workshop tree and what is missing (read-only)
+    cmds: ['{{.BOS}} status']
+
+  bootstrap:
+    desc: create missing workshop areas and descriptors (dry=true to only plan)
+    cmds: ['{{.BOS}} bootstrap {{if .dry}}--dry-run{{end}}']
+
+  open:
+    desc: open the workshop
+    cmds: ['{{.BOS}} open']
+
+  close:
+    desc: close the workshop (run `history -a` first to include this shell)
+    cmds: ['{{.BOS}} close']
+
+  hooks:install:
+    desc: link this repository's git hooks to BOS storylines
+    cmds: ['{{.BOS}} hooks install']
+
+  promote:
+    desc: move the current branch one station along the flow (task promote -- --apply)
+    cmds: ['{{.BOS}} promote {{.CLI_ARGS}}']
+
+  test:
+    desc: run the test suite
+    cmds: ['node --test "tests/**/*.test.mjs"']
+
+  check:
+    desc: syntax-check every module
+    cmds:
+      - for f in $(find src -name '*.mjs'); do node --check "$f" || exit 1; done

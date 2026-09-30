@@ -1,5 +1,20 @@
 # BOS codebase map
 
+## New core: this repository (bos-skillset → Sarverott/blacksmith-organizing-system)
+
+Zero-dependency Node ≥ 22 ESM. Read its root `AGENTS.md` first. In short:
+
+- `src/core/basic-model.mjs`: element = directory + descriptors; `ensure` (create missing, never overwrite), `inspect`, `seal` / `verify`
+- `src/core/basic-procedure.mjs`: steps over one context; logicflows in `src/core/logicflows/` (env-read, setup-load, bootstrap, open/close-workshop, hook-handlers, ci-cd)
+- `src/models/class.mjs`: glossary as classes (Workshop, System=.BOS, areas, artefacts, HOST_ROLES, Project.anatomy)
+- `src/cli.mjs` (`bos`): locate, status, bootstrap, open, close, seal, verify, hooks install, hook, promote
+- storylines log: `.BOS/storylines/logs/workshop.jsonl` (JSON lines: open, close, git-hook)
+- tests: `task test` (node:test, temporary workshops)
+
+Everything below describes the **old core**.
+
+---
+
 Local clone: `~/__WORKSHOP/forge/blacksmith-organization-system/blacksmith-organization-system`
 Remote: https://github.com/Sarverott/blacksmith-organization-system
 Node.js (CommonJS). Entry: `src/_index.js`. Run: `npm start`.

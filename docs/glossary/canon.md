@@ -18,11 +18,24 @@ from it.
 
 forge → archive (sarcophags) → canon monolith
 
-Repository flow (from `docs/README.md`): development → testing → master
-(release candidate) → canonical (confirmed by the Canon Keeper). A release is a
-commit confirmed into canon.
+Repository flow ([branch movement procedures](../infographics/branch-movement-procedures.md)),
+the minimal branches of every repository:
+
+| Branch | Role |
+| ------ | ---- |
+| `master` | spine of canon: the stable state shared with production |
+| `developement` | pulled from master in an opened workshop: here we code |
+| `revision` | control of code: approval by a maintainer or someone they authorize |
+| `testing` | quality assurance: tests, nightly builds signed with non-release certs |
+| `releasing` | stamping, publishing, announcing; lands in master through a pull request |
+
+A rejection at revision, testing or releasing sends work back to developement.
+`bos promote` walks this flow (`src/core/logicflows/ci-cd.mjs`).
+
+Older plan (old core `docs/README.md`): development → testing → master →
+canonical (confirmed by the Canon Keeper).
 
 ## Open questions
 
 - Who or what the Canon Keeper is (a person, an automated procedure, both?) [`TODO`]
-- How the new branches (drafting, moderation, publishing, testing, revision, releasing) map onto this flow [`TODO`]
+- The old core repo also has `drafting`, `moderation`, `publishing`: are they part of the flow? [`TODO`]

@@ -2,7 +2,8 @@
 
 > DRAFT. One page per element of the Blacksmith Organization System environment.
 > Gaps are marked [`TODO`]. Interpretations not yet confirmed by the author are marked *(assumed)*.
-> Sources: author's annotations, `docs/README.md`, `docs/devlog.md`, `docs/scrapnote-example.md` (PL).
+> Sources: author's annotations, and the old core's `docs/README.md`, `docs/devlog.md` and `docs/scrapnote-example.md` (PL).
+> Expressed as code in `src/models/class.mjs`; keep both consistent.
 
 ## The skeleton: three layers
 
@@ -43,7 +44,7 @@ Internal parts of `.BOS/`:
 | ------- | ---- | -------- |
 | [artefact](artefact.md) | any | Common name for every element BOS manages |
 | [scope](scope.md) | forge | Private repository holding a family of related projects (formerly *superproject*) |
-| [project](project.md) | forge | One concrete project repository |
+| [project](project.md) | forge | One concrete project repository, with a standard anatomy (README, LICENSE, AGENTS.md, Taskfile, src, docs, tests, .github) |
 | [sheme](sheme.md) | forge | Source material that isn't code: graphics, CAD, photos, templates, references |
 | [throwbox](throwbox.md) | forge | Collector of loose files for one scope |
 | [sarcophag](sarcophag.md) | archive | Encrypted container holding one bare repository |

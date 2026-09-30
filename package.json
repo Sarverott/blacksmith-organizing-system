@@ -29,8 +29,20 @@
   "directories": {
     "doc": "docs"
   },
+  "bin": {
+    "bos": "src/cli.mjs"
+  },
+  "exports": {
+    ".": "./src/index.mjs",
+    "./package.json": "./package.json"
+  },
+  "engines": {
+    "node": ">=22"
+  },
   "scripts": {
-    "test": "task test"
+    "start": "node src/cli.mjs status",
+    "test": "task test",
+    "bos": "node src/cli.mjs"
   },
   "devDependencies": {
     "@go-task/cli": "^3.53.1",
