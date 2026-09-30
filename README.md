@@ -1,73 +1,90 @@
 ```
-      █▄▄ █░░ ▄▀█ █▀▀ █▄▀ █▀ █▀▄▀█ █ ▀█▀ █░█
-      █▄█ █▄▄ █▀█ █▄▄ █░█ ▄█ █░▀░█ █ ░█░ █▀█
+      █▄▄ █░░ ▄▀█ █▀▀ █▄▀ █▀ █▀▄▀█ █ ▀█▀ █░█
+      █▄█ █▄▄ █▀█ █▄▄ █░█ ▄█ █░▀░█ █ ░█░ █▀█
 
-   █▀█ █▀█ █▀▀ ▄▀█ █▄░█ █ ▀█ ▄▀█ ▀█▀ █ █▀█ █▄░█
-   █▄█ █▀▄ █▄█ █▀█ █░▀█ █ █▄ █▀█ ░█░ █ █▄█ █░▀█
+   █▀█ █▀█ █▀▀ ▄▀█ █▄░█ █ ▀█ ▄▀█ ▀█▀ █ █▀█ █▄░█
+   █▄█ █▀▄ █▄█ █▀█ █░▀█ █ █▄ █▀█ ░█░ █ █▄█ █░▀█
 
-             █▀ █▄█ █▀ ▀█▀ █▀▀ █▀▄▀█
-             ▄█ ░█░ ▄█ ░█░ ██▄ █░▀░█
+             █▀ █▄█ █▀ ▀█▀ █▀▀ █▀▄▀█
+             ▄█ ░█░ ▄█ ░█░ ██▄ █░▀░█
 ```
 > ###### [Sett Sarverott](https://github.com/Sarverott) @ 2019-2026
 
 # Blacksmith Organization System
 
-Package files, sourcecode of server, client for end-user access and agent skills for the **Blacksmith Organization System (BOS)**: a convention that
-makes `~/__WORKSHOP` (per user) and `/media/**/__WORKSHOP` (per partition) the
-default root of code crafting.
+Tools, procedures and agent skills for the **Blacksmith Organization System
+(BOS)**: an ordered digital workshop. `~/__WORKSHOP` (per user) and
+`/media/**/__WORKSHOP` (per partition) are the root of code crafting, with
+the same shape on every host:
 
-Part of the `blacksmith-organization-system` project group. It relates to many
-other repositories: [`TODO`]
+```
+__WORKSHOP/
+├── .BOS/        BOS itself: setup, data, nests, storylines
+├── devarmory/   tools
+├── forge/       active work: <scope>/<project>
+├── craftbook/   notes, recipes, procedures
+└── archive/     work at rest
+```
+
+What each element means: [docs/glossary](docs/glossary/README.md).
+
+## Quick start
+
+```bash
+cd ~/__WORKSHOP/forge/blacksmith-organization-system
+git clone https://github.com/Sarverott/blacksmith-organizing-system.git bos-skillset
+cd bos-skillset && npm install && npm link   # `bos` on PATH
+
+bos status      # workshop tree, what is missing (read-only)
+bos open        # create missing areas, record the opening
+bos close       # keep shell history as a ttystory, record the closing
+bos repl        # every command at an interactive prompt
+```
+
+More: [preinstall](docs/tutorials/preinstall.md) ·
+[installation](docs/tutorials/installation.md) ·
+[getting started](docs/tutorials/GETTING_STARTED.md) ·
+[first use](docs/tutorials/first-use-example.md) ·
+[logicflows](docs/tutorials/logicflow-explanation.md)
 
 ## Skills
 
 | Skill | Description |
 | ----- | ----------- |
-| [`bos-workshop`](skills/bos-workshop/SKILL.md) | Recognize `__WORKSHOP` roots and their standard areas (forge, archive, devarmory, craftbook) |
+| [`bos-workshop`](skills/bos-workshop/SKILL.md) | Recognize workshops, their areas and elements; place work where it belongs |
+| `bos-devarmory` `bos-forge` `bos-craftbook` `bos-archive` | the crafting areas (drafts) |
+| `bos-scope` `bos-project` `bos-sheme` `bos-throwbox` `bos-sarcophag` `bos-exhibit` `bos-craftset` | the assets inside them (drafts) |
+
+A model's skill is drafted from its glossary page by `bos skills` and then grown by hand.
+
+```
+/plugin marketplace add Sarverott/blacksmith-organizing-system
+/plugin install bos-skills@bos-skillset
+```
+
+Or link one skill manually: `ln -s "$PWD/skills/bos-workshop" ~/.claude/skills/bos-workshop`.
+New skills start from `template/SKILL.md` and are registered in `.claude-plugin/marketplace.json`.
 
 ## Repository layout
 
 ```
-bos-skillset/
-├── .claude-plugin/
-│   └── marketplace.json      # plugin marketplace manifest (Claude Code)
-├── skills/                   # one directory per skill
-│   └── bos-workshop/
-│       ├── SKILL.md          # required: frontmatter + instructions
-│       ├── references/       # docs loaded on demand (bos-concept, bos-codebase)
-│       ├── scripts/          # executable helpers
-│       └── assets/           # templates, files used in output
-├── template/
-│   └── SKILL.md              # starting point for new skills
-├── LICENSE
-└── README.md
+src/
+├── main.ts         spine (class BOS)          ├── controllers/  management methods
+├── core/           skeleton logic             ├── commands/     index.json per command
+├── bridge/         docker, github, git, gitea ├── views/        status tree, help, repl
+├── models/         workshop assets            ├── cli.mjs       bos
+├── procedures/     protocols, step per file   └── index.mjs     library entry
+resources/  tests/  docs/  skills/  template/  .claude-plugin/
+Taskfile.yml  Dockerfile  compose.yaml  AGENTS.md  CLAUDE.md
 ```
 
-## Installation
+Details and the reasons behind the split: [AGENTS.md](AGENTS.md).
 
-### Claude Code (plugin marketplace)
+## Branches
 
-```
-/plugin marketplace add <path-or-repo-url>   # [`TODO`] repository URL
-/plugin install bos-skills@bos-skillset
-```
-
-### Manual
-
-Copy or symlink a skill directory into the agent's skills folder, e.g.:
-
-```bash
-ln -s "$PWD/skills/bos-workshop" ~/.claude/skills/bos-workshop
-```
-
-Other agents: [`TODO`]
-
-## Adding a skill
-
-1. Copy `template/` to `skills/<skill-name>/`.
-2. Fill in the `name` and `description` frontmatter in `SKILL.md`.
-3. Register the skill path in `.claude-plugin/marketplace.json`.
-4. Add it to the table above.
+`master` (spine of canon) → `developement` (here we code) → `revision` →
+`testing` → `releasing` → `master` through a pull request.
+See [branch movement procedures](docs/infographics/branch-movement-procedures.md); `bos promote` walks it.
 
 ## License
 

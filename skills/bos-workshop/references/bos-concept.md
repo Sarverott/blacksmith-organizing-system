@@ -11,8 +11,9 @@ across many machines, servers and publication targets, without version drift
 ("variantogeddon"). The author's rule: *"if it is good thinking then it will be
 automated"*.
 
-**Authoritative definitions:** `docs/glossary/<element>.md` in the old core
-repo, one page per element, index in `docs/glossary/README.md`. This file is a
+**Authoritative definitions:** `docs/glossary/<element>.md` in this repository
+(bos-skillset), one page per element, index in `docs/glossary/README.md`.
+Expressed as code in `src/models/<element>/class.mjs`. The old core repo holds an older copy. This file is a
 summary; if the two disagree, the glossary wins. The author annotates the
 glossary directly: read their changes (`git diff`) before summarizing.
 
@@ -51,6 +52,16 @@ or scrapbook instead of craftbook.
 
 Views (dashboards over CLI, web, mobile, Chrome extension, Electron, OpenAPI,
 MCP, with one shared handler class) has no settled location yet.
+
+### Modes of work (`.BOS/workshop.json` → "mode"; `bos mode`)
+
+1 ALMANAC: emergency (sinking) · 2 CONFORM: establish, migrate, clean, verify,
+sync workshops · 3 SMELTRY: code, development, publishing changes ·
+4 COMMANDORATE: rules, privileges, roles, mode switching · 5 PROVISION:
+presenting what a source of truth (e.g. GitHub) delivers. Defaults for a new
+workshop: role `forging-point`, mode `conform` (`resources/workshop.default.json`;
+null = not set → default). Commands declare
+their mode in `index.json`; `bos help` groups them. Glossary: mode.md.
 
 ### 3. Elements
 
@@ -93,11 +104,14 @@ Autocommit on save; GIMP history bound to VCS (a branch per session, a commit
 per action); releases trigger social media posts; Taskfile + Husky + a standard
 command set; history proven via OpenTimestamps.
 
-## Branches and versioning of the old core repo
+## Branches and versioning
 
-Branches: `developement`, `drafting`, `moderation`, `publishing`, `testing`,
-`revision`, `releasing`, `master`, and `dev/<topic>`. Original plan:
-development → testing → master → canonical. How the new branches map onto it: [`TODO`]
+Every repository (docs/infographics/branch-movement-procedures.md): `master`
+(spine of canon) → `developement` (here we code) → `revision` (approval) →
+`testing` (QA, nightly builds) → `releasing` (stamp, publish, announce) →
+`master` via pull request. Rejections go back to `developement`.
+The old core repo additionally has `drafting`, `moderation`, `publishing` and
+`dev/<topic>`; their place in the flow: [`TODO`]
 
 Versioning is `{G}.{R}.{I}.{H}`: Generation, Reconstruction, Integration, Hooking.
 

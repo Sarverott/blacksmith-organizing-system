@@ -1,0 +1,10 @@
+# docker compose run --rm bos open
+services:
+  bos:
+    build: .
+    image: blacksmith-organizing-system
+    environment:
+      BOS_WORKSHOP: /workshop
+    volumes:
+      - ${BOS_WORKSHOP:-~/__WORKSHOP}:/workshop
+    command: ["status"]

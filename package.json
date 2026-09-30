@@ -29,14 +29,28 @@
   "directories": {
     "doc": "docs"
   },
+  "bin": {
+    "bos": "src/cli.mjs"
+  },
+  "exports": {
+    ".": "./src/index.mjs",
+    "./package.json": "./package.json"
+  },
+  "engines": {
+    "node": ">=22.18"
+  },
   "scripts": {
-    "test": "task test"
+    "start": "node src/cli.mjs status",
+    "test": "task test",
+    "bos": "node src/cli.mjs"
+  },
+  "dependencies": {
+    "dockerode": "^5.0.1",
+    "isomorphic-git": "^1.42.4",
+    "octokit": "^5.0.5"
   },
   "devDependencies": {
     "@go-task/cli": "^3.53.1",
-    "dockerode": "^5.0.1",
-    "isomorphic-git": "^1.42.4",
-    "octokit": "^5.0.5",
     "skills": "^1.7.0"
   }
 }

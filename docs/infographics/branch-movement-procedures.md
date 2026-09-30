@@ -12,7 +12,7 @@
 ```mermaid
 
 flowchart LR
-	A@{ shape: cyl, label: "main" }
+	A@{ shape: cyl, label: "master" }
 	B@{ shape: notch-rect, label: "developement" }
 	C@{ shape: notch-rect, label: "revision" }
 	D@{ shape: notch-rect, label: "testing" }
@@ -27,7 +27,7 @@ flowchart LR
 ---
 
 ### minimal list of branches in every repository:
-- `main` 
+- `master` 
 	- spine of canon
 - `developement` 
 	- further changing
@@ -39,7 +39,7 @@ flowchart LR
 	- stamping, publishing and announcing
 
 ---
-### **main** branch
+### **master** branch
 
 - current stable state of code shared with [[LTS]] production released to be used by casual users
 - most important repo's branch that carries canonical spine of versions management
@@ -47,7 +47,7 @@ flowchart LR
 ---
 ### **developement**  branch
 
-- pulled from main on opened [[workshop]] to make changes in source code
+- pulled from master on opened [[workshop]] to make changes in source code
 - **HERE WE CODE**
 
 ---
@@ -64,7 +64,7 @@ flowchart LR
 ---
 ### **releasing** branch 
 - final station where version waits for [[releasing procedures]]
--  after been released it lands in main branch after [[pull request]] is passed through
+-  after been released it lands in master branch after [[pull request]] is passed through
 
 --- 
 #### branches workflow including rejects exceptions that requires further improovements
@@ -74,7 +74,7 @@ flowchart LR
 ```mermaid
 
 flowchart LR
-	A@{ shape: cyl, label: "main" }
+	A@{ shape: cyl, label: "master" }
 	B@{ shape: notch-rect, label: "developement" }
 	C@{ shape: notch-rect, label: "revision" }
 	D@{ shape: notch-rect, label: "testing" }
@@ -100,7 +100,7 @@ flowchart LR
   
 
 flowchart TD
-	A@{ shape: cyl, label: "main" }
+	A@{ shape: cyl, label: "master" }
 	B@{ shape: notch-rect, label: "developement" }
 	C@{ shape: notch-rect, label: "revision" }
 	D@{ shape: notch-rect, label: "testing" }
@@ -109,7 +109,7 @@ flowchart TD
 	B-- pushing to check code -->C;
 	C-- tests after approvals -->D;
 	D-- throw to release builds -->E;
-	E-- loop back to main -->A;
+	E-- loop back to master -->A;
 
 ```
 

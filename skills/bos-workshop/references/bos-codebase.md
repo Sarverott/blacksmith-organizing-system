@@ -1,5 +1,22 @@
 # BOS codebase map
 
+## New core: this repository (bos-skillset → Sarverott/blacksmith-organizing-system)
+
+Node ≥ 22.18, ESM plus `src/main.ts` (run directly via type stripping). Read the
+root `AGENTS.md` first: it has the architecture and the one-concern-per-file rule.
+
+- `src/main.ts`: the spine. `class BOS` holds `BOS.Bridge/Model/Procedure/Controll/View`; `bos.load()` loads the parts; `bos.workshop` is the controller; `bos.command(name)`.
+- `src/bridge/<name>/`: docker-host (dockerode: containers, images, volumes), github-api (octokit), git-client (isomorphic-git), gitea-api, subprocess-runner, docker-publish, npm-publish, ssh-link, bos-instances-link ([`TODO`])
+- `src/models/<element>/class.mjs`: standalone assets (`BOS.Model`); organs hang on their owner as `models/<owner>/hang.<name>.mjs` (`BOS.Submodule`, built from the owner: `workshop.storylines.logs`); shared anatomy in `core/basic-element.mjs`; `models/workshop/locate.mjs` finds workshops
+- `bos skills`: drafts `skills/bos-<type>/SKILL.md` per model from the glossary (procedure `skilling`), never overwrites
+- `src/procedures/<name>/`: DESCRIPTION.md + a step per file: locating, loading, inspecting, bootstrapping, opening, closing, sinking, hooking, promoting
+- `src/commands/<name>/index.json`: `{path, info, help, inline, repl}`; `bos help` lists them
+- storylines log: `.BOS/storylines/logs/workshop.jsonl`; tests: `task test`
+
+Everything below describes the **old core**.
+
+---
+
 Local clone: `~/__WORKSHOP/forge/blacksmith-organization-system/blacksmith-organization-system`
 Remote: https://github.com/Sarverott/blacksmith-organization-system
 Node.js (CommonJS). Entry: `src/_index.js`. Run: `npm start`.

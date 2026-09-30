@@ -14,6 +14,13 @@ It keeps everything BOS needs to run a workshop (and to rebuild it on another
 host) in one place, apart from crafted work, so the four crafting areas stay
 clean.
 
+## In code
+
+`.BOS` and its contents are **submodules** of the workshop, not models of
+their own: they exist only inside a workshop and are reached through it
+(`workshop.system`, `workshop.setup`, `workshop.data`, `workshop.nests`,
+`workshop.storylines`). Code: `src/models/workshop/hang.<name>.mjs`.
+
 ## Where
 
 `__WORKSHOP/.BOS/`. Mandatory: if missing, BOS initializes it at boot.
